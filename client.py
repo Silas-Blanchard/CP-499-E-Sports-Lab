@@ -6,3 +6,12 @@
 if __name__ == '__main__':
     print("Hello World")
 
+import socket
+import os
+s=socket.socket()
+#host=socket.gethostname() #server hostname
+host="10.16.32.7"
+port=12000 #same as server
+s.connect((host,port))
+content = "I am a computer"
+s.send(content.encode())
