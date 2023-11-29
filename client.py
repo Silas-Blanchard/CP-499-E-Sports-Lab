@@ -10,7 +10,7 @@ import socket
 import os
 s=socket.socket()
 #host=socket.gethostname() #server hostname
-host="10.16.32.7"
+host="127.0.0.1"
 port=12000 #same as server
 s.connect((host,port))
 content = "I am a computer"
