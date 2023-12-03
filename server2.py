@@ -45,7 +45,7 @@ if __name__ == '__main__':
         c.close()
 
         # split the message into 2 parts
-        message_split = message.splitlines(' ')
+        message_split = message.split(' ')
 
         # get the name
         computer_name = message_split[0]
