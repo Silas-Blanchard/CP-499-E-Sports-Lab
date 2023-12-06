@@ -19,7 +19,10 @@ cursor.execute("""
                 CREATE TABLE IF NOT EXISTS computer_status (
                 name TEXT PRIMARY KEY, 
                 time_last_0_received TIMESTAMP,
-                time_last_1_received TIMESTAMP
+                time_last_1_received TIMESTAMP,
+                reserved_start TIMESTAMP,
+                reserved_end TIMESTAMP,
+                is_out_of_order
                 )
                 """)
 # ======================== DATABASE STUFF ========================
