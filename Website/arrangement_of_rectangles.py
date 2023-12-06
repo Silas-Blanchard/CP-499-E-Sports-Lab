@@ -18,8 +18,6 @@ def placeRectangles(inputname, outputname):
 
     #initial svg section of our HTML document
     HTML_text = """<svg viewBox="0 0 500 500">"""
-        
-    
     for line in readr:
         if(not first):
             x = int(line[1])
@@ -33,12 +31,7 @@ def placeRectangles(inputname, outputname):
                 width = 40
             new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{color};"/>"""
             HTML_text = "% s\n %s" % (HTML_text, new_line)
-        else:   
+        else:
             first = False
     HTML_text = "% s\n %s" % (HTML_text,"</svg>")
     return(HTML_text)
-
-print(placeRectangles("Book1.csv","page1.html"))
-
-    
-    
