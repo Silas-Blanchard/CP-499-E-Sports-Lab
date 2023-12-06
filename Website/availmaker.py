@@ -2,7 +2,6 @@ import codecs
 import webbrowser
 import time
 import os
-from tabulate import tabulate
 
 def get_data(name):
     return [os.getlogin(), str(time.time()), name]
