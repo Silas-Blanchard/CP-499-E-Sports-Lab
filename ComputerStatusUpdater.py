@@ -37,10 +37,10 @@ def computer_status_update(computer_name, time_last_0_received_str, time_last_1_
     time_status = "Time status not available"
 
     # Check computer status based on timestamps
-    if time_last_0_received and (time_now - time_last_0_received).total_seconds() < (60 * 5):
-        status = f"{computer_name} is in use."
-    elif time_last_1_received and (time_now - time_last_1_received).total_seconds() < (60 * 45):
+    if time_last_1_received and (time_now - time_last_1_received).total_seconds() < (60 * 45):
         status = f"{computer_name} might be in use."
+    elif time_last_0_received and (time_now - time_last_0_received).total_seconds() < (60 * 5):
+        status = f"{computer_name} is in use."
     else:
         status = f"{computer_name} is not in use."
 

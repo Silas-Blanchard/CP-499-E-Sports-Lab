@@ -43,11 +43,11 @@ class MyServer(BaseHTTPRequestHandler):
 
             # Determine the color based on the status
             if "is not in use" in status:
-                box_color = "red"
+                box_color = "green"
             elif "might be in use" in status:
                 box_color = "yellow"
             else:
-                box_color = "green"
+                box_color = "red"
 
             # Add a box or container next to each list item with dynamic color
             response += "<div style='border: 1px solid #000; padding: 5px; display: inline-block; margin-left: 10px; " \
