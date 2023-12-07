@@ -6,12 +6,10 @@ import os
 
 if __name__ == '__main__':
     s = socket.socket()
-    host = "10.3.0.52"
+    host = "10.16.30.199"
     port = 12345  # same as server
     # if the server is not on, it will be disruptive for the code to stay running
     s.settimeout(2)
 
     s.connect((host, port))
-    content = os.getlogin() + ' 0'
-
-    s.send(content.encode())
+    content = os.getlogin() + " 0"
