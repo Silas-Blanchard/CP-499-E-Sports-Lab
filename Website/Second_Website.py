@@ -29,25 +29,25 @@ class MyServer(BaseHTTPRequestHandler):
         HTML_text = "<html><head><title>SQLite Data</title></head>"
         HTML_text += "<body><p>Database Content:</p><ul>"
 
-        #reading computers CSV
+        # reading computers CSV
         file_in = open("Book1.csv", "r")
         csv_readr = csv.reader(file_in, delimiter=',')
         readr = list(csv_readr)
 
-        countr = 0
+        counter = 0
 
-        #initial svg section of our HTML document
+        # initial svg section of our HTML document
         HTML_text += """<svg viewBox="0 0 1000 1000">"""
-            
-        #Loop
+
+        # Loop
         for row in rows:
-            #variables that define the parameters of our rectangle
+            # variables that define the parameters of our rectangle
             computer_name = row[0]
             time_last_0_received = row[1]
             time_last_1_received = row[2]
             status, time_status = computer_status_update(computer_name, time_last_0_received, time_last_1_received)
-            
-            #which color we are using
+
+            # which color we are using
             if "is not in use" in status:
                 box_color = "red"
             elif "might be in use" in status:
@@ -55,47 +55,51 @@ class MyServer(BaseHTTPRequestHandler):
             else:
                 box_color = "green"
 
-            #CSV varibles
-            csv_line = readr[countr + 1]
+            # CSV variables
+            csv_line = readr[counter + 1]
             x = int(csv_line[1])
             y = int(csv_line[2])
-            if(csv_line[3] == "TRUE"):
+            if csv_line[3] == "TRUE":
                 height = 40
                 width = 20
             else:
                 height = 20
                 width = 40
 
-            countr+=1
-            #Example: <rect x="120" y="120" width="100" height="100"/>            
-            new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};"/>"""
-            HTML_text = "% s\n %s" % (HTML_text, new_line)
+            counter += 1
 
-        #reading CSV for walls
+            # Example: <rect x="120" y="120" width="100" height="100"/>
+            new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">"""
+            new_line += f"""<title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>"""
+            new_line += "</rect>"
+
+            HTML_text = "%s\n%s" % (HTML_text, new_line)
+
+        # reading CSV for walls
         file_in = open("Walls.csv", "r")
         readr = csv.reader(file_in, delimiter=',')
 
-        #wall loop
+        # wall loop
         for wall in readr:
-            if(wall[1] != "X"):
+            if wall[1] != "X":
                 print(wall)
-                #CSV varibles
+                # CSV variables
                 x = int(wall[1])
                 y = int(wall[2])
-                if(wall[4] == "TRUE"):
+                if wall[4] == "TRUE":
                     height = 5
                     width = int(wall[3])
                 else:
                     height = int(wall[3])
                     width = 5
 
-                countr+=1
-                #Example: <rect x="120" y="120" width="100" height="100"/>            
+                counter += 1
+                # Example: <rect x="120" y="120" width="100" height="100"/>
                 new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:white;"/>"""
                 HTML_text = "% s\n %s" % (HTML_text, new_line)
 
-        #closing out HTML file
-        HTML_text = "% s\n %s" % (HTML_text,"</svg>")
+        # closing out HTML file
+        HTML_text = "% s\n %s" % (HTML_text, "</svg>")
         HTML_text += "</ul></body></html>"
 
         print(HTML_text)
@@ -105,6 +109,7 @@ class MyServer(BaseHTTPRequestHandler):
 
         # Closing database connection
         connection.close()
+
 
 # Main execution block
 if __name__ == "__main__":
