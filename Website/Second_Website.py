@@ -29,7 +29,7 @@ class MyServer(BaseHTTPRequestHandler):
         HTML_text = "<html><head><title>SQLite Data</title></head>"
         HTML_text += "<body><p>Database Content:</p><ul>"
 
-        #reading CSV
+        #reading computers CSV
         file_in = open("Book1.csv", "r")
         csv_readr = csv.reader(file_in, delimiter=',')
         readr = list(csv_readr)
@@ -70,6 +70,29 @@ class MyServer(BaseHTTPRequestHandler):
             #Example: <rect x="120" y="120" width="100" height="100"/>            
             new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};"/>"""
             HTML_text = "% s\n %s" % (HTML_text, new_line)
+
+        #reading CSV for walls
+        file_in = open("Walls.csv", "r")
+        readr = csv.reader(file_in, delimiter=',')
+
+        #wall loop
+        for wall in readr:
+            if(wall[1] != "X"):
+                print(wall)
+                #CSV varibles
+                x = int(wall[1])
+                y = int(wall[2])
+                if(wall[4] == "TRUE"):
+                    height = 5
+                    width = int(wall[3])
+                else:
+                    height = int(wall[3])
+                    width = 5
+
+                countr+=1
+                #Example: <rect x="120" y="120" width="100" height="100"/>            
+                new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:white;"/>"""
+                HTML_text = "% s\n %s" % (HTML_text, new_line)
 
         #closing out HTML file
         HTML_text = "% s\n %s" % (HTML_text,"</svg>")
