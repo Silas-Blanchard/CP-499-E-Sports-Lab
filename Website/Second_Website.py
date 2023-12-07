@@ -29,6 +29,20 @@ class MyServer(BaseHTTPRequestHandler):
         HTML_text = "<html><head><title>SQLite Data</title></head>"
         HTML_text += "<body><p>Database Content:</p><ul>"
 
+        #Style section
+        HTML_text +="""
+        <style>
+            text{
+                display: none;
+                fill:#fff;
+                font-size:12;
+            }
+
+            g:hover > text {
+                display: block;
+            }
+        </style>\n"""
+
         # reading computers CSV
         file_in = open("Book1.csv", "r")
         csv_readr = csv.reader(file_in, delimiter=',')
@@ -49,11 +63,11 @@ class MyServer(BaseHTTPRequestHandler):
 
             # which color we are using
             if "is not in use" in status:
-                box_color = "red"
+                box_color = "green"
             elif "might be in use" in status:
                 box_color = "yellow"
             else:
-                box_color = "green"
+                box_color = "red"
 
             # CSV variables
             csv_line = readr[counter + 1]
@@ -69,11 +83,17 @@ class MyServer(BaseHTTPRequestHandler):
             counter += 1
 
             # Example: <rect x="120" y="120" width="100" height="100"/>
-            new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">"""
-            new_line += f"""<title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>"""
-            new_line += "</rect>"
+            new_line = f"""
+<g>
+    <rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">\n    
+        <title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>
+    </rect>
+    <text x="0" y="400">Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</text>
+</g>
 
-            HTML_text = "%s\n%s" % (HTML_text, new_line)
+"""
+
+            HTML_text += new_line
 
         # reading CSV for walls
         file_in = open("Walls.csv", "r")
@@ -82,7 +102,6 @@ class MyServer(BaseHTTPRequestHandler):
         # wall loop
         for wall in readr:
             if wall[1] != "X":
-                print(wall)
                 # CSV variables
                 x = int(wall[1])
                 y = int(wall[2])

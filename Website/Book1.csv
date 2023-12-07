@@ -1,7 +1,7 @@
 Name,X,Y,Rotate
-VarsityLab1,10,50,TRUE
+VarsityLab1,10,150,TRUE
 VarsityLab2,10,100,TRUE
-VarsityLab3,10,150,TRUE
+VarsityLab3,10,50,TRUE
 VarsityLab4,60,0,FALSE
 VarsityLab5,110,0,FALSE
 VarsityLab6,160,0,FALSE
