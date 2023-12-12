@@ -9,17 +9,20 @@ def do_GET():
     # Connecting to the SQLite database
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(BASE_DIR, "test_database.db")
-    rect_csv_path = os.path.join(BASE_DIR, "Book1.csv")
-    wall_csv_path = os.path.join(BASE_DIR, "Walls.csv")
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
+
+    #leading this program in no uncertain terms to the correct files
+    rect_csv_path = os.path.join(BASE_DIR, "Book1.csv")
+    wall_csv_path = os.path.join(BASE_DIR, "Walls.csv")
+    HTML_path = os.path.join(BASE_DIR, "webber.html")
 
     # Fetching specific columns from the database
     cursor.execute("SELECT name, time_last_0_received, time_last_1_received FROM test_database")
     rows = cursor.fetchall()
 
     # Constructing HTML response with database data
-    HTML_text = "<html><head><title>SQLite Data</title></head>"
+    HTML_text = """<html><head><title>SQLite Data</title></head>"""
     HTML_text += "<body><p>Database Content:</p><ul>"
 
     #Style section
@@ -34,7 +37,8 @@ def do_GET():
         g:hover > text {
             display: block;
         }
-    </style>\n"""
+    </style>
+    """
 
     # reading computers CSV
     file_in = open(rect_csv_path, "r")
@@ -112,9 +116,16 @@ def do_GET():
 
     # closing out HTML file
     HTML_text = "% s\n %s" % (HTML_text, "</svg>")
-    HTML_text += "</ul></body></html>"
-
-    print(HTML_text)
+    HTML_text += """</ul>
+    <script src="/socket.io/socket.io.js"></script>
+            <script>
+              var socket = io();
+            </script></body></html>"
+"""
+    
+    f = open(HTML_path, "w")
+    f.write(HTML_text)
+    f.close()
 
     # Closing database connection
     connection.close()

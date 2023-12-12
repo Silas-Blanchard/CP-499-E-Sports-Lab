@@ -1,8 +1,15 @@
 // server/index.js
 
-const express = require("express");
+import express from 'express';
+import { createServer } from 'node:http';
 
-const {spawn} = require('child_process');
+import {spawn} from 'child_process';
+
+import { Server } from "socket.io";
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //const childPython = spawn('python',['--version']);
 const childPython = spawn('python',['server/Third_Website.py']);
@@ -10,6 +17,9 @@ const childPython = spawn('python',['server/Third_Website.py']);
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+const server = createServer(app);
+const io = new Server(server);
 
 let globedat = null;
 
@@ -22,15 +32,14 @@ childPython.stderr.on('data', (data) => {
   console.log(`stderr: ${data}`);
 });
 
-app.get("/api", (req,res)=>{
-  // Send a JSON response with the data from template.json
-  if (globedat !== null) {
-    const encodedHTML = JSON.stringify(globedat);
-    res.json({ message: encodedHTML });
-  } else {
-    res.json({ message: "H" });
-  }
-})
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'webber.html'));
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
   
   app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
