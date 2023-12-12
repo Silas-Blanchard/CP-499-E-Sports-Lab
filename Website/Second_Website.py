@@ -85,7 +85,7 @@ class MyServer(BaseHTTPRequestHandler):
             # Example: <rect x="120" y="120" width="100" height="100"/>
             new_line = f"""
 <g>
-    <rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">\n    
+    <rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">\n
         <title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>
     </rect>
     <text x="0" y="400">Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</text>
