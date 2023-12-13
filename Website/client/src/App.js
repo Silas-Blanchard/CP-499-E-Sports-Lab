@@ -1,21 +1,32 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [data, setData] = React.useState(null);
+  const [htmlContent, setHtmlContent] = useState({ __html: "Loading..." });
 
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
+  useEffect(() => {
+    // Fetch the HTML content when the component mounts
+    fetch('/webber') // Adjust the endpoint if necessary
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then((html) => {
+        setHtmlContent({ __html: html });
+      })
+      .catch((error) => {
+        console.error('Error fetching the HTML:', error);
+        setHtmlContent({ __html: "Failed to load content." });
+      });
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
+        {/* This will render the fetched HTML content */}
+        <div dangerouslySetInnerHTML={htmlContent} />
       </header>
     </div>
   );
