@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-const server = createServer(app);
+var server  = app.listen(3000);
 const io = new Server(server);
 
 let globedat = null;
@@ -38,6 +38,9 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
   
