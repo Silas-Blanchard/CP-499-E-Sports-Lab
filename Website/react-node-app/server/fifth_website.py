@@ -37,29 +37,20 @@ def do_GET():
         g:hover > text {
             display: block;
         }
-        .rectangle {
-            width: 40px;
-            height: 20px;
-        }
-
-        .rotatedrectangle{
-            transform: rotate(90)
-        }
-
-        .container {{
-            display: grid;
-            grid-template_rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-            grid-template-columns: 50px ;
-
-        }}
     </style>
     """
+
     # reading computers CSV
     file_in = open(rect_csv_path, "r")
     csv_readr = csv.reader(file_in, delimiter=',')
     readr = list(csv_readr)
 
     counter = 0
+
+    # initial svg section of our HTML document
+    HTML_text += """<svg viewBox="0 0 1000 1000">"""
+
+    # Loop
     for row in rows:
         # variables that define the parameters of our rectangle
         computer_name = row[0]
@@ -80,18 +71,21 @@ def do_GET():
         x = int(csv_line[1])
         y = int(csv_line[2])
         if csv_line[3] == "TRUE":
-            the_class = "rectangle rotatedrectangle"
+            height = 40
+            width = 20
         else:
-            the_class = "rectangle"
+            height = 20
+            width = 40
 
         counter += 1
 
-        new_line= f"""
+        # Example: <rect x="120" y="120" width="100" height="100"/>
+        new_line = f"""
 <g>
-    <div id={computer_name} class="{the_class}" style="background-color:{box_color};">\n
+    <rect id="{computer_name}" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">\n
         <title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>
-    </div>
-    <text>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</text>
+    </rect>
+    <text x="0" y="400">Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</text>
 </g>
 
 """
@@ -126,7 +120,16 @@ def do_GET():
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
-    </script></body></html>
+        
+      socket.on('update', function (data) {
+        const dataJSON = JSON.parse(data)
+        console.log(dataJSON)
+        for (var computer in dataJSON) {
+          let svg = document.getElementById(computer);
+          svg.style.fill = dataJSON[computer];
+        }
+      });
+</script></body></html>"
 """
     
     f = open(HTML_path, "w")

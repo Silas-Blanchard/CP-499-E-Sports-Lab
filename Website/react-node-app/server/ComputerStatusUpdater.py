@@ -41,7 +41,6 @@ def computer_status_update(computer_name, time_last_0_received_str, time_last_1_
         if time_last_1_received and (time_now - time_last_1_received).total_seconds() < (60 * 30):
             status = f"{computer_name} might be in use."
         else:
-            print("WA")
             status = f"{computer_name} is in use."
     elif time_last_1_received and (time_now - time_last_1_received).total_seconds() < (60 * 30):
         status = f"{computer_name} might be in use."
