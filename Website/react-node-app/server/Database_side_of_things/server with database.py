@@ -110,8 +110,8 @@ if __name__ == '__main__':
 
             cursor.execute("SELECT * FROM computer_status")
             myresult = cursor.fetchall()
-            for x in myresult:
-                print(x)
+//            for x in myresult:
+//                print(x)
     except Exception as e: print(e)
     # Close the database connection outside the loop
     connection.close()

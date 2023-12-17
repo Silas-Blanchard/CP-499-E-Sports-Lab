@@ -39,7 +39,7 @@ async function notify(){
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string
       var str = text.replace(/'/g, '\"');
-      console.log(str)
+//      console.log(str)
       io.emit('update', str);
   });
   }
