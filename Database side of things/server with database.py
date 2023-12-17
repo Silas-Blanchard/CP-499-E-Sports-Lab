@@ -86,26 +86,26 @@ if __name__ == '__main__':
             current_timestamp = datetime.now()
         except socket.error:
             print("Connection Error")
-        finally:
+        else: #run this stuff only if it works
+             # Call the function to find computer status
+            set_computer_status = find_computer_status(global_computer_name, global_computer_status)
+            print("Set Computer Status:", set_computer_status)
+
+            # Inside the loop where you process each computer status
+            # Insert data into the computer_status table
+            cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
+                        (global_computer_name,
+                            # Set time_last_0_received if status is 0
+                            current_timestamp if global_computer_status == 0 else None,
+                            # Set time_last_1_received if status is 1
+                            current_timestamp if global_computer_status == 1 else None
+                            ))
+
+            # Commit the changes to the database
+        finally: #everytime.
             # Close the connection with the client since this is just a ping
+            connection.commit()
             c.close()
-
-        # Call the function to find computer status
-        set_computer_status = find_computer_status(global_computer_name, global_computer_status)
-        print("Set Computer Status:", set_computer_status)
-
-        # Inside the loop where you process each computer status
-        # Insert data into the computer_status table
-        cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                       (global_computer_name,
-                        # Set time_last_0_received if status is 0
-                        current_timestamp if global_computer_status == 0 else None,
-                        # Set time_last_1_received if status is 1
-                        current_timestamp if global_computer_status == 1 else None
-                        ))
-
-        # Commit the changes to the database
-        connection.commit()
 
         cursor.execute("SELECT * FROM computer_status")
         myresult = cursor.fetchall()
