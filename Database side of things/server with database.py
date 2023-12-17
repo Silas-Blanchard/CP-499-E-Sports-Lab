@@ -53,7 +53,7 @@ if __name__ == '__main__':
     print("socket bound to %s" % port)
 
     # put the socket into listening mode
-    s.listen(5)
+    s.listen(3000)
     print("socket is listening")
 
     # a forever loop until we interrupt it or

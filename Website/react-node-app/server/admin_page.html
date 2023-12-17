@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computer Availability</title>
+<style type="text/css">
+
+body{
+background-color:linen;
+}
+
+h1{
+color:gray;
+margin-left: 40px;
+}
+</style>
+
+</head>
+    <body>
+        <h1>ADMINS ONLY</h1>
+        <h2>Changing these files will change the arrangement of elements in the lab!</h2><br>
+        <font size="3">Computer Arrangement Syntax: Computer Name, X Position, Y Position, Rotation (Enter TRUE or FALSE or it will break)</font><br>
+        <font size="3">Computer Arrangement Syntax: Wall Name, Starting X, Starting Y, Rotation (Enter TRUE or FALSE or it will break)</font><br>
+        <font size="3">Computer Arrangement Syntax: Decor Name, Starting X, Starting Y, Width, Height</font><br>
+
+        <form>
+            <label for="comparr">Computer Arrangement CSV:</label><br>
+            <input type="text" id="comparr" name="comparr"><br>
+            <label for="wallarr">Wall Arrangement CSV:</label><br>
+            <input type="text" id="wallarr" name="wallarr"><br>
+            <label for="decarr">Decor Arrangement CSV:</label><br>
+            <input type="text" id="decarr" name="decarr">
+        </form>
+        <button type="button">Save</button>
+        <button type="button">Restore Defaults</button>
+        <button type="button">Import Schedule (ICS File)</button>
+    </body>
+</html> 

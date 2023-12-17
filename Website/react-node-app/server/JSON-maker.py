@@ -34,6 +34,8 @@ for row in rows:
     dictionary[computer_name] = box_color
 
 print(dictionary)
+
+#superfluous
 f = open(json_path, "w")
 json.dump(dictionary, f)
 f.close()

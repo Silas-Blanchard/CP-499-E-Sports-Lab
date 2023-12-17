@@ -21,9 +21,20 @@ const io = new Server(server);
 //
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
+//CAS!
+//import caspackage from 'cas-authentication';
+
+// const cas = new caspackage({
+//   cas_url: 'https://cc-cas.com/cas', //replace with the proper cas website, please
+//   service_url: 'http://esportscomm.coloradocollege.edu'
+// });
+
+//app.use(cas.bounce)
+
 async function notify(){
   while (true){
     await sleep(10000)
+    spawn('python',['server/fifth_website.py']);
     const hey = spawn('python',['server/JSON-maker.py']);
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string
@@ -50,6 +61,14 @@ childPython.stderr.on('data', (data) => {
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'webber.html'));
 });
+
+app.get('/admin', (req, res) => {
+  res.sendFile(join(__dirname, 'admin_page.html'));
+});
+
+// app.get('/admin', cas.block, (req, res) => {
+//   res.sendFile(join(__dirname, 'admin_page.html'));
+// });
 
 io.on('connection', (socket) => {
   console.log('a user connected');

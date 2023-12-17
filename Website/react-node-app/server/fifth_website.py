@@ -123,7 +123,6 @@ def do_GET():
         
       socket.on('update', function (data) {
         const dataJSON = JSON.parse(data)
-        console.log(dataJSON)
         for (var computer in dataJSON) {
           let svg = document.getElementById(computer);
           svg.style.fill = dataJSON[computer];
