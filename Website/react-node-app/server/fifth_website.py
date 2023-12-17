@@ -8,7 +8,7 @@ import os
 def do_GET():
     # Connecting to the SQLite database
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "test_database.db")
+    db_path = os.path.join(BASE_DIR, "computer_database.db")
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 

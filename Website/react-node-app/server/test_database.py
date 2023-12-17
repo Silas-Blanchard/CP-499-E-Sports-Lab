@@ -10,12 +10,16 @@ cursor = connection.cursor()
 
 # Create the database table if it doesn't exist
 cursor.execute("""
-                CREATE TABLE IF NOT EXISTS test_database (
+                CREATE TABLE IF NOT EXISTS use_database (
                 name TEXT PRIMARY KEY, 
                 time_last_0_received TIMESTAMP,
                 time_last_1_received TIMESTAMP
                 )
                 """)
+
+# Commit changes and close the connection
+connection.commit()
+connection.close()
 
 # Add 9 computers with random times
 for i in range(1, 16):
