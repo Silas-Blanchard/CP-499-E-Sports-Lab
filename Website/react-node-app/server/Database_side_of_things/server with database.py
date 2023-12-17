@@ -17,7 +17,7 @@ cursor = connection.cursor()
 # create the database called computer_status
 cursor.execute("""
                 CREATE TABLE IF NOT EXISTS computer_status (
-                name TEXT PRIMARY KEY, 
+                name TEXT PRIMARY KEY,
                 time_last_0_received TIMESTAMP,
                 time_last_1_received TIMESTAMP,
                 reserved_start TIMESTAMP,
@@ -110,9 +110,6 @@ if __name__ == '__main__':
 
             cursor.execute("SELECT * FROM computer_status")
             myresult = cursor.fetchall()
-//            for x in myresult:
-//                print(x)
     except Exception as e: print(e)
     # Close the database connection outside the loop
     connection.close()
-    

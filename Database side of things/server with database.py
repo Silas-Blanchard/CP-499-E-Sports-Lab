@@ -80,8 +80,8 @@ if __name__ == '__main__':
                 global_computer_status = int(message_split[-1])
 
                 # Print to make sure we split correctly
-                print("Computer Name:", global_computer_name)
-                print("Computer Status:", global_computer_status)
+                #print("Computer Name:", global_computer_name)
+                #print("Computer Status:", global_computer_status)
 
                 # Get the current timestamp
                 current_timestamp = datetime.now()
@@ -90,7 +90,7 @@ if __name__ == '__main__':
             else: #run this stuff only if it works
                 # Call the function to find computer status
                 set_computer_status = find_computer_status(global_computer_name, global_computer_status)
-                print("Set Computer Status:", set_computer_status)
+                # print("Set Computer Status:", set_computer_status)
 
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
@@ -110,9 +110,9 @@ if __name__ == '__main__':
 
             cursor.execute("SELECT * FROM computer_status")
             myresult = cursor.fetchall()
-            for x in myresult:
-                print(x)
-    except Exception as e: print(e)
+
+    except Exception as e: 
+        print(e)
     # Close the database connection outside the loop
     connection.close()
     
