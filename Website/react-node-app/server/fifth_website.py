@@ -8,7 +8,7 @@ import os
 def do_GET():
     # Connecting to the SQLite database
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "computer_database.db")
+    db_path = os.path.join(BASE_DIR, "computer_status.db")
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 
@@ -18,7 +18,7 @@ def do_GET():
     HTML_path = os.path.join(BASE_DIR, "webber.html")
 
     # Fetching specific columns from the database
-    cursor.execute("SELECT name, time_last_0_received, time_last_1_received FROM test_database")
+    cursor.execute("SELECT name, time_last_0_received, time_last_1_received FROM computer_status")
     rows = cursor.fetchall()
 
     # Constructing HTML response with database data
@@ -128,7 +128,7 @@ def do_GET():
           svg.style.fill = dataJSON[computer];
         }
       });
-</script></body></html>"
+</script></body></html>
 """
     
     f = open(HTML_path, "w")
