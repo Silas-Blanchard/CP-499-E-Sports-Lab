@@ -22,24 +22,75 @@ def do_GET():
     rows = cursor.fetchall()
 
     # Constructing HTML response with database data
-    HTML_text = """<html><head><title>SQLite Data</title></head>"""
-    HTML_text += "<body><p>Database Content:</p><ul>"
+    HTML_text = """<html><head><title>Esports Lab</title></head>"""
+    HTML_text += "<body><ul>"
 
     #Style section
     HTML_text +="""
-    <style>
-        text{
-            display: none;
-            fill:#fff;
-            font-size:12;
-        }
+        <style>
+            text {
+                display: none;
+                fill: #000000;
+                font-size: 12;
+            }
 
-        g:hover > text {
-            display: block;
-        }
-    </style>
+            g:hover > text {
+                display: block;
+            }
+
+            g:focus > text {
+                display: block;
+            }
+
+            .header {
+                padding: 10px 5px; /* First value is for top and bottom, second is for left and right */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #1abc9c;
+                color: white;
+            }
+
+            .logo-container {
+                padding-left: 20px; /* Adjust as needed */
+            }
+
+            .logo {
+                height: 80px; /* Adjust the size as needed */
+            }
+
+            .header-title {
+                flex-grow: 1;
+                text-align: center;
+                margin: 0; /* This ensures the title is truly centered */
+            }
+
+            .login-button {
+                margin-right: 20px; /* Adjust as needed */
+                background: #f2f2f2;
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+        """
+
+    # Header for website with logo on the left, title centered, and login button on the right
+    HTML_text += """
+    <div class="header">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
+        </div>
+        <h1 class="header-title">CC Esports Lab</h1>
+        <button class="login-button">Login</button>
+    </div>
     """
-
+    
     # reading computers CSV
     file_in = open(rect_csv_path, "r")
     csv_readr = csv.reader(file_in, delimiter=',')
@@ -70,12 +121,8 @@ def do_GET():
         csv_line = readr[counter + 1]
         x = int(csv_line[1])
         y = int(csv_line[2])
-        if csv_line[3] == "TRUE":
-            height = 40
-            width = 20
-        else:
-            height = 20
-            width = 40
+        height = 35
+        width = 35
 
         counter += 1
 
@@ -83,7 +130,7 @@ def do_GET():
         new_line = f"""
 <g>
     <rect id="{computer_name}" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};">\n
-        <title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>
+        <!<title>Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</title>-- -->
     </rect>
     <text x="0" y="400">Computer Name: {computer_name}, Status: {status}, Time Status: {time_status}</text>
 </g>
@@ -111,25 +158,26 @@ def do_GET():
 
             counter += 1
             # Example: <rect x="120" y="120" width="100" height="100"/>
-            new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:white;"/>"""
+            new_line = f"""<rect x="{x}" y="{y}" width="{width}" height="{height}" style="fill:black;"/>"""
             HTML_text = "% s\n %s" % (HTML_text, new_line)
 
     # closing out HTML file
     HTML_text = "% s\n %s" % (HTML_text, "</svg>")
-    HTML_text += """</ul>
+    HTML_text += """</ul>    
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
         
       socket.on('update', function (data) {
         const dataJSON = JSON.parse(data)
+        console.log(dataJSON)
         for (var computer in dataJSON) {
           let svg = document.getElementById(computer);
           svg.style.fill = dataJSON[computer];
         }
       });
-</script></body></html>
-"""
+    </script></body></html>
+    """
     
     f = open(HTML_path, "w")
     f.write(HTML_text)
