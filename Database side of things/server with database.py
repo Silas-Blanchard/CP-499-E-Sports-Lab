@@ -61,31 +61,34 @@ if __name__ == '__main__':
     clients = []
     while True:
         # Establish connection with client and store it for later
-        c, addr = s.accept()
-        print('Got connection from', addr)
-        clients.append(addr)
+        try:
+            c, addr = s.accept()
+            print('Got connection from', addr)
+            clients.append(addr)
 
-        # create a variable to hold the message the computer sent
-        message = (c.recv(1024).decode())
+            # create a variable to hold the message the computer sent
+            message = (c.recv(1024).decode())
 
-        # split the message into 2 parts
-        message_split = message.split(" ")
+            # split the message into 2 parts
+            message_split = message.split(" ")
 
-        # get the name
-        global_computer_name = "".join(message_split[:-1])
+            # get the name
+            global_computer_name = "".join(message_split[:-1])
 
-        # get the status number
-        global_computer_status = int(message_split[-1])
+            # get the status number
+            global_computer_status = int(message_split[-1])
 
-        # Print to make sure we split correctly
-        print("Computer Name:", global_computer_name)
-        print("Computer Status:", global_computer_status)
+            # Print to make sure we split correctly
+            print("Computer Name:", global_computer_name)
+            print("Computer Status:", global_computer_status)
 
-        # Get the current timestamp
-        current_timestamp = datetime.now()
-
-        # Close the connection with the client since this is just a ping
-        c.close()
+            # Get the current timestamp
+            current_timestamp = datetime.now()
+        except socket.error:
+            print("Connection Error")
+        finally:
+            # Close the connection with the client since this is just a ping
+            c.close()
 
         # Call the function to find computer status
         set_computer_status = find_computer_status(global_computer_name, global_computer_status)
