@@ -40,77 +40,79 @@ def find_computer_status(name, status):
 
 
 if __name__ == '__main__':
-    # next create a socket object
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("Socket successfully created")
+    try:
+        # next create a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("Socket successfully created")
 
-    # reserve a port on your computer in our
-    # case it is 12345, but it can be anything
-    port = 12345
+        # reserve a port on your computer in our
+        # case it is 12345, but it can be anything
+        port = 12345
 
-    # Next bind to the port
-    s.bind(('', port))
-    print("socket bound to %s" % port)
+        # Next bind to the port
+        s.bind(('', port))
+        print("socket bound to %s" % port)
 
-    # put the socket into listening mode
-    s.listen(3000)
-    print("socket is listening")
+        # put the socket into listening mode
+        s.listen(3000)
+        print("socket is listening")
 
-    # a forever loop until we interrupt it or
-    # an error occurs
-    clients = []
-    while True:
-        # Establish connection with client and store it for later
-        try:
-            c, addr = s.accept()
-            print('Got connection from', addr)
-            clients.append(addr)
+        # a forever loop until we interrupt it or
+        # an error occurs
+        clients = []
+        while True:
+            # Establish connection with client and store it for later
+            try:
+                c, addr = s.accept()
+                print('Got connection from', addr)
+                clients.append(addr)
 
-            # create a variable to hold the message the computer sent
-            message = (c.recv(1024).decode())
+                # create a variable to hold the message the computer sent
+                message = (c.recv(1024).decode())
 
-            # split the message into 2 parts
-            message_split = message.split(" ")
+                # split the message into 2 parts
+                message_split = message.split(" ")
 
-            # get the name
-            global_computer_name = "".join(message_split[:-1])
+                # get the name
+                global_computer_name = "".join(message_split[:-1])
 
-            # get the status number
-            global_computer_status = int(message_split[-1])
+                # get the status number
+                global_computer_status = int(message_split[-1])
 
-            # Print to make sure we split correctly
-            print("Computer Name:", global_computer_name)
-            print("Computer Status:", global_computer_status)
+                # Print to make sure we split correctly
+                print("Computer Name:", global_computer_name)
+                print("Computer Status:", global_computer_status)
 
-            # Get the current timestamp
-            current_timestamp = datetime.now()
-        except socket.error:
-            print("Connection Error")
-        else: #run this stuff only if it works
-             # Call the function to find computer status
-            set_computer_status = find_computer_status(global_computer_name, global_computer_status)
-            print("Set Computer Status:", set_computer_status)
+                # Get the current timestamp
+                current_timestamp = datetime.now()
+            except socket.error:
+                print("Connection Error")
+            else: #run this stuff only if it works
+                # Call the function to find computer status
+                set_computer_status = find_computer_status(global_computer_name, global_computer_status)
+                print("Set Computer Status:", set_computer_status)
 
-            # Inside the loop where you process each computer status
-            # Insert data into the computer_status table
-            cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                        (global_computer_name,
-                            # Set time_last_0_received if status is 0
-                            current_timestamp if global_computer_status == 0 else None,
-                            # Set time_last_1_received if status is 1
-                            current_timestamp if global_computer_status == 1 else None
-                            ))
+                # Inside the loop where you process each computer status
+                # Insert data into the computer_status table
+                cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
+                            (global_computer_name,
+                                # Set time_last_0_received if status is 0
+                                current_timestamp if global_computer_status == 0 else None,
+                                # Set time_last_1_received if status is 1
+                                current_timestamp if global_computer_status == 1 else None
+                                ))
 
-            # Commit the changes to the database
-        finally: #everytime.
-            # Close the connection with the client since this is just a ping
-            connection.commit()
-            c.close()
+                # Commit the changes to the database
+            finally: #everytime.
+                # Close the connection with the client since this is just a ping
+                connection.commit()
+                c.close()
 
-        cursor.execute("SELECT * FROM computer_status")
-        myresult = cursor.fetchall()
-        for x in myresult:
-            print(x)
-
-# Close the database connection outside the loop
-connection.close()
+            cursor.execute("SELECT * FROM computer_status")
+            myresult = cursor.fetchall()
+            for x in myresult:
+                print(x)
+    except Exception as e: print(e)
+    # Close the database connection outside the loop
+    connection.close()
+    
