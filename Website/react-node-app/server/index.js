@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const childPython = spawn('python3',['server/fifth_website.py']);
+const childPython = spawn('python3',['server/six_website.py']);
 const childPythonJSON = spawn('python3',['server/JSON-maker.py']);
 
 const PORT = process.env.PORT || 3001;
@@ -34,7 +34,7 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 async function notify(){
   while (true){
     await sleep(10000)
-    spawn('python3',['server/fifth_website.py']);
+    spawn('python3',['server/six_website.py']);
     const hey = spawn('python3',['server/JSON-maker.py']);
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string

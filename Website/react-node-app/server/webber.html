@@ -1,56 +1,88 @@
-<html><head><title>Esports Lab</title></head><body><ul>
+<html><head><title>Esports Lab</title></head><body>
         <style>
-            text {
-                display: none;
-                fill: #000000;
-                font-size: 12;
-            }
 
-            g:hover > text {
-                display: block;
-            }
+        svg {
+            background-color: #333333; /* Dark grey background */
+        }
 
-            g:focus > text {
-                display: block;
-            }
+        rect {
+            fill: #4CAF50; /* Green color for computer rectangles */
+        }
 
-            .header {
-                padding: 10px 5px; /* First value is for top and bottom, second is for left and right */
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background: #1abc9c;
-                color: white;
-            }
+        .wall {
+            fill: #555555; /* Lighter grey for walls */
+        }
 
-            .logo-container {
-                padding-left: 20px; /* Adjust as needed */
-            }
-
-            .logo {
-                height: 80px; /* Adjust the size as needed */
-            }
-
-            .header-title {
-                flex-grow: 1;
-                text-align: center;
-                margin: 0; /* This ensures the title is truly centered */
-            }
-
-            .login-button {
-                margin-right: 20px; /* Adjust as needed */
-                background: #f2f2f2;
-                border: none;
-                padding: 10px 20px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 16px;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-        </style>
+        text {
+            fill: white;
+            font-size: 14px;
+        }
         
+        .computer-text {
+            /* Styles for text inside the rectangles */
+            font-size: 14px; /* Adjust to fit inside the rectangles */
+            dominant-baseline: middle;
+            text-anchor: middle;
+            pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
+        }
+
+        .header {
+            padding: 10px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #D09B2C;
+            color: black;
+        }
+
+        g:hover > text {
+            display: block;
+        }
+
+        g:focus > text {
+            display: block;
+        }
+
+        .logo-container {
+            padding-left: 20px; /* Adjust as needed */
+        }
+
+        .logo {
+            height: 80px; /* Adjust the size as needed */
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0; /* This ensures the title is truly centered */
+        }
+
+        .login-button {
+            margin-right: 20px; /* Adjust as needed */
+            background: #f2f2f2;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .events-header {
+            background: #444; /* A different shade for contrast */
+            color: white;
+            padding: 5px 20px 20px 20px; /* Increased bottom padding */
+            text-align: center;
+        }
+
+        #events-list {
+            margin: 0;
+            font-size: 14px;
+        }
+
+    </style>
     <div class="header">
         <div class="logo-container">
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
@@ -58,157 +90,147 @@
         <h1 class="header-title">CC Esports Lab</h1>
         <button class="login-button">Login</button>
     </div>
-    <svg viewBox="0 0 1000 1000">
-<g>
-    <rect id="VarsityLab11" x="10" y="200" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab11, Status: VarsityLab11 is not in use., Time Status: Last used: 49 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab11, Status: VarsityLab11 is not in use., Time Status: Last used: 49 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab3" x="10" y="150" width="35" height="35" style="fill:yellow;">
-
-        <!<title>Computer Name: VarsityLab3, Status: VarsityLab3 might be in use., Time Status: Last used: 24 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab3, Status: VarsityLab3 might be in use., Time Status: Last used: 24 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="EventSpace1" x="10" y="100" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: EventSpace1, Status: EventSpace1 is not in use., Time Status: Last used: 23 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: EventSpace1, Status: EventSpace1 is not in use., Time Status: Last used: 23 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab9" x="60" y="10" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab9, Status: VarsityLab9 is not in use., Time Status: Last used: 22 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab9, Status: VarsityLab9 is not in use., Time Status: Last used: 22 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="EventSpace4" x="110" y="10" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: EventSpace4, Status: EventSpace4 is not in use., Time Status: Last used: 20 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: EventSpace4, Status: EventSpace4 is not in use., Time Status: Last used: 20 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab7" x="160" y="10" width="35" height="35" style="fill:yellow;">
-
-        <!<title>Computer Name: VarsityLab7, Status: VarsityLab7 might be in use., Time Status: Last used: 16 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab7, Status: VarsityLab7 might be in use., Time Status: Last used: 16 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="EventSpace6" x="210" y="50" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: EventSpace6, Status: EventSpace6 is not in use., Time Status: Last used: 9 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: EventSpace6, Status: EventSpace6 is not in use., Time Status: Last used: 9 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab1" x="210" y="100" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab1, Status: VarsityLab1 is not in use., Time Status: Last used: 8 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab1, Status: VarsityLab1 is not in use., Time Status: Last used: 8 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab8" x="210" y="150" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab8, Status: VarsityLab8 is not in use., Time Status: Last used: 8 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab8, Status: VarsityLab8 is not in use., Time Status: Last used: 8 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab12" x="210" y="200" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab12, Status: VarsityLab12 is not in use., Time Status: Last used: 8 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab12, Status: VarsityLab12 is not in use., Time Status: Last used: 8 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab10" x="310" y="150" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab10, Status: VarsityLab10 is not in use., Time Status: Last used: 8 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab10, Status: VarsityLab10 is not in use., Time Status: Last used: 8 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="EventSpace3" x="310" y="200" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: EventSpace3, Status: EventSpace3 is not in use., Time Status: Last used: 6 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: EventSpace3, Status: EventSpace3 is not in use., Time Status: Last used: 6 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab6" x="375" y="150" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab6, Status: VarsityLab6 is not in use., Time Status: Last used: 6 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab6, Status: VarsityLab6 is not in use., Time Status: Last used: 6 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="Eventspace5" x="375" y="200" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: Eventspace5, Status: Eventspace5 is not in use., Time Status: Last used: 6 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: Eventspace5, Status: Eventspace5 is not in use., Time Status: Last used: 6 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab4" x="460" y="300" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab4, Status: VarsityLab4 is not in use., Time Status: Last used: 5 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab4, Status: VarsityLab4 is not in use., Time Status: Last used: 5 minutes ago</text>
-</g>
-
-
-<g>
-    <rect id="VarsityLab5" x="510" y="300" width="35" height="35" style="fill:green;">
-
-        <!<title>Computer Name: VarsityLab5, Status: VarsityLab5 is not in use., Time Status: Last used: 5 minutes ago</title>-- -->
-    </rect>
-    <text x="0" y="400">Computer Name: VarsityLab5, Status: VarsityLab5 is not in use., Time Status: Last used: 5 minutes ago</text>
-</g>
-
-
- <rect x="350" y="0" width="5" height="240" style="fill:black;"/>
- <rect x="350" y="310" width="5" height="40" style="fill:black;"/>
- <rect x="0" y="350" width="700" height="5" style="fill:black;"/>
- <rect x="700" y="0" width="5" height="355" style="fill:black;"/>
- <rect x="0" y="0" width="5" height="355" style="fill:black;"/>
- <rect x="0" y="0" width="700" height="5" style="fill:black;"/>
+    
+    <div class="events-header">
+        <h2>Today's Practices</h2>
+        <p id="events-list">No events scheduled for today.</p>
+    </div>
+    <svg viewBox='0 0 1000 1000'>
+        <g>
+            <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="27.5" y="217.5" fill="white">1</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab3" x="10" y="100" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="27.5" y="117.5" fill="white">3</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab4" x="60" y="10" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="77.5" y="27.5" fill="white">4</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab5" x="110" y="10" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="127.5" y="27.5" fill="white">5</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab6" x="160" y="10" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="177.5" y="27.5" fill="white">6</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab7" x="210" y="50" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="227.5" y="67.5" fill="white">7</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab8" x="210" y="100" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="227.5" y="117.5" fill="white">8</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab9" x="210" y="150" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="227.5" y="167.5" fill="white">9</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab10" x="210" y="200" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="227.5" y="217.5" fill="white">10</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab11" x="310" y="150" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="327.5" y="167.5" fill="white">11</text>
+        </g>
+        
+        <g>
+            <rect id="VarsityLab12" x="310" y="200" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="327.5" y="217.5" fill="white">12</text>
+        </g>
+        
+        <g>
+            <rect id="EventSpace1" x="375" y="150" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="392.5" y="167.5" fill="white">E1</text>
+        </g>
+        
+        <g>
+            <rect id="EventSpace3" x="460" y="300" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="477.5" y="317.5" fill="white">E3</text>
+        </g>
+        
+        <g>
+            <rect id="EventSpace4" x="510" y="300" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="527.5" y="317.5" fill="white">E4</text>
+        </g>
+        
+        <g>
+            <rect id="EventSpace6" x="610" y="300" width="35" height="35" style="fill:dark green;"/>
+            <text class="computer-text" x="627.5" y="317.5" fill="white">E6</text>
+        </g>
+        <rect class="wall" x="350" y="0" width="5" height="240"></rect><rect class="wall" x="350" y="310" width="5" height="40"></rect><rect class="wall" x="0" y="350" width="700" height="5"></rect><rect class="wall" x="700" y="0" width="5" height="355"></rect><rect class="wall" x="0" y="0" width="5" height="355"></rect><rect class="wall" x="0" y="0" width="700" height="5"></rect><g>
+            <text x="800" y="28.8" fill="black">
+                VarsityLab1: Free
+            </text>
+            
+            <text x="800" y="66.4" fill="black">
+                VarsityLab3: Free
+            </text>
+            
+            <text x="800" y="85.2" fill="black">
+                VarsityLab4: Free
+            </text>
+            
+            <text x="800" y="104.0" fill="black">
+                VarsityLab5: Free
+            </text>
+            
+            <text x="800" y="122.80000000000001" fill="black">
+                VarsityLab6: Free
+            </text>
+            
+            <text x="800" y="141.6" fill="black">
+                VarsityLab7: Free
+            </text>
+            
+            <text x="800" y="160.4" fill="black">
+                VarsityLab8: Free
+            </text>
+            
+            <text x="800" y="179.20000000000002" fill="black">
+                VarsityLab9: Free
+            </text>
+            
+            <text x="800" y="198.0" fill="black">
+                VarsityLab10: Free
+            </text>
+            
+            <text x="800" y="216.8" fill="black">
+                VarsityLab11: Free
+            </text>
+            
+            <text x="800" y="235.60000000000002" fill="black">
+                VarsityLab12: Free
+            </text>
+            
+            <text x="800" y="254.4" fill="black">
+                EventSpace1: Free
+            </text>
+            
+            <text x="800" y="292.0" fill="black">
+                EventSpace3: Free
+            </text>
+            
+            <text x="800" y="310.8" fill="black">
+                EventSpace4: Free
+            </text>
+            
+            <text x="800" y="348.40000000000003" fill="black">
+                EventSpace6: Free
+            </text>
+            </g></svg></body></html>
  </svg></ul>    
     <script src="/socket.io/socket.io.js"></script>
     <script>
