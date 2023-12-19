@@ -283,7 +283,7 @@ def write_html_file(HTML_path, HTML_text):
     # closing out HTML file
     HTML_text = "% s\n %s" % (HTML_text, "</svg>")
     HTML_text += """</ul>    
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="esportscomm.coloradocollege.edu:80/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
         
