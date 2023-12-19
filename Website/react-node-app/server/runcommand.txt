@@ -1,2 +1,2 @@
-sudo fuser -k 3000/tcp
+sudo fuser -k 3001/tcp && sudo fuser -k 3000/tcp
 npm start & python3 Database_side_of_things/server\ with\ database.py
