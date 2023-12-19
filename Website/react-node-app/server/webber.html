@@ -1,88 +1,105 @@
 <html><head><title>Esports Lab</title></head><body>
         <style>
+    svg {
+        background-color: #333333; /* Dark grey background */
+    }
 
-        svg {
-            background-color: #333333; /* Dark grey background */
-        }
+    rect {
+        fill: #4CAF50; /* Green color for computer rectangles */
+    }
 
-        rect {
-            fill: #4CAF50; /* Green color for computer rectangles */
-        }
+    .wall {
+        fill: #555555; /* Lighter grey for walls */
+    }
 
-        .wall {
-            fill: #555555; /* Lighter grey for walls */
-        }
+    text {
+        fill: white;
+        font-size: 14px;
+    }
+    
+    .computer-text {
+        /* Styles for text inside the rectangles */
+        font-size: 14px; /* Adjust to fit inside the rectangles */
+        dominant-baseline: middle;
+        text-anchor: middle;
+        pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
+    }
 
-        text {
-            fill: white;
-            font-size: 14px;
-        }
-        
-        .computer-text {
-            /* Styles for text inside the rectangles */
-            font-size: 14px; /* Adjust to fit inside the rectangles */
-            dominant-baseline: middle;
-            text-anchor: middle;
-            pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
-        }
+    .header {
+        padding: 10px 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #D09B2C;
+        color: black;
+    }
 
-        .header {
-            padding: 10px 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #D09B2C;
-            color: black;
-        }
+    g:hover > text {
+        display: block;
+    }
 
-        g:hover > text {
-            display: block;
-        }
+    g:focus > text {
+        display: block;
+    }
 
-        g:focus > text {
-            display: block;
-        }
+    .logo-container {
+        padding-left: 20px; /* Adjust as needed */
+    }
 
-        .logo-container {
-            padding-left: 20px; /* Adjust as needed */
-        }
+    .logo {
+        height: 80px; /* Adjust the size as needed */
+    }
 
-        .logo {
-            height: 80px; /* Adjust the size as needed */
-        }
+    .header-title {
+        flex-grow: 1;
+        text-align: center;
+        margin: 0; /* This ensures the title is truly centered */
+    }
 
-        .header-title {
-            flex-grow: 1;
-            text-align: center;
-            margin: 0; /* This ensures the title is truly centered */
-        }
+    .login-button {
+        margin-right: 20px; /* Adjust as needed */
+        background: #f2f2f2;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        .login-button {
-            margin-right: 20px; /* Adjust as needed */
-            background: #f2f2f2;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    .events-container {
+        display: flex;
+        justify-content: space-between; /* Space out the children evenly */
+        align-items: flex-start; /* Align children at their top edge */
+        padding: 10px;
+        background: #444; /* A different shade for contrast */
+        color: white;
+        margin: 0 auto; /* Center the container */
+        max-width: calc(100% - 20px); /* Adjust the width to not exceed the parent's width considering padding */
+    }
 
-        .events-header {
-            background: #444; /* A different shade for contrast */
-            color: white;
-            padding: 5px 20px 20px 20px; /* Increased bottom padding */
-            text-align: center;
-        }
+    .events-column {
+        flex-basis: calc(50% - 20px); /* Subtract the padding from the width */
+        text-align: center; /* Center text within each column */
+        padding: 0 10px; /* Add some padding on the left and right */
+    }
 
-        #events-list {
-            margin: 0;
-            font-size: 14px;
-        }
+    /* Ensure the list takes up full width of the column */
+    #events-list-today, #events-list-tomorrow {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    #events-list-today li, #events-list-tomorrow li {
+        margin: 5px 0; /* Margin for list items */
+    }
 
     </style>
+    
     <div class="header">
         <div class="logo-container">
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
@@ -91,11 +108,11 @@
         <button class="login-button">Login</button>
     </div>
     
-    <div class="events-header">
-        <h2>Today's Practices</h2>
-        <p id="events-list">No events scheduled for today.</p>
-    </div>
-    <svg viewBox='0 0 1000 1000'>
+    <div class='events-container'>
+        <div class='events-column'>
+            <h2>Today's Events</h2>
+            <ul id='events-list-today'>
+    <li>No events scheduled for today.</li></ul></div><div class='events-column'><h2>Tomorrow's Events</h2><ul id='events-list-tomorrow'><li>No events scheduled for tomorrow.</li></ul></div></div><svg viewBox='0 0 1000 1000'>
         <g>
             <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:dark green;"/>
             <text class="computer-text" x="27.5" y="217.5" fill="white">1</text>
@@ -232,7 +249,7 @@
             </text>
             </g></svg></body></html>
  </svg></ul>    
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="esportscomm.coloradocollege.edu:80/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
         

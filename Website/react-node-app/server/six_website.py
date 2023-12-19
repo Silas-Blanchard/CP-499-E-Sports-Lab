@@ -2,6 +2,9 @@ import sqlite3
 import csv
 import os
 from ComputerStatusUpdater import computer_status_update
+from datetime import datetime, timedelta
+import requests
+from ics import Calendar
 
 # Custom request handler class
 def do_GET():
@@ -14,8 +17,12 @@ def do_GET():
     # Read CSV files
     computers, walls = read_csv_files(rect_csv_path, wall_csv_path)
 
-    # Generate HTML content
-    HTML_text = generate_html_content(rows, computers, walls)
+    # Fetch calendar events using the actual iCalendar URL
+    calendar_url = "https://calendar.google.com/calendar/ical/ccesportslab1%40gmail.com/public/basic.ics"
+    events_today, events_tomorrow = fetch_calendar_events(calendar_url)
+
+    # Generate HTML content with calendar events
+    HTML_text = generate_html_content(rows, computers, walls, events_today, events_tomorrow)
 
     # Write HTML to file
     write_html_file(HTML_path, HTML_text)
@@ -51,18 +58,23 @@ def read_csv_files(rect_csv_path, wall_csv_path):
     return computers, walls
 
 
-def generate_html_content(rows, computers, walls):
+def generate_html_content(rows, computers, walls, events_today, events_tomorrow):
     # Start HTML content generation (including styles and headers)
     HTML_text = "<html><head><title>Esports Lab</title></head><body>"
     HTML_text += generate_styles()
     HTML_text += generate_header()
+    
+    # Add the events section here
+    HTML_text += generate_events_section(events_today, events_tomorrow)
+    
+    # Continue with the SVG content
     HTML_text += "<svg viewBox='0 0 1000 1000'>"
     
     # Add computers and walls to SVG
     HTML_text += generate_computers_svg(rows, computers)
     HTML_text += generate_walls_svg(walls)
     HTML_text += generate_computers_list_svg(rows, computers, 1000)  # Adjust the width as needed
-
+    
     # Close SVG and add remaining HTML content
     HTML_text += "</svg></body></html>"
     return HTML_text
@@ -72,89 +84,106 @@ def generate_styles():
     #Style section
     styles="""
         <style>
+    svg {
+        background-color: #333333; /* Dark grey background */
+    }
 
-        svg {
-            background-color: #333333; /* Dark grey background */
-        }
+    rect {
+        fill: #4CAF50; /* Green color for computer rectangles */
+    }
 
-        rect {
-            fill: #4CAF50; /* Green color for computer rectangles */
-        }
+    .wall {
+        fill: #555555; /* Lighter grey for walls */
+    }
 
-        .wall {
-            fill: #555555; /* Lighter grey for walls */
-        }
+    text {
+        fill: white;
+        font-size: 14px;
+    }
+    
+    .computer-text {
+        /* Styles for text inside the rectangles */
+        font-size: 14px; /* Adjust to fit inside the rectangles */
+        dominant-baseline: middle;
+        text-anchor: middle;
+        pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
+    }
 
-        text {
-            fill: white;
-            font-size: 14px;
-        }
-        
-        .computer-text {
-            /* Styles for text inside the rectangles */
-            font-size: 14px; /* Adjust to fit inside the rectangles */
-            dominant-baseline: middle;
-            text-anchor: middle;
-            pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
-        }
+    .header {
+        padding: 10px 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #D09B2C;
+        color: black;
+    }
 
-        .header {
-            padding: 10px 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #D09B2C;
-            color: black;
-        }
+    g:hover > text {
+        display: block;
+    }
 
-        g:hover > text {
-            display: block;
-        }
+    g:focus > text {
+        display: block;
+    }
 
-        g:focus > text {
-            display: block;
-        }
+    .logo-container {
+        padding-left: 20px; /* Adjust as needed */
+    }
 
-        .logo-container {
-            padding-left: 20px; /* Adjust as needed */
-        }
+    .logo {
+        height: 80px; /* Adjust the size as needed */
+    }
 
-        .logo {
-            height: 80px; /* Adjust the size as needed */
-        }
+    .header-title {
+        flex-grow: 1;
+        text-align: center;
+        margin: 0; /* This ensures the title is truly centered */
+    }
 
-        .header-title {
-            flex-grow: 1;
-            text-align: center;
-            margin: 0; /* This ensures the title is truly centered */
-        }
+    .login-button {
+        margin-right: 20px; /* Adjust as needed */
+        background: #f2f2f2;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        .login-button {
-            margin-right: 20px; /* Adjust as needed */
-            background: #f2f2f2;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    .events-container {
+        display: flex;
+        justify-content: space-between; /* Space out the children evenly */
+        align-items: flex-start; /* Align children at their top edge */
+        padding: 10px;
+        background: #444; /* A different shade for contrast */
+        color: white;
+        margin: 0 auto; /* Center the container */
+        max-width: calc(100% - 20px); /* Adjust the width to not exceed the parent's width considering padding */
+    }
 
-        .events-header {
-            background: #444; /* A different shade for contrast */
-            color: white;
-            padding: 5px 20px 20px 20px; /* Increased bottom padding */
-            text-align: center;
-        }
+    .events-column {
+        flex-basis: calc(50% - 20px); /* Subtract the padding from the width */
+        text-align: center; /* Center text within each column */
+        padding: 0 10px; /* Add some padding on the left and right */
+    }
 
-        #events-list {
-            margin: 0;
-            font-size: 14px;
-        }
+    /* Ensure the list takes up full width of the column */
+    #events-list-today, #events-list-tomorrow {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
 
-    </style>"""
+    #events-list-today li, #events-list-tomorrow li {
+        margin: 5px 0; /* Margin for list items */
+    }
+
+    </style>
+    """
     return styles
 
 
@@ -169,17 +198,61 @@ def generate_header():
         <button class="login-button">Login</button>
     </div>
     """
-
-      # Additional header for displaying the events of the day
-    events_header = """
-    <div class="events-header">
-        <h2>Today's Practices</h2>
-        <p id="events-list">No events scheduled for today.</p>
-    </div>
-    """
-
     # Combine the two headers
-    return header + events_header
+    return header
+
+
+def is_event_today(event, today):
+    return event.begin.date() == today
+
+
+def is_event_tomorrow(event, tomorrow):
+    return event.begin.date() == tomorrow
+
+
+def fetch_calendar_events(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+        cal = Calendar(response.text)
+    except requests.RequestException as e:
+        print(f"Error fetching calendar data: {e}")
+        return [], []  # Return empty lists in case of an error
+
+    # Get today's and tomorrow's dates
+    today = datetime.now().date()
+    tomorrow = today + timedelta(days=1)
+
+    # Filter events for today and tomorrow
+    events_today = [event for event in cal.events if is_event_today(event, today)]
+    events_tomorrow = [event for event in cal.events if is_event_tomorrow(event, tomorrow)]
+
+    return events_today, events_tomorrow
+
+
+def generate_events_section(events_today, events_tomorrow):
+    # This section will create two columns for events: one for today and one for tomorrow
+    events_html = """
+    <div class='events-container'>
+        <div class='events-column'>
+            <h2>Today's Events</h2>
+            <ul id='events-list-today'>
+    """
+    if events_today:
+        for event in events_today:
+            events_html += f"<li>{event.name} at {event.begin.format('HH:mm')}</li>"
+    else:
+        events_html += "<li>No events scheduled for today.</li>"
+    events_html += "</ul></div><div class='events-column'><h2>Tomorrow's Events</h2><ul id='events-list-tomorrow'>"
+    
+    if events_tomorrow:
+        for event in events_tomorrow:
+            events_html += f"<li>{event.name} at {event.begin.format('HH:mm')}</li>"
+    else:
+        events_html += "<li>No events scheduled for tomorrow.</li>"
+    events_html += "</ul></div></div>"
+
+    return events_html
 
 
 def get_identifier(computer_name):
