@@ -74,6 +74,20 @@ def generate_html_content(rows, computers, walls, events_today, events_tomorrow)
     HTML_text += generate_computers_svg(rows, computers)
     HTML_text += generate_walls_svg(walls)
     HTML_text += generate_computers_list_svg(rows, computers, 1000)  # Adjust the width as needed
+
+    # Add pop-up HTML
+    HTML_text += """
+    <div id="welcomePopupModal" class="welcome-popup">
+        <div class="welcome-popup-content">
+            <span class="welcome-popup-close">&times;</span>
+            <p>Welcome to the Esports Lab Viewer! This is a resource to see what computers are currently open or in-use. Please be mindful of practice times and closed lab events!</p>
+            <p>Looking to be a part of the Colorado College Esports community? Be sure to join the 
+            <a href="https://discord.com/invite/Ker2VQa" target="_blank">Discord!</a> 
+            </p>
+            <p>Interested in getting card access to the lab? Be sure to join the Discord and reach out to Josh (JoamL) to learn about gaining access!</p>
+        </div>
+    </div>
+    """
     
     # Close SVG and add remaining HTML content
     HTML_text += "</svg></body></html>"
@@ -182,6 +196,43 @@ def generate_styles():
         margin: 5px 0; /* Margin for list items */
     }
 
+    .welcome-popup {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 10; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .welcome-popup-content {
+        background-color: #D09B2C; /* Matching the header's background color */
+        margin: 10% auto; /* 10% from the top and centered */
+        padding: 20px;
+        border: 1px solid #222; /* Black border for emphasis */
+        width: 50%; /* Width can be adjusted for different screen sizes */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        text-align: center; /* Center the text */
+        color: #000; /* Text color */
+        font-family: 'Arial', sans-serif; /* Assuming Arial is used on the website */
+    }
+
+    .welcome-popup-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .welcome-popup-close:hover,
+    .welcome-popup-close:focus {
+        color: #000; /* Change color on hover/focus for better visibility */
+        text-decoration: none;
+    }
     </style>
     """
     return styles
@@ -369,6 +420,34 @@ def write_html_file(HTML_path, HTML_text):
         }
       });
     </script></body></html>
+    """
+
+    # Add JavaScript for the modal
+    HTML_text += """
+    <script>
+      // Get the modal
+      var modal = document.getElementById('welcomePopupModal');
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName('welcome-popup-close')[0];
+
+      // When the page loads, open the modal 
+      window.onload = function() {
+          modal.style.display = 'block';
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+          modal.style.display = 'none';
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = 'none';
+          }
+      }
+    </script>
     """
     with open(HTML_path, "w") as file:
         file.write(HTML_text)
