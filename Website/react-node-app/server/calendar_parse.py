@@ -2,7 +2,7 @@ from ics import Calendar
 import requests
  
 # Parse the URL
-url = "https://calendar.google.com/calendar/ical/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/public/basic.ics"
+url = "https://calendar.google.com/calendar/u/0/embed?src=ccesportslab1@gmail.com&ctz=America/Denver&pli=1"
 cal = Calendar(requests.get(url).text)
  
 # Print all the events
