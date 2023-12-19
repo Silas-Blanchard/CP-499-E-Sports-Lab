@@ -407,9 +407,10 @@ def write_html_file(HTML_path, HTML_text):
     # closing out HTML file
     HTML_text = "% s\n %s" % (HTML_text, "</svg>")
     HTML_text += """</ul>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.esm.min.js></script>
-    <script>  
+    <script src="esportscomm.coloradocollege.edu:80/socket.io/socket.io.js"></script>
+    <script>
       const socket = io();
+        
       socket.on('update', function (data) {
         const dataJSON = JSON.parse(data)
         console.log(dataJSON)
