@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const childPython = spawn('python3',['server/six_website.py']);
@@ -78,7 +79,7 @@ io.on('connection', (socket) => {
 });
 
   
-  app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
   });
 

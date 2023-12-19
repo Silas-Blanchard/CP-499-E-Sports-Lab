@@ -10,13 +10,61 @@ background-color:linen;
 }
 
 h1{
-color:gray;
+color:black;
 margin-left: 40px;
+}
+
+.header {
+    padding: 10px 5px; /* First value is for top and bottom, second is for left and right */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #D09B2C;
+    color: white;
+}
+
+.textbox{
+    height:200px;
+    width:400px;
+    font-size:14pt;
+}
+
+.logo-container {
+    padding-left: 20px; /* Adjust as needed */
+}
+
+.logo {
+    height: 80px; /* Adjust the size as needed */
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0; /* This ensures the title is truly centered */
+}
+
+.login-button {
+    margin-right: 20px; /* Adjust as needed */
+    background: #f2f2f2;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 </style>
 
 </head>
     <body>
+        <div class="header">
+            <div class="logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
+            </div>
+            <h1 class="header-title">CC Esports Admin Page</h1>
+        </div>
         <h1>ADMINS ONLY</h1>
         <h2>Changing these files will change the arrangement of elements in the lab!</h2><br>
         <font size="3">Computer Arrangement Syntax: Computer Name, X Position, Y Position, Rotation (Enter TRUE or FALSE or it will break)</font><br>
@@ -25,11 +73,11 @@ margin-left: 40px;
 
         <form>
             <label for="comparr">Computer Arrangement CSV:</label><br>
-            <input type="text" id="comparr" name="comparr"><br>
+            <textarea class="longInput" cols="30" rows="10" id="comparr"></textarea><br>
             <label for="wallarr">Wall Arrangement CSV:</label><br>
-            <input type="text" id="wallarr" name="wallarr"><br>
+            <textarea class="longInput" cols="30" rows="10" id="wallarr"></textarea><br>
             <label for="decarr">Decor Arrangement CSV:</label><br>
-            <input type="text" id="decarr" name="decarr">
+            <textarea class="longInput" cols="30" rows="10" id="decarr"></textarea>
         </form>
         <button type="button">Save</button>
         <button type="button">Restore Defaults</button>
