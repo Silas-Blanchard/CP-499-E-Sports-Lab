@@ -149,9 +149,9 @@ if __name__ == '__main__':
                     current_timestamp = datetime.now()
 
                     #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{global_computer_name}'
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{global_computer_name}')
                     BEGIN  
-	                    UPDATE computer_status
+                        UPDATE computer_status
                         SET time_last_0_received = '{current_timestamp}'
                         WHERE name = '{global_computer_name}'
                     END                                     
@@ -161,7 +161,7 @@ if __name__ == '__main__':
                     alt_name = current_timestamp.lower()
 
                     #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{alt_name}'
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{alt_name}')
                     BEGIN  
 	                    UPDATE computer_status
                         SET time_last_0_received = '{current_timestamp}'
