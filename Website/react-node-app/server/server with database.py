@@ -107,15 +107,15 @@ if __name__ == '__main__':
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
                         # Set time_last_0_received if status is 0
-                        current_timestamp if global_computer_status == 0 else old_0[0],
+                        str(current_timestamp) if global_computer_status == 0 else old_0[0],
                         # Set time_last_1_received if status is 1
-                        current_timestamp if global_computer_status == 1 else old_1[0]
+                        str(current_timestamp) if global_computer_status == 1 else old_1[0]
                         ))
                 # Commit the changes to the database
             finally: #everytime.
                 # Close the connection with the client since this is just a ping
                 connection.commit()
-                c.close()
+                connection.close()
 
             cursor.execute("SELECT * FROM computer_status")
             myresult = cursor.fetchall()
