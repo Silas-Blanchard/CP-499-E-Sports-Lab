@@ -29,10 +29,10 @@ for row in comps:
     comp_name = row[0]
     #thirty_one_minutes_ago is for our last idle ping
     #this should make it so that each computer is definitely in use
-    thirty_minutes_ago =  datetime.now() - timedelta(minutes=45)
+    thirty_minutes_ago =  datetime.now() - timedelta(minutes=19)
     cursor.execute(f"""
                     UPDATE computer_status
-                    SET time_last_0_received = '{now}', time_last_1_received = '{now}'
+                    SET time_last_0_received = '{now}', time_last_1_received = '{thirty_minutes_ago}'
                     WHERE name = '{comp_name}';
                     """)
 connection.commit()

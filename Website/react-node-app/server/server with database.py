@@ -2,6 +2,7 @@
 import socket
 import sqlite3 as sql
 from datetime import datetime
+import os
 
 # variables we need outside the loop
 global_computer_name = ''
@@ -9,7 +10,9 @@ global_computer_status = 0
 
 # ======================== DATABASE STUFF ========================
 # connect to the local database
-connection = sql.connect("computer_status.db")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "computer_status.db")
+connection = sql.connect(db_path)
 
 # create cursor object to execute sqlite3 processes
 cursor = connection.cursor()
@@ -19,13 +22,11 @@ cursor.execute("""
                 CREATE TABLE IF NOT EXISTS computer_status (
                 name TEXT PRIMARY KEY,
                 time_last_0_received TIMESTAMP,
-                time_last_1_received TIMESTAMP,
-                reserved_start TIMESTAMP,
-                reserved_end TIMESTAMP,
-                is_out_of_order
-                )
+                time_last_1_received TIMESTAMP
+                );
                 """)
-cursor.execute("""SELECT * FROM computer_status""")
+
+cursor.execute("""SELECT * FROM computer_status;""")
 old_1 = cursor.fetchall()
 print(old_1)
 # ======================== DATABASE STUFF ========================
@@ -98,7 +99,7 @@ if __name__ == '__main__':
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
 
-                cursor.execute(f"""SELECT * FROM computer_status WHERE name = '{global_computer_name}'""")
+                cursor.execute(f"""SELECT * FROM computer_status WHERE name = '{global_computer_name}';""")
                 old_1 = cursor.fetchall()
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
