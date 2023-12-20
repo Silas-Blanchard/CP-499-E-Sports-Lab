@@ -172,7 +172,7 @@ if __name__ == '__main__':
             finally: #everytime.
                 # Close the connection with the client since this is just a ping
                 connection.commit()
-                c.close()
+                connection.close()
 
             cursor.execute("SELECT * FROM computer_status")
             myresult = cursor.fetchall()
