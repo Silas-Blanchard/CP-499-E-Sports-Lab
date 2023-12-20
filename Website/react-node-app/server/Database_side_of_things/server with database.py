@@ -20,6 +20,9 @@ cursor.execute("""
                 name TEXT PRIMARY KEY,
                 time_last_0_received TIMESTAMP,
                 time_last_1_received TIMESTAMP,
+                reserved_start TIMESTAMP,
+                reserved_end TIMESTAMP,
+                is_out_of_order
                 )
                 """)
 # ======================== DATABASE STUFF ========================
@@ -95,13 +98,12 @@ if __name__ == '__main__':
                 old_1 = cursor.execute(f"SELECT time_last_1_received FROM computer_status WHERE name = {global_computer_name}")
                 old_0 = cursor.execute(f"SELECT time_last_0_received FROM computer_status WHERE name = {global_computer_name}")
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                        (global_computer_name,
-                            # Set time_last_0_received if status is 0
-                            current_timestamp if global_computer_status == 0 else old_0,
-                            # Set time_last_1_received if status is 1
-                            current_timestamp if global_computer_status == 1 else old_1
-                            ))
-
+                    (global_computer_name,
+                        # Set time_last_0_received if status is 0
+                        current_timestamp if global_computer_status == 0 else old_0,
+                        # Set time_last_1_received if status is 1
+                        current_timestamp if global_computer_status == 1 else old_1
+                        ))
                 # Commit the changes to the database
             finally: #everytime.
                 # Close the connection with the client since this is just a ping
