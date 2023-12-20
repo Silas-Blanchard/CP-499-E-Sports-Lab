@@ -26,9 +26,9 @@ cursor.execute("""
                 );
                 """)
 
-cursor.execute("""SELECT * FROM computer_status;""")
-old_1 = cursor.fetchall()
-print(old_1)
+# cursor.execute(f"""SELECT time_last_0_received FROM computer_status WHERE name = 'VarsityLab1';""")
+# old_1 = cursor.fetchall()
+# print(list(old_1))
 # ======================== DATABASE STUFF ========================
 
 
@@ -99,8 +99,10 @@ if __name__ == '__main__':
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
 
-                cursor.execute(f"""SELECT * FROM computer_status WHERE name = '{global_computer_name}';""")
+                cursor.execute(f"""SELECT time_last_0_received FROM computer_status WHERE name = '{global_computer_name}';""")
                 old_1 = cursor.fetchall()
+                cursor.execute(f"""SELECT time_last_1_received FROM computer_status WHERE name = '{global_computer_name}';""")
+                old_0 = cursor.fetchall()
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
                         # Set time_last_0_received if status is 0
