@@ -246,7 +246,7 @@ def generate_header():
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
         </div>
         <h1 class="header-title">CC Esports Lab</h1>
-        <button class="login-button">Login</button>
+        <button class="login-button" onclick="esportscomm.coloradocollege.edu/admin">Login</button>
     </div>
     """
     # Combine the two headers
