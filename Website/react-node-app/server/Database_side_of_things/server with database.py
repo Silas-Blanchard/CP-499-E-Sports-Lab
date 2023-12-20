@@ -95,7 +95,8 @@ if __name__ == '__main__':
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
 
-                old_1 = cursor.execute(f"""SELECT * FROM computer_status WHERE name = '{global_computer_name}'""")
+                cursor.execute(f"""SELECT * FROM computer_status WHERE name = '{global_computer_name}'""")
+                old_1 = cursor.fetchall()
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
                         # Set time_last_0_received if status is 0
