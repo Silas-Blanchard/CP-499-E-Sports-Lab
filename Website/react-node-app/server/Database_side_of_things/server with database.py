@@ -95,15 +95,15 @@ if __name__ == '__main__':
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
 
-		old_1 = cursor.execute(f"SELECT time_last_1_recieved FROM computer_status WHERE name = {global_computer_name}")
-		old_0 = cursor.execute(f"SELECT time_last_0_recieved FROM computer_status WHERE name = {global_computer_name}")
+                old_1 = cursor.execute(f"SELECT time_last_1_recieved FROM computer_status WHERE name = {global_computer_name}")
+                old_0 = cursor.execute(f"SELECT time_last_0_recieved FROM computer_status WHERE name = {global_computer_name}")
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                            (global_computer_name,
-                                # Set time_last_0_received if status is 0
-                                current_timestamp if global_computer_status == 0 else old_0,
-                                # Set time_last_1_received if status is 1
-                                current_timestamp if global_computer_status == 1 else old_1
-                                ))
+                        (global_computer_name,
+                            # Set time_last_0_received if status is 0
+                            current_timestamp if global_computer_status == 0 else old_0,
+                            # Set time_last_1_received if status is 1
+                            current_timestamp if global_computer_status == 1 else old_1
+                            ))
 
                 # Commit the changes to the database
             finally: #everytime.
