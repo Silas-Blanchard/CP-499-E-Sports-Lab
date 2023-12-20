@@ -31,7 +31,7 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
 async function notify(){
   while (true){
-    await sleep(10000)
+    await sleep(5000)
     spawn('python3',['server/six_website.py']);
     const hey = spawn('python3',['server/JSON-maker.py']);
     hey.stdout.on('data', function(data) {
