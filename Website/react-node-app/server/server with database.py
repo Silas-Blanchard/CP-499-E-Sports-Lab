@@ -125,48 +125,20 @@ if __name__ == '__main__':
                     current_timestamp = datetime.now()
 
                     #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_1_received FROM computer_status WHERE name = '{global_computer_name}'
-                    BEGIN  
-	                    UPDATE computer_status
+                    cursor.execute(f"""
+                        UPDATE computer_status
                         SET time_last_1_received = '{current_timestamp}'
-                        WHERE name = '{global_computer_name}'
-                    END                                     
-                    """)
-
-                    current_timestamp = datetime.now()
-                    alt_name = current_timestamp.lower()
-
-                    #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_1_received FROM computer_status WHERE name = '{alt_name}'
-                    BEGIN  
-	                    UPDATE computer_status
-                        SET time_last_1_received = '{current_timestamp}'
-                        WHERE name = '{alt_name}'
-                    END                                     
+                        WHERE name = '{global_computer_name}'                                 
                     """)
                 else:
                     # Get the current timestamp
                     current_timestamp = datetime.now()
 
                     #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{global_computer_name}')
-                    BEGIN  
+                    cursor.execute(f"""
                         UPDATE computer_status
                         SET time_last_0_received = '{current_timestamp}'
-                        WHERE name = '{global_computer_name}'
-                    END                                     
-                    """)
-
-                    current_timestamp = datetime.now()
-                    alt_name = current_timestamp.lower()
-
-                    #some computers have alternate names
-                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{alt_name}')
-                    BEGIN  
-	                    UPDATE computer_status
-                        SET time_last_0_received = '{current_timestamp}'
-                        WHERE name = '{global_computer_name}'
-                    END                                     
+                        WHERE name = '{global_computer_name}'                                 
                     """)
                 # Commit the changes to the database
             finally: #everytime.
