@@ -6,13 +6,13 @@ import sqlite3
 
 #connecting to database using objective path so nothing gets confused
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(BASE_DIR, "computer_database.db")
+db_path = os.path.join(BASE_DIR, "computer_status.db")
 connection = sqlite3.connect(db_path)
 cursor = connection.cursor()
 
 json_path = os.path.join(BASE_DIR, "colors.json")
 
-cursor.execute("SELECT name, time_last_0_received, time_last_1_received FROM test_database")
+cursor.execute("SELECT name, time_last_0_received, time_last_1_received FROM computer_status")
 rows = cursor.fetchall()
 
 dictionary = {}
@@ -25,11 +25,11 @@ for row in rows:
 
 # which color we are using
     if "is not in use" in status:
-        box_color = "green"
+        box_color = "#228C22"
     elif "might be in use" in status:
-        box_color = "yellow"
+        box_color = "#D09B2C"
     elif "is in use" in status:
-        box_color = "red"
+        box_color = "#801B1B"
 
     dictionary[computer_name] = box_color
 

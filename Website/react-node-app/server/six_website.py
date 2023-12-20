@@ -246,9 +246,10 @@ def generate_header():
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
         </div>
         <h1 class="header-title">CC Esports Lab</h1>
-        <form action="https://google.com">
-            <input type="submit" value="Go to Google" />
+        <form action="esportscomm.coloradocollege.edu/admin">
+            <input type="submit" value="Login" />
         </form>
+        <br>
     </div>
     """
     # Combine the two headers
@@ -339,11 +340,11 @@ def generate_computer_svg(row, computer, identifier):
     status, _ = computer_status_update(computer_name, time_last_0_received, time_last_1_received)
 
     # Determine the box color based on status
-    box_color = "red"  # default to red
+    box_color = "#801B1B"  # default to red
     if "is not in use" in status:
-        box_color = "dark green"
+        box_color = "#228C22"
     elif "might be in use" in status:
-        box_color = "yellow"
+        box_color = "#D09B2C"
 
     # Extract position and size from the CSV
     x, y = int(computer[1]), int(computer[2])
@@ -371,10 +372,11 @@ def generate_computers_list_svg(database_rows, computers_csv, svg_width):
 
         if matching_row:
             status, _ = computer_status_update(matching_row[0], matching_row[1], matching_row[2])
+            computer_name_csv_text = computer_name_csv + "_text"
 
             # Update the status message presentation here
             list_content += f"""
-            <text x="{list_x}" y="{list_y_start + index * line_height}" fill="black">
+            <text id="{computer_name_csv_text}" x="{list_x}" y="{list_y_start + index * line_height}" fill="black">
                 {computer_name_csv}: {('In Use' if 'is in use' in status else 'Free')}
             </text>
             """
@@ -419,6 +421,19 @@ def write_html_file(HTML_path, HTML_text):
         for (var computer in dataJSON) {
           let svg = document.getElementById(computer);
           svg.style.fill = dataJSON[computer];
+          
+          let text_name = computer
+          let text_id = text_name.concat("_text")//simply the name of the text bits we have
+          if(dataJSON[computer] == "#801B1B"){
+            let computer_stat = computer.concat(": In Use");
+            document.getElementById(text_id).innerHTML = computer_stat
+          }else if(dataJSON[computer] == "#D09B2C"){
+            let computer_stat = computer.concat(": Likely In Use");
+            document.getElementById(text_id).innerHTML = computer_stat
+          }else{
+            let computer_stat = computer.concat(": Free");
+            document.getElementById(text_id).innerHTML = computer_stat
+          }
         }
       });
       // Get the modal
@@ -447,6 +462,7 @@ def write_html_file(HTML_path, HTML_text):
     """
     with open(HTML_path, "w") as file:
         file.write(HTML_text)
+        file.close()
 
 
 # Main execution block
