@@ -419,8 +419,7 @@ def write_html_file(HTML_path, HTML_text):
           svg.style.fill = dataJSON[computer];
         }
       });
-    </script></body></html>
-    """
+      """
 
     # Add JavaScript for the modal
     HTML_text += """
