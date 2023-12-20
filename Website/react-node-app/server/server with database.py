@@ -103,12 +103,13 @@ if __name__ == '__main__':
                 old_1 = cursor.fetchall()
                 cursor.execute(f"""SELECT time_last_1_received FROM computer_status WHERE name = '{global_computer_name}';""")
                 old_0 = cursor.fetchall()
+                print(global_computer_name)
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
                         # Set time_last_0_received if status is 0
-                        current_timestamp if global_computer_status == 0 else list(old_0),
+                        current_timestamp if global_computer_status == 0 else old_0[0],
                         # Set time_last_1_received if status is 1
-                        current_timestamp if global_computer_status == 1 else list(old_1)
+                        current_timestamp if global_computer_status == 1 else old_1[0]
                         ))
                 # Commit the changes to the database
             finally: #everytime.
