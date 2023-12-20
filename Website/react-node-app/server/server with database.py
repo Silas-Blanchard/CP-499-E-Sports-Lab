@@ -104,9 +104,6 @@ if __name__ == '__main__':
                 # Print to make sure we split correctly
                 print("Computer Name:", global_computer_name)
                 print("Computer Status:", global_computer_status)
-
-                # Get the current timestamp
-                current_timestamp = datetime.now()
             except socket.error:
                 print("Connection Error")
             else: #run this stuff only if it works
@@ -116,14 +113,61 @@ if __name__ == '__main__':
 
                 # Inside the loop where you process each computer status
                 # Insert data into the computer_status table
-                cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                            (global_computer_name,
-                                # Set time_last_0_received if status is 0
-                                current_timestamp if global_computer_status == 0 else None,
-                                # Set time_last_1_received if status is 1
-                                current_timestamp if global_computer_status == 1 else None
-                                ))
+                # cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
+                #             (global_computer_name,
+                #                 # Set time_last_0_received if status is 0
+                #                 current_timestamp if global_computer_status == 0 else None,
+                #                 # Set time_last_1_received if status is 1
+                #                 current_timestamp if global_computer_status == 1 else None
+                #                 ))
+                if(global_computer_status): #that is, if it is a "1" which means idle
+                    # Get the current timestamp
+                    current_timestamp = datetime.now()
 
+                    #some computers have alternate names
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_1_received FROM computer_status WHERE name = '{global_computer_name}'
+                    BEGIN  
+	                    UPDATE computer_status
+                        SET time_last_1_received = '{current_timestamp}'
+                        WHERE name = '{global_computer_name}'
+                    END                                     
+                    """)
+
+                    current_timestamp = datetime.now()
+                    alt_name = current_timestamp.lower()
+
+                    #some computers have alternate names
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_1_received FROM computer_status WHERE name = '{alt_name}'
+                    BEGIN  
+	                    UPDATE computer_status
+                        SET time_last_1_received = '{current_timestamp}'
+                        WHERE name = '{alt_name}'
+                    END                                     
+                    """)
+                else:
+                    # Get the current timestamp
+                    current_timestamp = datetime.now()
+
+                    #some computers have alternate names
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{global_computer_name}'
+                    BEGIN  
+	                    UPDATE computer_status
+                        SET time_last_0_received = '{current_timestamp}'
+                        WHERE name = '{global_computer_name}'
+                    END                                     
+                    """)
+
+                    current_timestamp = datetime.now()
+                    alt_name = current_timestamp.lower()
+
+                    #some computers have alternate names
+                    cursor.execute(f"""IF EXISTS (SELECT time_last_0_received FROM computer_status WHERE name = '{alt_name}'
+                    BEGIN  
+	                    UPDATE computer_status
+                        SET time_last_0_received = '{current_timestamp}'
+                        WHERE name = '{global_computer_name}'
+                    END                                     
+                    """)
                 # Commit the changes to the database
             finally: #everytime.
                 # Close the connection with the client since this is just a ping
