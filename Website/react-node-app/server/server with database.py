@@ -106,9 +106,9 @@ if __name__ == '__main__':
                 cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
                     (global_computer_name,
                         # Set time_last_0_received if status is 0
-                        current_timestamp if global_computer_status == 0 else list(old_1)[1],
+                        current_timestamp if global_computer_status == 0 else list(old_0),
                         # Set time_last_1_received if status is 1
-                        current_timestamp if global_computer_status == 1 else list(old_1)[2]
+                        current_timestamp if global_computer_status == 1 else list(old_1)
                         ))
                 # Commit the changes to the database
             finally: #everytime.
