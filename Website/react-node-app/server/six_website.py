@@ -419,11 +419,6 @@ def write_html_file(HTML_path, HTML_text):
           svg.style.fill = dataJSON[computer];
         }
       });
-      """
-
-    # Add JavaScript for the modal
-    HTML_text += """
-    <script>
       // Get the modal
       var modal = document.getElementById('welcomePopupModal');
 
