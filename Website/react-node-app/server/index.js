@@ -1,21 +1,18 @@
 //the innumerable imports
-import express from 'express';
-import {spawn} from 'child_process';
-import { Server } from "socket.io";
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const express = require('express');
+const http = require('http');
+const { spawn } = require('node:child_process');
+const app = express();
+const server = http.createServer(app);
+const { Server } = require("socket.io")
+const {join} = require('path')
 
 const childPython = spawn('python3',['server/six_website.py']);
 const childPythonJSON = spawn('python3',['server/JSON-maker.py']);
 
 const PORT = process.env.PORT || 3001;
 
-const app = express();
-
-var server  = app.listen(3000);
+//var server  = app.listen(3001);
 const io = new Server(server);
 
 //sleep function that only works in async functions!
@@ -40,7 +37,7 @@ async function notify(){
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string
       var str = text.replace(/'/g, '\"');
-//      console.log(str)
+      //console.log(str)
       io.emit('update', str);
   });
   }
@@ -79,9 +76,9 @@ io.on('connection', (socket) => {
 });
 
   
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
-  });
+});
 
 childPython.on('close',(code) => {
   console.log(`child process exited with code ${code}`);
