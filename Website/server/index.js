@@ -7,8 +7,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io")
 const {join} = require('path')
 
-const childPython = spawn('python3',['server/six_website.py']);
-const childPythonJSON = spawn('python3',['server/JSON-maker.py']);
+const childPython = spawn('python3',['server/content_gen/six_website.py']);
+const childPythonJSON = spawn('python3',['server/content_gen/JSON-maker.py']);
 
 const PORT = process.env.PORT || 3001;
 
@@ -32,8 +32,8 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 async function notify(){
   while (true){
     await sleep(5000)
-    spawn('python3',['server/six_website.py']);
-    const hey = spawn('python3',['server/JSON-maker.py']);
+    spawn('python3',['server/content_gen/six_website.py']);
+    const hey = spawn('python3',['server/content_gen/JSON-maker.py']);
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string
       var str = text.replace(/'/g, '\"');
@@ -56,11 +56,11 @@ childPython.stderr.on('data', (data) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'webber.html'));
+  res.sendFile(join(__dirname, '/html_and_layout_data/webber.html'));
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile(join(__dirname, 'admin_page.html'));
+  res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
 });
 
 // app.get('/admin', cas.block, (req, res) => {
