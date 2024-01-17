@@ -118,7 +118,7 @@ def generate_styles():
     .computer-text {
         /* Styles for text inside the rectangles */
         font-size: 14px; /* Adjust to fit inside the rectangles */
-        dominant-baseline: middle;
+        /* alignment-baseline: middle; */
         text-anchor: middle;
         pointer-events: none; /* Ensures the text doesn't interfere with rectangle clicks */
     }
@@ -165,6 +165,7 @@ def generate_styles():
         font-size: 16px;
         cursor: pointer;
         border-radius: 5px;
+        color: #333333;
     }
 
     .events-container {
@@ -246,7 +247,7 @@ def generate_header():
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
         </div>
         <h1 class="header-title">CC Esports Lab</h1>
-        <br>
+        <a href="admin" class="login-button">Login</a>
     </div>
     """
     # Combine the two headers

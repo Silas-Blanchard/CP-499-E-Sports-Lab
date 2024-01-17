@@ -14,8 +14,16 @@ color:black;
 margin-left: 40px;
 }
 
+.warning {
+    background-color: #D09B2C;
+    padding: 10px;
+    border-left: 5px solid red;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
 .header {
-    padding: 10px 5px; /* First value is for top and bottom, second is for left and right */
+    padding: 10px 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,21 +38,21 @@ margin-left: 40px;
 }
 
 .logo-container {
-    padding-left: 20px; /* Adjust as needed */
+    padding-left: 20px;
 }
 
 .logo {
-    height: 80px; /* Adjust the size as needed */
+    height: 80px;
 }
 
 .header-title {
     flex-grow: 1;
     text-align: center;
-    margin: 0; /* This ensures the title is truly centered */
+    margin: 0;
 }
 
 .login-button {
-    margin-right: 20px; /* Adjust as needed */
+    margin-right: 20px;
     background: #f2f2f2;
     border: none;
     padding: 10px 20px;
@@ -55,6 +63,15 @@ margin-left: 40px;
     cursor: pointer;
     border-radius: 5px;
 }
+
+.example-text {
+  color: #555; /* Darker text for examples */
+  background-color: #f8f8f8; /* Light background for the example area */
+  padding: 10px;
+  border-left: 4px solid #999; /* A left border to highlight it's an example */
+  font-family: monospace; /* Monospaced font for code-like examples */
+  margin-bottom: 10px;
+}
 </style>
 
 </head>
@@ -63,24 +80,34 @@ margin-left: 40px;
             <div class="logo-container">
                 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
             </div>
-            <h1 class="header-title">CC Esports Admin Page (Non-Functional)</h1>
+            <h1 class="header-title">CC Esports Admin Page</h1>
         </div>
-        <h1>ADMINS ONLY</h1>
-        <h2>Changing these files will change the arrangement of elements in the lab!</h2><br>
-        <font size="3">Computer Arrangement Syntax: Computer Name, X Position, Y Position, Rotation (Enter TRUE or FALSE or it will break)</font><br>
-        <font size="3">Computer Arrangement Syntax: Wall Name, Starting X, Starting Y, Rotation (Enter TRUE or FALSE or it will break)</font><br>
-        <font size="3">Computer Arrangement Syntax: Decor Name, Starting X, Starting Y, Width, Height</font><br>
+        <div class="warning">
+            <h2>ADMINS ONLY</h2>
+            <p>Changing these files will change the arrangement of the computers, walls, and decortations in the lab!</p>
+            <ul>
+                <li>Computer Arrangement Syntax: Computer Name, X Position, Y Position</li>
+                <li>Wall Arrangement Syntax: Wall Name, Starting X, Starting Y, Length, Rotation (Enter TRUE or FALSE or it will break)</li>
+                <li>Decor Arrangement Syntax: Decor Name, Starting X, Starting Y, Width, Height</li>
+                <li>(0,0) meaning X = 0 and Y = 0 is the top left of the screen</li>
+            </ul>
+        </div>
 
         <form>
             <label for="comparr">Computer Arrangement CSV:</label><br>
-            <textarea class="longInput" cols="30" rows="10" id="comparr"></textarea><br>
+            <p class="example-text">Example: VarsityLab1, 10, 200</p>
+            <textarea class="textbox" id="comparr"></textarea>
+            <br>
             <label for="wallarr">Wall Arrangement CSV:</label><br>
-            <textarea class="longInput" cols="30" rows="10" id="wallarr"></textarea><br>
+            <p class="example-text">Example: NorthWall, 0, 0, 700, TRUE (FALSE makes the wall go horizantal TRUE makes it vertical)</p>
+            <textarea class="textbox" id="wallarr"></textarea>
+            <br>
             <label for="decarr">Decor Arrangement CSV:</label><br>
-            <textarea class="longInput" cols="30" rows="10" id="decarr"></textarea>
-        </form>
+            <p class="example-text">Example: "Switch, 50, 75, 20, 30"</p>
+            <textarea class="textbox" id="decarr"></textarea>
+          </form>
         <button type="button">Save</button>
         <button type="button">Restore Defaults</button>
         <button type="button">Import Schedule (ICS File)</button>
     </body>
-</html> 
+</html>
