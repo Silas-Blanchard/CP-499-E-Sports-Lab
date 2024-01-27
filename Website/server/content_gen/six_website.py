@@ -30,7 +30,7 @@ def do_GET():
 
 def get_file_paths(BASE_DIR):
     return (
-        os.path.join(BASE_DIR, "..\\html_and_layout_data\\computer_status.db"),
+        os.path.join(BASE_DIR, "..\\html_and_layout_data" , "computer_status.db"),
         os.path.join(BASE_DIR, "..\\html_and_layout_data", "Book1.csv"),
         os.path.join(BASE_DIR, "..\\html_and_layout_data", "Walls.csv"),
         os.path.join(BASE_DIR, "..\\html_and_layout_data", "webber.html"),
