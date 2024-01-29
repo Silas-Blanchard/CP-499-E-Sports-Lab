@@ -6,7 +6,7 @@ import os
 
 # Connect to the local database
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-connect_path = os.path.join(BASE_DIR, "..\\html_and_layout_data" , "computer_status.db")
+connect_path = os.path.join(BASE_DIR, "../html_and_layout_data" , "computer_status.db")
 connection = sqlite3.connect(connect_path)
 
 # Create cursor object to execute SQLite processes

@@ -63,7 +63,7 @@ def computer_status_update(computer_name, time_last_0_received_str, time_last_1_
 # Main script
 # if __name__ == "__main__":
 #     # Connecting to the SQLite database
-#     connection = sqlite3.connect("..\\html_and_layout_data\\computer_status.db")
+#     connection = sqlite3.connect("../html_and_layout_data/computer_status.db")
 #     cursor = connection.cursor()
 
 #     # Fetching specific columns from the database

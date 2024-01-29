@@ -8,7 +8,7 @@ from ics import Calendar
 
 def do_GET():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    #print(os.listdir(os.path.join(BASE_DIR, "..\\html_and_layout_data" )))
+    #print(os.listdir(os.path.join(BASE_DIR, "../html_and_layout_data" )))
     db_path, rect_csv_path, wall_csv_path, HTML_path = get_file_paths(BASE_DIR)
 
     # Database operations
@@ -30,10 +30,10 @@ def do_GET():
 
 def get_file_paths(BASE_DIR):
     return (
-        os.path.join(BASE_DIR, "..\\html_and_layout_data" , "computer_status.db"),
-        os.path.join(BASE_DIR, "..\\html_and_layout_data", "Book1.csv"),
-        os.path.join(BASE_DIR, "..\\html_and_layout_data", "Walls.csv"),
-        os.path.join(BASE_DIR, "..\\html_and_layout_data", "webber.html"),
+        os.path.join(BASE_DIR, "../html_and_layout_data" , "computer_status.db"),
+        os.path.join(BASE_DIR, "../html_and_layout_data", "Book1.csv"),
+        os.path.join(BASE_DIR, "../html_and_layout_data", "Walls.csv"),
+        os.path.join(BASE_DIR, "../html_and_layout_data", "webber.html"),
     )
 
 
