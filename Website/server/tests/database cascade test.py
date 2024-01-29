@@ -6,7 +6,7 @@ import os
 
 # Connect to the local database
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-connect_path = os.path.join(BASE_DIR, "../html_and_layout_data" , "computer_status.db")
+connect_path = os.path.join(BASE_DIR, ".." ,"html_and_layout_data" , "computer_status.db")
 connection = sqlite3.connect(connect_path)
 
 # Create cursor object to execute SQLite processes
@@ -21,11 +21,9 @@ cursor = connection.cursor()
 #                 )
 #                 """)
 
-#take every computer and make it red, yellow, and  back to green in order
-#comps = list(cursor.execute('SELECT name FROM test_database' ))
-cursor.execute("""SELECT name FROM computer_status""")
+#Takes every computer and updates its color for the sake of testing
+cursor.execute("SELECT name FROM computer_status")
 comps = cursor.fetchall()
-cursor.execute("SELECT * FROM computer_status WHERE name = 'InUseComputer'")
 print(cursor.fetchall())
 for row in comps:
     now = datetime.now()
@@ -41,7 +39,7 @@ for row in comps:
 connection.commit()
 cursor.execute("SELECT * FROM computer_status WHERE name = 'InUseComputer'")
 print(cursor.fetchall())
-time.sleep(10)
+time.sleep(1)
     
 for row in comps:
     now = datetime.now()

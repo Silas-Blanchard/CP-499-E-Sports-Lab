@@ -8,7 +8,7 @@ global_computer_status = 0
 # ======================== DATABASE STUFF ========================
 # connect to the local database
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-data_path = os.path.join(BASE_DIR, "..\\html_and_layout_data" , "computer_status.db")
+data_path = os.path.join(BASE_DIR, ".." , "html_and_layout_data" , "computer_status.db")
 
 connection = sql.connect(data_path)
 
@@ -28,7 +28,7 @@ cursor.execute("""
                 )
                 """)
 
-connection = sql.connect("computer_status.db")
+connection = sql.connect(data_path)
 cursor = connection.cursor()
 
 for i in range(1,13):
