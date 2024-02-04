@@ -1,0 +1,87 @@
+
+> react-node-app@1.0.0 start
+> node server/index.js
+
+node:events:491
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Object.<anonymous> (/home/s_blanchard/CP-499-E-Sports-Lab/Website/server/index.js:78:8)
+    at Module._compile (node:internal/modules/cjs/loader:1198:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1252:10)
+    at Module.load (node:internal/modules/cjuser disconnected
+a user connected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+user disconnected
+a user connected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+user disconnected
+a user connected
+a user connected
+user disconnected

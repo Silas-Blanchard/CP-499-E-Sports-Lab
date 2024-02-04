@@ -1,7 +1,7 @@
 # first of all import the socket library
 import socket
 import sqlite3 as sql
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 # variables we need outside the loop
@@ -120,16 +120,31 @@ if __name__ == '__main__':
                 #                 # Set time_last_1_received if status is 1
                 #                 current_timestamp if global_computer_status == 1 else None
                 #                 ))
-                if(global_computer_status): #that is, if it is a "1" which means idle
-                    # Get the current timestamp
-                    current_timestamp = datetime.now()
+                if(global_computer_status): #that is, if it is not a zero which is the default normal ping
+                    #a bit of an explanation: 2 means the computer is informing us that it's starting
+		    #That means we will reset the idle counter since someone just turned it on (:
+		    if(global_computer_status == 2:
+			idle_timestamp = datetime.now() - timedelta(minutes=45)
+			current_timestamp = datetime.now()
+		    	cursor.execute(f"""
+                                UPDATE computer_status
 
-                    #some computers have alternate names
-                    cursor.execute(f"""
-                        UPDATE computer_status
-                        SET time_last_1_received = '{current_timestamp}'
-                        WHERE name = '{global_computer_name}'                                 
-                    """)
+                                SET time_last_0_received = '{current_timestamp}'
+
+                                SET time_last_1_received = '{idle_timestamp}'
+                                WHERE name = '{global_computer_name}'
+                        """)
+
+		    else:
+		    # Get the current timestamp
+                    	current_timestamp = datetime.now()
+
+                    	#some computers have alternate names
+                    	cursor.execute(f"""
+                        	UPDATE computer_status
+                        	SET time_last_1_received = '{current_timestamp}'
+                        	WHERE name = '{global_computer_name}'                                 
+                    	""")
                 else:
                     # Get the current timestamp
                     current_timestamp = datetime.now()
