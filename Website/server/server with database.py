@@ -55,6 +55,8 @@ def find_computer_status(name, status):
         result_status = name + ' is in use'
     elif status == 1:
         result_status = name + ' might be in use'
+    elif status == 2:
+         result_status = name + ' turned on'
     else:
         raise Exception("Invalid computer status")
 
@@ -120,30 +122,24 @@ if __name__ == '__main__':
                 #                 # Set time_last_1_received if status is 1
                 #                 current_timestamp if global_computer_status == 1 else None
                 #                 ))
-                if(global_computer_status): #that is, if it is not a zero which is the default normal ping
-                    #a bit of an explanation: 2 means the computer is informing us that it's starting
-		            #That means we will reset the idle counter since someone just turned it on (:
-                    if(global_computer_status == 2):
-                        idle_timestamp = datetime.now() - timedelta(minutes=45)
-                        current_timestamp = datetime.now()
-                        cursor.execute(f"""
-                            UPDATE computer_status
+                if(global_computer_status == 2):
+                    idle_timestamp = datetime.now() - timedelta(minutes=45)
+                    current_timestamp = datetime.now()
+                    cursor.execute(f"""
+                        UPDATE computer_status
+                        SET time_last_0_received = '{current_timestamp}', time_last_1_received = '{idle_timestamp}'
+                        WHERE name = '{global_computer_name}'
+                    """)
+                elif(global_computer_status == 1):
+                # Get the current timestamp
+                            current_timestamp = datetime.now()
 
-                            SET time_last_0_received = '{current_timestamp}'
-
-                            SET time_last_1_received = '{idle_timestamp}'
-                            WHERE name = '{global_computer_name}'
-                        """)
-                    else:
-                    # Get the current timestamp
-                                current_timestamp = datetime.now()
-
-                                #some computers have alternate names
-                                cursor.execute(f"""
-                                    UPDATE computer_status
-                                    SET time_last_1_received = '{current_timestamp}'
-                                    WHERE name = '{global_computer_name}'                                 
-                                """)
+                            #some computers have alternate names
+                            cursor.execute(f"""
+                                UPDATE computer_status
+                                SET time_last_1_received = '{current_timestamp}'
+                                WHERE name = '{global_computer_name}'                                 
+                            """)
                 else:
                     # Get the current timestamp
                     current_timestamp = datetime.now()
