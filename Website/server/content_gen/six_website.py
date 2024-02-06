@@ -3,8 +3,6 @@ import csv
 import os
 from ComputerStatusUpdater import computer_status_update
 from datetime import datetime, timedelta
-import requests
-from ics import Calendar
 
 def do_GET():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,12 +15,8 @@ def do_GET():
     # Read CSV files
     computers, walls = read_csv_files(rect_csv_path, wall_csv_path)
 
-    # Fetch calendar events using the actual iCalendar URL
-    calendar_url = "https://calendar.google.com/calendar/ical/ccesportslab1%40gmail.com/public/basic.ics"
-    events_today, events_tomorrow = fetch_calendar_events(calendar_url)
-
     # Generate HTML content with calendar events
-    HTML_text = generate_html_content(rows, computers, walls, events_today, events_tomorrow)
+    HTML_text = generate_html_content(rows, computers, walls)
 
     # Write HTML to file
     write_html_file(HTML_path, HTML_text)
@@ -58,14 +52,18 @@ def read_csv_files(rect_csv_path, wall_csv_path):
     return computers, walls
 
 
-def generate_html_content(rows, computers, walls, events_today, events_tomorrow):
+def generate_html_content(rows, computers, walls):
     # Start HTML content generation (including styles and headers)
     HTML_text = "<html><head><title>Esports Lab</title></head><body>"
     HTML_text += generate_styles()
     HTML_text += generate_header()
     
-    # Add the events section here
-    HTML_text += generate_events_section(events_today, events_tomorrow)
+    # Add the responsive iframe container
+    HTML_text += """
+    <div class="iframe-container">
+        <iframe class="responsive-iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&showTitle=0&showCalendars=0&src=Y2Nlc3BvcnRzQGNvbG9yYWRvY29sbGVnZS5lZHU&color=%23D81B60" frameborder="0" scrolling="no"></iframe>
+    </div>
+    """
     
     # Continue with the SVG content
     HTML_text += "<svg viewBox='0 0 1000 1000'>"
@@ -234,6 +232,24 @@ def generate_styles():
         color: #000; /* Change color on hover/focus for better visibility */
         text-decoration: none;
     }
+
+    .iframe-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%; /* full width */
+        padding-top: 56.25%; /* aspect ratio */
+    }
+
+    .responsive-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
     </style>
     """
     return styles
@@ -252,60 +268,6 @@ def generate_header():
     """
     # Combine the two headers
     return header
-
-
-def is_event_today(event, today):
-    return event.begin.date() == today
-
-
-def is_event_tomorrow(event, tomorrow):
-    return event.begin.date() == tomorrow
-
-
-def fetch_calendar_events(url):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
-        cal = Calendar(response.text)
-    except requests.RequestException as e:
-        print(f"Error fetching calendar data: {e}")
-        return [], []  # Return empty lists in case of an error
-
-    # Get today's and tomorrow's dates
-    today = datetime.now().date()
-    tomorrow = today + timedelta(days=1)
-
-    # Filter events for today and tomorrow
-    events_today = [event for event in cal.events if is_event_today(event, today)]
-    events_tomorrow = [event for event in cal.events if is_event_tomorrow(event, tomorrow)]
-
-    return events_today, events_tomorrow
-
-
-def generate_events_section(events_today, events_tomorrow):
-    # This section will create two columns for events: one for today and one for tomorrow
-    events_html = """
-    <div class='events-container'>
-        <div class='events-column'>
-            <h2>Today's Events</h2>
-            <ul id='events-list-today'>
-    """
-    if events_today:
-        for event in events_today:
-            events_html += f"<li>{event.name} at {event.begin.format('HH:mm')}</li>"
-    else:
-        events_html += "<li>No events scheduled for today.</li>"
-    events_html += "</ul></div><div class='events-column'><h2>Tomorrow's Events</h2><ul id='events-list-tomorrow'>"
-    
-    if events_tomorrow:
-        for event in events_tomorrow:
-            events_html += f"<li>{event.name} at {event.begin.format('HH:mm')}</li>"
-    else:
-        events_html += "<li>No events scheduled for tomorrow.</li>"
-    events_html += "</ul></div></div>"
-
-    return events_html
-
 
 def get_identifier(computer_name):
     if 'VarsityLab' in computer_name:
