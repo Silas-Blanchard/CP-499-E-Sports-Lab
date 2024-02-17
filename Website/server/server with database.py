@@ -122,6 +122,11 @@ if __name__ == '__main__':
                 #                 # Set time_last_1_received if status is 1
                 #                 current_timestamp if global_computer_status == 1 else None
                 #                 ))
+
+                #time_last_0_received just means time since computer pinged that it was active.
+                #time_last_0_received just means time since computer pinged that it was idle
+                #there is no time_last_2_received because it is a combination of these two (resets idle to 45 minutes ago to 
+                #simulate the computer moving to "in use" status instead of just might be in use forever)
                 if(global_computer_status == 2):
                     idle_timestamp = datetime.now() - timedelta(minutes=45)
                     current_timestamp = datetime.now()

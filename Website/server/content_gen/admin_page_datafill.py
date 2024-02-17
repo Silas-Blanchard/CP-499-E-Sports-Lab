@@ -1,57 +1,98 @@
-<!DOCTYPE html>
+import os
+import csv
+import sys
+
+def get_paths(BASE_DIR):
+    return(
+        os.path.join(BASE_DIR, "..","html_and_layout_data","Book1.csv"),
+        os.path.join(BASE_DIR, "..","html_and_layout_data","Walls.csv"),
+        os.path.join(BASE_DIR, "..","html_and_layout_data","Decor.csv"),
+        os.path.join(BASE_DIR, "..","html_and_layout_data","Manual Booking.csv"),
+        os.path.join(BASE_DIR, "..","html_and_layout_data","admin_page.html")
+    )
+
+def update_HTML():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    computer_layout, wall_layout, decor_layout, bookings, admin_html_path = get_paths(BASE_DIR)
+
+    computer_reader = csv.reader(open(computer_layout), delimiter=",")
+    wall_reader = csv.reader(open(wall_layout), delimiter=",")
+    decor_reader = csv.reader(open(decor_layout), delimiter=",")
+    book_reader = csv.reader(open(bookings), delimiter=",")
+
+    computers = walls = decor = books = ""
+
+    #this takes all the data and makes it into a tab delineated list that the HTML page will handle
+    for row in computer_reader:
+        computers+=str(row)
+        computers+="\n"
+
+    for row in wall_reader:
+        walls+=str(row)
+        walls+="\n"
+
+    for row in decor_reader:
+        decor+=str(row) 
+        decor+= "\n"
+
+    for row in book_reader:
+        books+=str(row)
+        books+="\n"
+
+    json_content =f"""<!DOCTYPE html>
     <html lang="en">
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Computer Availability</title>
     <style type="text/css">
 
-    body{
+    body{{
     background-color:linen;
-    }
+    }}
 
-    h1{
+    h1{{
     color:black;
     margin-left: 40px;
-    }
+    }}
 
-    .warning {
+    .warning {{
         background-color: #D09B2C;
         padding: 10px;
         border-left: 5px solid red;
         margin: 20px 0;
         font-weight: bold;
-    }
+    }}
 
-    .header {
+    .header {{
         padding: 10px 5px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: #D09B2C;
         color: white;
-    }
+    }}
 
-    .textbox{
+    .textbox{{
         height:200px;
         width:400px;
         font-size:14pt;
-    }
+    }}
 
-    .logo-container {
+    .logo-container {{
         padding-left: 20px;
-    }
+    }}
 
-    .logo {
+    .logo {{
         height: 80px;
-    }
+    }}
 
-    .header-title {
+    .header-title {{
         flex-grow: 1;
         text-align: center;
         margin: 0;
-    }
+    }}
 
-    .login-button {
+    .login-button {{
         margin-right: 20px;
         background: #f2f2f2;
         border: none;
@@ -62,20 +103,20 @@
         font-size: 16px;
         cursor: pointer;
         border-radius: 5px;
-    }
+    }}
 
-    .example-text {
+    .example-text {{
     color: #555; /* Darker text for examples */
     background-color: #f8f8f8; /* Light background for the example area */
     padding: 10px;
     border-left: 4px solid #999; /* A left border to highlight it's an example */
     font-family: monospace; /* Monospaced font for code-like examples */
     margin-bottom: 10px;
-    }
+    }}
 
-    .textarea{
+    .textarea{{
         width: 1000px
-    }
+    }}
     </style>
 
     </head>
@@ -100,60 +141,35 @@
             <form>
                 <label for="comparr">Computer Arrangement CSV:</label><br>
                 <p class="example-text">Example: VarsityLab1, 10, 200</p>
-                <textarea class="textbox textarea" id="comparr">['Name', 'X', 'Y']
-['VarsityLab1', '10', '200']
-['VarsityLab2', '10', '150']
-['VarsityLab3', '10', '100']
-['VarsityLab4', '60', '10']
-['VarsityLab5', '110', '10']
-['VarsityLab6', '160', '10']
-['VarsityLab7', '210', '50']
-['VarsityLab8', '210', '100']
-['VarsityLab9', '210', '150']
-['VarsityLab10', '210', '200']
-['VarsityLab11', '310', '150']
-['VarsityLab12', '310', '200']
-['EventSpace1', '375', '150']
-['EventSpace2', '375', '200']
-['EventSpace3', '460', '300']
-['EventSpace4', '510', '300']
-['EventSpace5', '560', '300']
-['EventSpace6', '610', '300']
-</textarea>
+                <textarea class="textbox textarea" id="comparr">{computers}</textarea>
                 <br>
                 <button onclick="saveComputers()">Save</button>
                 <button onclick="restoreComputers()">Restore Default</button> 
                 <br>
                 <label for="wallarr">Wall Arrangement CSV:</label><br>
                 <p class="example-text">Example: NorthWall, 0, 0, 700, TRUE (FALSE makes the wall go horizantal TRUE makes it vertical)</p>
-                <textarea class="textbox textarea" id="wallarr">['Walls', 'X', 'Y', 'Length', 'Rotate']
-['0', '350', '0', '240', 'FALSE']
-['1', '350', '310', '40', 'FALSE']
-['2', '0', '350', '700', 'TRUE']
-['3', '700', '0', '355', 'FALSE']
-['4', '0', '0', '355', 'FALSE']
-['5', '0', '0', '700', 'TRUE']
-</textarea>
+                <textarea class="textbox textarea" id="wallarr">{walls}</textarea>
                 <br>
                 <button onclick="saveWalls()">Save</button>
                 <button onclick="restoreWalls()">Restore Default</button> 
                 <br>
                 <label for="decarr">Decor Arrangement CSV:</label><br>
                 <p class="example-text">Example: "Switch, 50, 75, 20, 30"</p>
-                <textarea class="textbox textarea" id="decarr"></textarea>
+                <textarea class="textbox textarea" id="decarr">{decor}</textarea>
                 <br>
                 <button onclick="saveDecor()">Save</button>
                 <button onclick="restoreBooking()">Restore Default</button>
                 <br>
                 <label for="bookarr">Availability CSV:</label><br>
                 <p class="example-text">Example: "Close Time, Close Date, Open Time, Open Date"</p>
-                <textarea class="textbox textarea" id="decarr"></textarea>
+                <textarea class="textbox textarea" id="decarr">{books}</textarea>
                 <br>
-                <button onclick="saveBoooking()">Save</button>
+                <button onclick="saveBooking()">Save</button>
                 <button onclick="restoreBooking()">Restore Default</button> 
             </form>
         </body>
-        
+        """
+    json_content += """
         <script src="/socket.io/socket.io.js"></script>
             <script>
                 const socket = io();
@@ -186,4 +202,27 @@
                     alert('Availability Restored')
                 }
             </script>
-        </html>
+        </html>"""
+
+    with open(admin_html_path, "w") as file:
+        file.write(json_content)
+        file.close()
+
+#Takes a string input and processes it to update files
+def update_files(files):
+    separate_files = files.split(";")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    computer_layout_path, wall_layout, decor_layout, bookings, admin_html_path = get_paths(BASE_DIR)
+
+    with open(computer_layout_path, "w") as file:
+        file.write(separate_files[0])
+        file.close()
+
+def restore_original():
+    pass
+
+if __name__ == "__main__":
+    if(len(sys.argv) < 2):
+        update_HTML()
+    elif(sys.argv[1] == "1"):
+        update_files(sys.argv[2])

@@ -29,6 +29,7 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
 //app.use(cas.bounce)
 
+//We will forever update our clients forever (or until they inevitably disconnect)
 async function notify(){
   while (true){
     await sleep(5000)
@@ -36,17 +37,15 @@ async function notify(){
     const hey = spawn('python3',['server/content_gen/JSON-maker.py']);
     hey.stdout.on('data', function(data) {
       var text = data.toString('utf8');// buffer to string
-      var str = text.replace(/'/g, '\"');
+      var str = text.replace(/'/g, '\"');//it does not like ' quotation marks it likes "
       io.emit('update', str);
   });
   }
 }
 
-//one line of code and we will forever update our clients forever (or until they inevitably disconnect)
 notify()
 
 //when our JSON maker goes off, we will have this print out the data. 
-//HTML doesn't do that since we just serve the file once initially.
 childPythonJSON.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
@@ -72,9 +71,11 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+  socket.on("update_files", (received_file) => {
+    const hey = spawn('python3',['server/content_gen/JSON-maker.py','1']);
+  })
 });
 
-  
 server.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
