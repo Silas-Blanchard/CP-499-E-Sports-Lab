@@ -100,45 +100,19 @@
             <form>
                 <label for="comparr">Computer Arrangement CSV:</label><br>
                 <p class="example-text">Example: VarsityLab1, 10, 200</p>
-                <textarea class="textbox textarea" id="comparr">['Name', 'X', 'Y']
-['VarsityLab1', '10', '200']
-['VarsityLab2', '10', '150']
-['VarsityLab3', '10', '100']
-['VarsityLab4', '60', '10']
-['VarsityLab5', '110', '10']
-['VarsityLab6', '160', '10']
-['VarsityLab7', '210', '50']
-['VarsityLab8', '210', '100']
-['VarsityLab9', '210', '150']
-['VarsityLab10', '210', '200']
-['VarsityLab11', '310', '150']
-['VarsityLab12', '310', '200']
-['EventSpace1', '375', '150']
-['EventSpace2', '375', '200']
-['EventSpace3', '460', '300']
-['EventSpace4', '510', '300']
-['EventSpace5', '560', '300']
-['EventSpace6', '610', '300']
-</textarea>
+                <textarea class="textbox textarea" id="comparr">...1...</textarea>
                 <br>
                 <label for="wallarr">Wall Arrangement CSV:</label><br>
                 <p class="example-text">Example: NorthWall, 0, 0, 700, TRUE (FALSE makes the wall go horizantal TRUE makes it vertical)</p>
-                <textarea class="textbox textarea" id="wallarr">['Walls', 'X', 'Y', 'Length', 'Rotate']
-['0', '350', '0', '240', 'FALSE']
-['1', '350', '310', '40', 'FALSE']
-['2', '0', '350', '700', 'TRUE']
-['3', '700', '0', '355', 'FALSE']
-['4', '0', '0', '355', 'FALSE']
-['5', '0', '0', '700', 'TRUE']
-</textarea>
+                <textarea class="textbox textarea" id="wallarr">...2...</textarea>
                 <br>
                 <label for="decarr">Decor Arrangement CSV:</label><br>
                 <p class="example-text">Example: "Switch, 50, 75, 20, 30"</p>
-                <textarea class="textbox textarea" id="decarr">NONE</textarea>
+                <textarea class="textbox textarea" id="decarr">...3...</textarea>
                 <br>
                 <label for="bookarr">Availability CSV:</label><br>
                 <p class="example-text">Example: "Close Time, Close Date, Open Time, Open Date"</p>
-                <textarea class="textbox textarea" id="bookarr">NONE</textarea>
+                <textarea class="textbox textarea" id="bookarr">...4...</textarea>
             </form>
             <br>
             <button onclick="save()">Save</button>

@@ -136,6 +136,24 @@
         color: #000; /* Change color on hover/focus for better visibility */
         text-decoration: none;
     }
+
+    .iframe-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%; /* full width */
+        padding-top: 56.25%; /* aspect ratio */
+    }
+
+    .responsive-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
     </style>
     
     <div class="header">
@@ -146,33 +164,32 @@
         <a href="www.google.com" class="login-button">Login</a>
     </div>
     
-    <div class='events-container'>
-        <div class='events-column'>
-            <h2>Today's Events</h2>
-            <ul id='events-list-today'>
-    <li>No events scheduled for today.</li></ul></div><div class='events-column'><h2>Tomorrow's Events</h2><ul id='events-list-tomorrow'><li>No events scheduled for tomorrow.</li></ul></div></div><svg viewBox='0 0 1000 1000'>
+    <div class="iframe-container">
+        <iframe class="responsive-iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&showTitle=0&showCalendars=0&src=Y2Nlc3BvcnRzQGNvbG9yYWRvY29sbGVnZS5lZHU&color=%23D81B60" frameborder="0" scrolling="no"></iframe>
+    </div>
+    <svg viewBox='0 0 1000 1000'>
         <g>
-            <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="27.5" y="217.5" fill="white">1</text>
         </g>
         
         <g>
-            <rect id="VarsityLab2" x="10" y="150" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab2" x="10" y="150" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="27.5" y="167.5" fill="white">2</text>
         </g>
         
         <g>
-            <rect id="VarsityLab3" x="10" y="100" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab3" x="10" y="100" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="27.5" y="117.5" fill="white">3</text>
         </g>
         
         <g>
-            <rect id="VarsityLab4" x="60" y="10" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab4" x="60" y="10" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="77.5" y="27.5" fill="white">4</text>
         </g>
         
         <g>
-            <rect id="VarsityLab5" x="110" y="10" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab5" x="110" y="10" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="127.5" y="27.5" fill="white">5</text>
         </g>
         
@@ -187,7 +204,7 @@
         </g>
         
         <g>
-            <rect id="VarsityLab8" x="210" y="100" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab8" x="210" y="100" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="227.5" y="117.5" fill="white">8</text>
         </g>
         
@@ -202,12 +219,12 @@
         </g>
         
         <g>
-            <rect id="VarsityLab11" x="310" y="150" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab11" x="310" y="150" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="327.5" y="167.5" fill="white">11</text>
         </g>
         
         <g>
-            <rect id="VarsityLab12" x="310" y="200" width="35" height="35" style="fill:#D09B2C;"/>
+            <rect id="VarsityLab12" x="310" y="200" width="35" height="35" style="fill:#228C22;"/>
             <text class="computer-text" x="327.5" y="217.5" fill="white">12</text>
         </g>
         

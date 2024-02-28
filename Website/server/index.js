@@ -68,12 +68,12 @@ app.get('/admin', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on("updateComps", function(data) {
+    console.log(data)
+  })
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on("update_files", (received_file) => {
-    const hey = spawn('python3',['server/content_gen/JSON-maker.py','1']);
-  })
 });
 
 server.listen(PORT, () => {
