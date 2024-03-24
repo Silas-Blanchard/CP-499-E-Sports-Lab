@@ -67,12 +67,11 @@ app.get('/admin', (req, res) => {
 // });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
   socket.on("updateComps", function(data) {
     console.log(data)
-  })
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  });
+  socket.on("restore", function(data) {
+    console.log("restore")
   });
 });
 
