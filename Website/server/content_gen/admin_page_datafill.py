@@ -7,7 +7,7 @@ def get_paths(BASE_DIR):
         os.path.join(BASE_DIR, "..","html_and_layout_data","Book1.csv"),
         os.path.join(BASE_DIR, "..","html_and_layout_data","Walls.csv"),
         os.path.join(BASE_DIR, "..","html_and_layout_data","Decor.csv"),
-        os.path.join(BASE_DIR, "..","html_and_layout_data","Manual Booking.csv"),
+        os.path.join(BASE_DIR, "..","html_and_layout_data","Manual_Booking.csv"),
         os.path.join(BASE_DIR, "..","html_and_layout_data","admin_page.html"),
         os.path.join(BASE_DIR, "..","html_and_layout_data","default_admin_page.txt"),
         os.path.join(BASE_DIR, "..","html_and_layout_data","labels.csv")
@@ -35,9 +35,7 @@ def update_HTML():
         is_in_order = status[1]
         data_id = computer_name + "," + is_in_order
         HTML+= f"""
-        <g>
             <rect id = "{computer_name}" class="selectable computer" data-id="{data_id}" x="{x}" y="{y}" width="35" height="35"/>
-        </g>
         """
 
     #This takes everything from the wall layout CSV and makes it into HTML
@@ -55,7 +53,7 @@ def update_HTML():
         HTML += f"""
         <rect id = "{name}" class="wall selectable" x="{x}" y="{y}" width="{width}" height="{height}"></rect>
         """
-        
+
     #takes everythign in decor.csv and makes it into HTML
     for row in list(decor_reader)[1:]:
         decor, x, y, width, height, label = row
@@ -85,10 +83,7 @@ def update_HTML():
     #The "..." are a strange sequence someone won't likely use and also doesn't interact with HTML
     with open(default_admin_path, "r") as file:
         raw_html = str(file.read())
-        raw_html = raw_html.replace("...1...",computers)
-        raw_html = raw_html.replace("...2...",walls)
-        raw_html = raw_html.replace("...3...",decor)
-        raw_html = raw_html.replace("...4...",books)
+        raw_html = raw_html.replace("...0...",HTML)
         with open(admin_html_path, "w") as file:
             file.write(raw_html)
             file.close()
