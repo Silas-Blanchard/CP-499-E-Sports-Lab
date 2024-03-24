@@ -263,7 +263,7 @@ def generate_header():
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Colorado_College_Tigers_logo.svg/800px-Colorado_College_Tigers_logo.svg.png" alt="CC Logo" class="logo" />
         </div>
         <h1 class="header-title">CC Esports Lab</h1>
-        <a href="https://cas.coloradocollege.edu/cas/login?service=http://esportscomm.coloradocollege.edu/login/cas" class="login-button" class="login-button">Login</a>
+        <a href="https://cas.coloradocollege.edu/cas/login?service=http://esportscomm.coloradocollege.edu/admin" class="login-button" class="login-button">Login</a>
     </div>
     """
     # http://localhost:3001/  ||  http://esportscomm.coloradocollege.edu/
