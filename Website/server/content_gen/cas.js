@@ -16,10 +16,10 @@ function initializeCasAuth() {
 // Middleware to check whitelist
 function checkWhitelist(req, res, next) {
   const userEmail = req.session.cas && req.session.cas.user;
-  const adminWhitelist = ['s_blanchard@coloradocollege.edu', 'jlauer2023@coloradocollege.edu'];
-  if (userEmail && adminWhitelist.includes(userEmail.toLowerCase())) {
+  const adminWhitelist = ['s_blanchard@coloradocollege.edu', 'jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
+  if (userEmail && adminWhitelist.includes(userEmail)) {
     // If user is on the whitelist, proceed to the next middleware
-    next();
+    res.redirect('/admin');
   } else {
     // If user is not on the whitelist, redirect to the main page
     res.redirect('/');
