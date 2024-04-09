@@ -18,9 +18,9 @@ function initializeCasAuth() {
 function checkWhitelist(req, res, next) {
   const userEmail = req.session.cas && req.session.cas.user.attributes.email;
   const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
-  if (userEmail && adminWhitelist.includes(userEmail.toLowerCase())) {
-    console.log(adminWhitelist.includes(userEmail.toLowerCase()));
-    console.log(userEmail && adminWhitelist.includes(userEmail.toLowerCase()));
+  if (userEmail && adminWhitelist.includes(userEmail)) {
+    console.log(adminWhitelist.includes(userEmail));
+    console.log(userEmail && adminWhitelist.includes(userEmail));
     console.log(req.session.cas);
     console.log(req.session.cas.user);
     console.log(req.session.cas.user.attributes.email); // Corrected access to email attribute
@@ -29,8 +29,8 @@ function checkWhitelist(req, res, next) {
     console.log('IT WORKED, WHY ARE YOU NOT GOING?');
   } else {
     // If user is not on the whitelist, redirect to the main page
-    console.log(adminWhitelist.includes(userEmail.toLowerCase()));
-    console.log(userEmail && adminWhitelist.includes(userEmail.toLowerCase()));
+    console.log(adminWhitelist.includes(userEmail));
+    console.log(userEmail && adminWhitelist.includes(userEmail));
     console.log(req.session.cas);
     console.log(req.session.cas.user);
     console.log(req.session.cas.user.attributes.email); // Corrected access to email attribute
