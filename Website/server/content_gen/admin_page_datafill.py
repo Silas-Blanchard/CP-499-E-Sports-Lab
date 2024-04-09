@@ -43,39 +43,24 @@ def update_HTML():
         x, y = int(row[1]), int(row[2])
         name = row[0]
         #determines orientation
-        if row[4] == "TRUE":
-            width = int(row[3])
-            height = 5
-        else:
-            width = 5
-            height = int(row[3])
+        width = int(row[3])
+        height = int(row[4])
         
         HTML += f"""
-        <rect id = "{name}" class="wall selectable" x="{x}" y="{y}" width="{width}" height="{height}"></rect>
+        <rect id = "{name}" class="selectable wall" x="{x}" y="{y}" width="{width}" height="{height}"></rect>
         """
 
     #takes everythign in decor.csv and makes it into HTML
     for row in list(decor_reader)[1:]:
-        decor, x, y, width, height, label = row
+        decor, x, y, width, height = row
         HTML += f"""
         <rect id="{decor}" class="selectable decor" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:#808080;"></rect>
         """
-
-    #Displays booked computers
-    for count, row in enumerate(list(book_reader)[1:]):
-        computer, status = row
-        x = 750
-        y = 10 + 50*count
-        HTML += f"""<g>
-        <rect class="selectable" x="{x}" y="{y}" width="200" height="40" style="fill:#808080;"></rect>
-        <text class="computer-text" x="{x+10}" y="{y + 25}" fill="white">{computer}: {status}</text>
-        </g>
-        """
     
     for row in list(label_reader)[1:]:
-        text, x, y, size = row
+        text, x, y, name = row
         HTML += f"""
-            <text id="{text}" class="selectable decortext" x="{x}" y="{y}" data-id="{text}">{text}</text>
+            <text id="{text}" class="selectable decor" x="{x}" y="{y}" data-id="{text}">{text}</text>
         """
     
     #this bit takes the default html, which is a text file and can be manipulated with minimal imports

@@ -260,7 +260,7 @@
         
             <rect id = "VarsityLab11" class="selectable computer" data-id="VarsityLab11,FALSE" x="310" y="150" width="35" height="35"/>
         
-            <rect id = "VarsityLab12" class="selectable computer" data-id="VarsityLab12,FALSE" x="310" y="200" width="35" height="35"/>
+            <rect id = "VarsityLab12" class="selectable computer" data-id="VarsityLab12,false" x="310" y="200" width="35" height="35"/>
         
             <rect id = "EventSpace1" class="selectable computer" data-id="EventSpace1,FALSE" x="375" y="150" width="35" height="35"/>
         
@@ -274,23 +274,25 @@
         
             <rect id = "EventSpace6" class="selectable computer" data-id="EventSpace6,FALSE" x="610" y="300" width="35" height="35"/>
         
-        <rect id = "0" class="wall selectable" x="350" y="0" width="5" height="240"></rect>
+        <rect id = "0" class="selectable wall" x="357" y="0" width="5" height="240"></rect>
         
-        <rect id = "1" class="wall selectable" x="350" y="310" width="5" height="40"></rect>
+        <rect id = "1" class="selectable wall" x="357" y="310" width="5" height="40"></rect>
         
-        <rect id = "2" class="wall selectable" x="0" y="350" width="700" height="5"></rect>
+        <rect id = "2" class="selectable wall" x="0" y="350" width="700" height="5"></rect>
         
-        <rect id = "3" class="wall selectable" x="700" y="0" width="5" height="355"></rect>
+        <rect id = "3" class="selectable wall" x="700" y="0" width="5" height="355"></rect>
         
-        <rect id = "4" class="wall selectable" x="0" y="0" width="5" height="355"></rect>
+        <rect id = "4" class="selectable wall" x="0" y="0" width="5" height="355"></rect>
         
-        <rect id = "5" class="wall selectable" x="0" y="0" width="700" height="5"></rect>
+        <rect id = "5" class="selectable wall" x="0" y="0" width="700" height="5"></rect>
         
-            <text id="West Entrance" class="selectable decortext" x="10" y="380" data-id="West Entrance">West Entrance</text>
+        <rect id="Nintendo Spot" class="selectable decor" x="500" y="10" width="35" height="35" style="fill:#808080;"></rect>
         
-            <text id="East Entrance" class="selectable decortext" x="630" y="380" data-id="East Entrance">East Entrance</text>
+            <text id="West Entrance" class="selectable decor" x="10" y="380" data-id="West Entrance">West Entrance</text>
         
-            <text id="Nintendo Corner" class="selectable decortext" x="500" y="40" data-id="Nintendo Corner">Nintendo Corner</text>
+            <text id="East Entrance" class="selectable decor" x="630" y="380" data-id="East Entrance">East Entrance</text>
+        
+            <text id="Nintendo Corner" class="selectable decor" x="500" y="40" data-id="Nintendo Corner">Nintendo Corner</text>
         
             <br>
             <button onclick="apply()">Save Changes</button>
@@ -472,10 +474,11 @@
                         // Get all attributes of the element
                         var attributes = e.attributes;
                         for (var i = 0; i < attributes.length; i++) {
-                            output += attributes[i].value + ' ';
+                            output += (attributes[i].value + ';') //semi-colon delineated
                         }
                         output += "\n"
                     });
+                    console.log(output)
                     socket.emit('updateComps',output);
                 }
                 function restore(){
@@ -487,11 +490,13 @@
                 function makelement(){
                     var newElementWindow = document.getElementById("new-element");
                     newElementWindow.style.display = "block";
+                    console.log("H")
                 }
                 
                 var newcancelbutton = document.getElementById("cancel-new");
                 newcancelbutton.addEventListener("click", function() {
                     newElementWindow.style.display = "none";
+                    console.log("H")
                 });
 
                 var newcomputer = document.getElementById("new-computer");
@@ -536,7 +541,6 @@
                         }
                     };
                     //the name isn't taken
-                    console.log("I")
                     return false;
                 }
             </script>

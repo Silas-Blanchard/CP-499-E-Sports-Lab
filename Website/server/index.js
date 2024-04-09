@@ -9,6 +9,9 @@ const {join} = require('path')
 
 const childPython = spawn('python3',['server/content_gen/six_website.py']);
 const childPythonJSON = spawn('python3',['server/content_gen/JSON-maker.py']);
+const childServer = spawn('python3',['server/content_gen/server with databaser.py']);
+
+const fs = require('fs');
 
 const PORT = process.env.PORT || 3001;
 
@@ -59,6 +62,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
+  var listening = spawn('python3',['server/content_gen/admin_page_datafill.py']);
   res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
 });
 
@@ -68,8 +72,17 @@ app.get('/admin', (req, res) => {
 
 io.on('connection', (socket) => {
   socket.on("updateComps", function(data) {
-    console.log(data)
+  fs.writeFile('server/html_and_layout_data/unparsed.txt', data, (err) => {
+      if (err) throw err;
+  })
+  var listening = spawn('python3',['server/content_gen/admin_update.py'])
+  listening.on('exit', function (code) { 
+    listening = null;
+    console.log("EXITED " + code);
+   });
+  spawn('python3',['server/content_gen/six_website.py'])
   });
+
   socket.on("restore", function(data) {
     console.log("restore")
   });
@@ -82,3 +95,4 @@ server.listen(PORT, () => {
 childPython.on('close',(code) => {
   console.log(`child process exited with code ${code}`);
 });
+
