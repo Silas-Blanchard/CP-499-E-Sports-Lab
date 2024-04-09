@@ -25,7 +25,7 @@ function checkWhitelist(req, res, next) {
                        req.session.cas.user.attributes.email;
     
     // Whitelisted email addresses
-    const adminWhitelist = ['jlauer2023@ColoradoCollege.edu', 'q_sebso@gColoradoCollege.edu'];
+    const adminWhitelist = ['jlauer2023@ColoradoCollege.edu', 'q_sebso@ColoradoCollege.edu'];
 
     // Log the current user email and whitelist status
     // console.log('User email:', userEmail);
