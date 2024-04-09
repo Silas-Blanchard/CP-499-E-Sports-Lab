@@ -23,7 +23,7 @@ function checkWhitelist(req, res, next) {
     console.log(userEmail && adminWhitelist.includes(userEmail.toLowerCase()));
     console.log(req.session.cas);
     console.log(req.session.cas.user);
-    console.log(req.session.cas.userEmail);
+    console.log(req.session.cas.user.attributes.email); // Corrected access to email attribute
     // If user is on the whitelist, proceed to the next middleware
     res.redirect('/admin');
     console.log('IT WORKED, WHY ARE YOU NOT GOING?');
@@ -33,7 +33,6 @@ function checkWhitelist(req, res, next) {
     console.log('User is not on the list');
   }
 }
-
 
 
 
