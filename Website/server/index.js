@@ -65,13 +65,30 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, '/html_and_layout_data/webber.html'));
 });
 
+app.get('/admin', (req, res) => {
+  var listening = spawn('python3',['server/content_gen/admin_page_datafill.py']);
+  res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
+});
+
+// app.get('/admin', cas.block, (req, res) => {
+//   res.sendFile(join(__dirname, 'admin_page.html'));
+// });
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on("updateComps", function (data) {
-    console.log(data)
+  socket.on("updateComps", function(data) {
+  fs.writeFile('server/html_and_layout_data/unparsed.txt', data, (err) => {
+      if (err) throw err;
+  })
+  var listening = spawn('python3',['server/content_gen/admin_update.py'])
+  listening.on('exit', function (code) { 
+    listening = null;
+    console.log("EXITED " + code);
+   });
+  spawn('python3',['server/content_gen/six_website.py'])
   });
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+
+  socket.on("restore", function(data) {
+    console.log("restore")
   });
 });
 
@@ -82,3 +99,4 @@ server.listen(PORT, () => {
 childPython.on('close', (code) => {
   console.log(`child process exited with code ${code}`);
 });
+

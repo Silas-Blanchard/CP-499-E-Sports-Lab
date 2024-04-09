@@ -7,16 +7,16 @@ from datetime import datetime, timedelta
 def do_GET():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     #print(os.listdir(os.path.join(BASE_DIR, "../html_and_layout_data" )))
-    db_path, rect_csv_path, wall_csv_path, HTML_path = get_file_paths(BASE_DIR)
+    db_path, rect_csv_path, wall_csv_path, HTML_path, labels_path, decor_path = get_file_paths(BASE_DIR)
 
     # Database operations
     rows = fetch_database_data(db_path)
 
     # Read CSV files
-    computers, walls = read_csv_files(rect_csv_path, wall_csv_path)
+    computers, walls, labels, decor = read_csv_files(rect_csv_path, wall_csv_path, labels_path, decor_path)
 
     # Generate HTML content with calendar events
-    HTML_text = generate_html_content(rows, computers, walls)
+    HTML_text = generate_html_content(rows, computers, walls, labels, decor)
 
     # Write HTML to file
     write_html_file(HTML_path, HTML_text)
@@ -28,6 +28,8 @@ def get_file_paths(BASE_DIR):
         os.path.join(BASE_DIR, ".." , "html_and_layout_data", "Book1.csv"),
         os.path.join(BASE_DIR, "..", "html_and_layout_data", "Walls.csv"),
         os.path.join(BASE_DIR, "..", "html_and_layout_data", "webber.html"),
+        os.path.join(BASE_DIR, "..", "html_and_layout_data", "labels.csv"),
+        os.path.join(BASE_DIR, "..", "html_and_layout_data", "Decor.csv")
     )
 
 
@@ -40,7 +42,7 @@ def fetch_database_data(db_path):
     return rows
 
 
-def read_csv_files(rect_csv_path, wall_csv_path):
+def read_csv_files(rect_csv_path, wall_csv_path, label_csv_path, decor_csv_path):
     with open(rect_csv_path, "r") as file:
         computers = list(csv.reader(file, delimiter=','))
         computers = computers[1:]  # Skip header row
@@ -48,11 +50,19 @@ def read_csv_files(rect_csv_path, wall_csv_path):
     with open(wall_csv_path, "r") as file:
         walls = list(csv.reader(file, delimiter=','))
         walls = walls[1:]  # Skip header row
+
+    with open(label_csv_path, "r") as file:
+        labels = list(csv.reader(file, delimiter=','))
+        labels = labels[1:]  # Skip header row
     
-    return computers, walls
+    with open(decor_csv_path, "r") as file:
+        decor = list(csv.reader(file, delimiter=','))
+        decor = decor[1:]  # Skip header row
+    
+    return computers, walls, labels, decor
 
 
-def generate_html_content(rows, computers, walls):
+def generate_html_content(rows, computers, walls, labels, decor_path):
     # Start HTML content generation (including styles and headers)
     HTML_text = "<html><head><title>Esports Lab</title></head><body>"
     HTML_text += generate_styles()
@@ -72,6 +82,8 @@ def generate_html_content(rows, computers, walls):
     HTML_text += generate_computers_svg(rows, computers)
     HTML_text += generate_walls_svg(walls)
     HTML_text += generate_computers_list_svg(rows, computers, 1000)  # Adjust the width as needed
+    HTML_text += generate_decor(decor_path)
+    HTML_text += generate_labels(labels)
 
     # Add pop-up HTML
     HTML_text += """
@@ -90,6 +102,25 @@ def generate_html_content(rows, computers, walls):
     # Close SVG and add remaining HTML content
     HTML_text += "</svg></body></html>"
     return HTML_text
+
+#adds labels to the HTML file
+def generate_labels(label_path):
+    outputHTML = ""
+    for i in label_path:
+        label, x, y, size = i
+        outputHTML += f"""
+            <text x = "{x}" y = "{y}" data-id = "{size}">{label}</text>
+        """
+    return outputHTML
+#the labels
+def generate_decor(decs):
+    outputHTML = ""
+    for i in decs:
+        decor, x, y, width, height = i
+        outputHTML += f"""
+            <rect id="{decor}" class="selectable decor" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:#808080;"></rect>
+        """
+    return outputHTML
 
 
 def generate_styles():
@@ -357,13 +388,9 @@ def generate_walls_svg(walls):
 
 def generate_wall_svg(wall):
     x, y = int(wall[1]), int(wall[2])
-    if wall[4] == "TRUE":
-        width = int(wall[3])
-        height = 5
-    else:
-        width = 5
-        height = int(wall[3])
-
+    width = int(wall[3])
+    height = int(wall[4])
+     
     # Create SVG rectangle for the wall
     svg_content = f"""<rect class="wall" x="{x}" y="{y}" width="{width}" height="{height}"></rect>"""
     return svg_content

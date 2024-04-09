@@ -432,13 +432,11 @@
                 function makelement(){
                     var newElementWindow = document.getElementById("new-element");
                     newElementWindow.style.display = "block";
-                    console.log("H")
                 }
                 
                 var newcancelbutton = document.getElementById("cancel-new");
                 newcancelbutton.addEventListener("click", function() {
                     newElementWindow.style.display = "none";
-                    console.log("H")
                 });
 
                 var newcomputer = document.getElementById("new-computer");
@@ -485,8 +483,5 @@
                     //the name isn't taken
                     return false;
                 }
-
-                //okay so below this is all of the 
-
             </script>
         </html>

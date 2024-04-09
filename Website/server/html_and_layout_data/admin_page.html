@@ -72,10 +72,92 @@
     font-family: monospace; /* Monospaced font for code-like examples */
     margin-bottom: 10px;
     }
-
-    .textarea{
-        width: 1000px
+	
+    .selectable{
+	    fill: #000F;
+        border: 2px solid black;
+        outline-style: solid;
     }
+    .selectable:hover {
+          outline-color: red;
+    }
+
+    .computer{
+        fill: #080808;
+    }
+
+    .wall {
+        fill: #000000;
+    }
+
+    .decortext {
+        fill: #000000;
+    }
+
+	#comp-popup {
+  		position: fixed;
+  		width: 300px;
+  		height: 250px;
+  		background: white;
+  		border: 1px solid black;
+  		padding: 10px;
+ 		margin: auto;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  		left: 0;
+  		z-index: 10;
+  		display: none;
+	}
+
+    #wall-popup {
+  		position: fixed;
+  		width: 300px;
+  		height: 300px;
+  		background: white;
+  		border: 1px solid black;
+  		padding: 10px;
+ 		margin: auto;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  		left: 0;
+  		z-index: 10;
+  		display: none;
+	}
+
+    #text-popup {
+  		position: fixed;
+  		width: 300px;
+  		height: 200px;
+  		background: white;
+  		border: 1px solid black;
+  		padding: 10px;
+ 		margin: auto;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  		left: 0;
+  		z-index: 10;
+  		display: none;
+	}
+
+    #new-element {
+  		position: fixed;
+  		width: 120px;
+  		height: 250px;
+  		background: white;
+  		border: 1px solid black;
+  		padding: 10px;
+ 		margin: auto;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  		left: 0;
+  		z-index: 10;
+  		display: none;
+        text-align: center
+	}
     </style>
 
     </head>
@@ -96,67 +178,370 @@
                     <li>(0,0) meaning X = 0 and Y = 0 is the top left of the screen</li>
                 </ul>
             </div>
-
-            <form>
-                <label for="comparr">Computer Arrangement CSV:</label><br>
-                <p class="example-text">Example: VarsityLab1, 10, 200</p>
-                <textarea class="textbox textarea" id="comparr">['Name', 'X', 'Y']
-['VarsityLab1', '10', '200']
-['VarsityLab2', '10', '150']
-['VarsityLab3', '10', '100']
-['VarsityLab4', '60', '10']
-['VarsityLab5', '110', '10']
-['VarsityLab6', '160', '10']
-['VarsityLab7', '210', '50']
-['VarsityLab8', '210', '100']
-['VarsityLab9', '210', '150']
-['VarsityLab10', '210', '200']
-['VarsityLab11', '310', '150']
-['VarsityLab12', '310', '200']
-['EventSpace1', '375', '150']
-['EventSpace2', '375', '200']
-['EventSpace3', '460', '300']
-['EventSpace4', '510', '300']
-['EventSpace5', '560', '300']
-['EventSpace6', '610', '300']
-</textarea>
-                <br>
-                <label for="wallarr">Wall Arrangement CSV:</label><br>
-                <p class="example-text">Example: NorthWall, 0, 0, 700, TRUE (FALSE makes the wall go horizantal TRUE makes it vertical)</p>
-                <textarea class="textbox textarea" id="wallarr">['Walls', 'X', 'Y', 'Length', 'Rotate']
-['0', '350', '0', '240', 'FALSE']
-['1', '350', '310', '40', 'FALSE']
-['2', '0', '350', '700', 'TRUE']
-['3', '700', '0', '355', 'FALSE']
-['4', '0', '0', '355', 'FALSE']
-['5', '0', '0', '700', 'TRUE']
-</textarea>
-                <br>
-                <label for="decarr">Decor Arrangement CSV:</label><br>
-                <p class="example-text">Example: "Switch, 50, 75, 20, 30"</p>
-                <textarea class="textbox textarea" id="decarr">NONE</textarea>
-                <br>
-                <label for="bookarr">Availability CSV:</label><br>
-                <p class="example-text">Example: "Close Time, Close Date, Open Time, Open Date"</p>
-                <textarea class="textbox textarea" id="bookarr">NONE</textarea>
-            </form>
+		        <div id="comp-popup">
+  		        <text id="comp-title">Computer</text><br><br>
+  		        <form>
+                    <label for="compname">Computer Name:</label>
+                    <input type="text" id="compname" name="compname"><br><br>
+                    <label for="xpos">x position:</label>
+                    <input type="text" id="xpos" name="xpos"><br><br>
+                    <label for="ypos">y position:</label>
+                    <input type="text" id="ypos" name="ypos"><br><br>
+                    <label for="order">Out of Order</label>
+                    <input type="checkbox" id="order" name="order"><br><br>
+                </form>
+                <button id="apply-button">Apply</button>
+  		        <button id="close-button">Close</button>
+                <button id="delete-button">Delete Element</button>
+	        </div>
+            </div>
+		        <div id="wall-popup">
+  		        <text id="wall-title">Editing Wall</text><br><br>
+  		        <form>
+                    <label for="wallxpos">x position:</label>
+                    <input type="text" id="wallxpos" name="wallxpos"><br><br>
+                    <label for="wallypos">y position:</label>
+                    <input type="text" id="wallypos" name="ypos"><br><br>
+                    <label for="wallwidth">Width:</label>
+                    <input type="text" id="wallwidth" name="wallwidth"><br><br>
+                    <label for="wallheight">Height:</label>
+                    <input type="text" id="wallheight" name="wallheight"><br><br>
+                </form>
+                <button id="wall-apply-button">Apply</button>
+  		        <button id="wall-close-button">Close</button>
+                <button id="wall-delete-button">Delete Element</button>
+	        </div>
+            </div>
+		        <div id="text-popup">
+  		        <text id="text-title">Editing Wall</text><br><br>
+  		        <form>
+                    <label for="textfield">Text:</label>
+                    <input type="text" id="textfield" name="textfield"><br><br>
+                    <label for="textxpos">x position:</label>
+                    <input type="text" id="textxpos" name="textxpos"><br><br>
+                    <label for="textypos">y position:</label>
+                    <input type="text" id="textypos" name="textypos"><br><br>
+                </form>
+                <button id="text-apply-button">Apply</button>
+  		        <button id="text-close-button">Close</button>
+                <button id="text-delete-button">Delete Element</button>
+	        </div>
+            </div>
+		        <div id="new-element">
+  		        <text id="text-title">New Element</text><br><br>
+                <button id="new-computer">New Computer</button><br><br>
+                <button id="new-wall">New Wall</button><br><br>
+                <button id="new-decoration">New Decoration</button><br><br>
+                <button id="new-textbox">New Label</button><br><br>
+                <button id="cancel-new">Cancel</button><br><br>
+	        </div>       
+	    
+    <svg viewBox='-10 0 1000 500'>
+    
+            <rect id = "VarsityLab1" class="selectable computer" data-id="VarsityLab1,TRUE" x="10" y="200" width="35" height="35"/>
+        
+            <rect id = "VarsityLab2" class="selectable computer" data-id="VarsityLab2,FALSE" x="10" y="150" width="35" height="35"/>
+        
+            <rect id = "VarsityLab3" class="selectable computer" data-id="VarsityLab3,FALSE" x="10" y="100" width="35" height="35"/>
+        
+            <rect id = "VarsityLab4" class="selectable computer" data-id="VarsityLab4,FALSE" x="60" y="10" width="35" height="35"/>
+        
+            <rect id = "VarsityLab5" class="selectable computer" data-id="VarsityLab5,FALSE" x="110" y="10" width="35" height="35"/>
+        
+            <rect id = "VarsityLab6" class="selectable computer" data-id="VarsityLab6,FALSE" x="160" y="10" width="35" height="35"/>
+        
+            <rect id = "VarsityLab7" class="selectable computer" data-id="VarsityLab7,FALSE" x="210" y="50" width="35" height="35"/>
+        
+            <rect id = "VarsityLab8" class="selectable computer" data-id="VarsityLab8,FALSE" x="210" y="100" width="35" height="35"/>
+        
+            <rect id = "VarsityLab9" class="selectable computer" data-id="VarsityLab9,FALSE" x="210" y="150" width="35" height="35"/>
+        
+            <rect id = "VarsityLab10" class="selectable computer" data-id="VarsityLab10,FALSE" x="210" y="200" width="35" height="35"/>
+        
+            <rect id = "VarsityLab11" class="selectable computer" data-id="VarsityLab11,FALSE" x="310" y="150" width="35" height="35"/>
+        
+            <rect id = "VarsityLab12" class="selectable computer" data-id="VarsityLab12,false" x="310" y="200" width="35" height="35"/>
+        
+            <rect id = "EventSpace1" class="selectable computer" data-id="EventSpace1,FALSE" x="375" y="150" width="35" height="35"/>
+        
+            <rect id = "EventSpace2" class="selectable computer" data-id="EventSpace2,FALSE" x="375" y="200" width="35" height="35"/>
+        
+            <rect id = "EventSpace3" class="selectable computer" data-id="EventSpace3,FALSE" x="460" y="300" width="35" height="35"/>
+        
+            <rect id = "EventSpace4" class="selectable computer" data-id="EventSpace4,FALSE" x="510" y="300" width="35" height="35"/>
+        
+            <rect id = "EventSpace5" class="selectable computer" data-id="EventSpace5,FALSE" x="560" y="300" width="35" height="35"/>
+        
+            <rect id = "EventSpace6" class="selectable computer" data-id="EventSpace6,FALSE" x="610" y="300" width="35" height="35"/>
+        
+        <rect id = "0" class="selectable wall" x="357" y="0" width="5" height="240"></rect>
+        
+        <rect id = "1" class="selectable wall" x="357" y="310" width="5" height="40"></rect>
+        
+        <rect id = "2" class="selectable wall" x="0" y="350" width="700" height="5"></rect>
+        
+        <rect id = "3" class="selectable wall" x="700" y="0" width="5" height="355"></rect>
+        
+        <rect id = "4" class="selectable wall" x="0" y="0" width="5" height="355"></rect>
+        
+        <rect id = "5" class="selectable wall" x="0" y="0" width="700" height="5"></rect>
+        
+        <rect id="Nintendo Spot" class="selectable decor" x="500" y="10" width="35" height="35" style="fill:#808080;"></rect>
+        
+            <text id="West Entrance" class="selectable decor" x="10" y="380" data-id="West Entrance">West Entrance</text>
+        
+            <text id="East Entrance" class="selectable decor" x="630" y="380" data-id="East Entrance">East Entrance</text>
+        
+            <text id="Nintendo Corner" class="selectable decor" x="500" y="40" data-id="Nintendo Corner">Nintendo Corner</text>
+        
             <br>
-            <button onclick="save()">Save</button>
-            <button onclick="restore()">Restore Default</button> 
+            <button onclick="apply()">Save Changes</button>
+            <button onclick="makelement()">Insert New Element</button>
+            <button onclick="restore()">Restore Default</button>
         </body>
         
         <script src="/socket.io/socket.io.js"></script>
             <script src="/socket.io/socket.io.js"></script>
             <script>
+                // Popup variables
+                var popupWindow = document.getElementById("comp-popup");
+                var wallpopupWindow = document.getElementById("wall-popup");
+                var textpopupWindow = document.getElementById("text-popup");
+                var newElementWindow = document.getElementById("new-element");
+                var computername = document.getElementById("compname");
+
+                //computer editing variables
+                var deleteButton = document.getElementById("delete-button");
+                var currentitle = document.getElementById("comp-title");
+                var showorhide = document.getElementById("order");
+                var xfield = document.getElementById("xpos");
+                var yfield = document.getElementById("ypos");
+
+                //the wall variables
+                var walltitle = document.getElementById("wall-title");
+                var wallxfield = document.getElementById("wallxpos");
+                var wallyfield = document.getElementById("wallypos");
+                //(width and height)
+                var wallwfield = document.getElementById("wallwidth");
+                var wallhfield = document.getElementById("wallheight");
+
+                //textbox variables!
+                var texttitle = document.getElementById("text-title");
+                var textxfield = document.getElementById("textxpos");
+                var textyfield = document.getElementById("textypos");
+                var textstring = document.getElementById("textfield");
+
+                //our buttons for the popups go here
+                // Hide the pop-up window when the close button is clicked
+                var closeButton = document.getElementById("close-button");
+                closeButton.addEventListener("click", function() {
+                    popupWindow.style.display = "none";
+                });
+
+                // Hide the pop-up window for walls when the wall close button is clicked
+                var wallcloseButton = document.getElementById("wall-close-button");
+                wallcloseButton.addEventListener("click", function() {
+                    wallpopupWindow.style.display = "none";
+                });
+
+                //the apply buttons for computers
+                var applyButton = document.getElementById("apply-button");
+                applyButton.addEventListener("click", function() {
+                    popupWindow.style.display = "none";
+                    //the element that was clicked is stored in the button, so we are accessing that element
+                    var element = document.getElementById(applyButton.dataset.id)
+
+                    element.setAttribute("x", xfield.value)
+                    element.setAttribute("y", yfield.value)
+                    
+                    var name = guranteeunique(computername.value, element)
+                    element.setAttribute("id", name)
+
+                    var newdata = element.id.concat(",".concat(showorhide.checked))
+                    element.setAttribute("data-id" , newdata)
+                });
+
+                //apply and close buttons for text
+                var textcloseButton = document.getElementById("text-close-button");
+                textcloseButton.addEventListener("click", function() {
+                    textpopupWindow.style.display = "none";
+                });
+
+                //the apply buttons for textboxes
+                var textapplyButton = document.getElementById("text-apply-button");
+                textapplyButton.addEventListener("click", function() {
+                    textpopupWindow.style.display = "none";
+                    //the element that was clicked is stored in the button, so we are accessing that element
+                    var element = document.getElementById(textapplyButton.dataset.id)
+
+                    element.setAttribute("x", textxfield.value)
+                    element.setAttribute("y", textyfield.value)
+                    element.textContent = textfield.value
+                    element.id = textfield.value
+                    element.setAttribute("data-id", textfield.value)
+                });
+
+                //this defines the behavior of the apply button for walls. Literally just shoves the displayed values into the element the popup came from
+                var wallapplyButton = document.getElementById("wall-apply-button");
+                wallapplyButton.addEventListener("click", function() {
+                    wallpopupWindow.style.display = "none";
+                    var element = document.getElementById(wallapplyButton.dataset.id)
+
+                    element.setAttribute("x", wallxfield.value)
+                    element.setAttribute("y" , wallyfield.value)
+                    element.setAttribute("width" , wallwfield.value)
+                    element.setAttribute("height", wallhfield.value)
+                });
+
+                // Show the comp-pop-up window when each computer is clicked
+                //Also populates the pop-up with the proper values
+                document.querySelectorAll('.computer').forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    popupWindow.style.display = "block";
+                    var values = button.dataset.id.split(',');
+                    currentitle.innerText = "Editing " + values[0];
+                    computername.value = values[0];
+                    xfield.value = button.x.animVal.value
+                    yfield.value = button.y.animVal.value
+                    if(values[1] == "FALSE" || values[1] == "false"){
+                        showorhide.checked = false;
+                    }else{
+                        showorhide.checked = true;
+                    }
+                    closeButton.setAttribute('data-id', button.id);
+                    applyButton.setAttribute('data-id', button.id);
+                    });
+
+                    //the buttons on the popup know which computer they came from.
+                });
+
+                // Adds the popup functionality to walls
+                document.querySelectorAll('.wall').forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    wallpopupWindow.style.display = "block";
+                    wallxfield.value = button.x.animVal.value
+                    wallyfield.value = button.y.animVal.value
+                    wallwidth.value = button.width.animVal.value
+                    wallheight.value = button.height.animVal.value
+
+                    //the buttons on the popup know which wall they came from.
+                    wallcloseButton.setAttribute('data-id', button.id);
+                    wallapplyButton.setAttribute('data-id', button.id);
+                    });
+                });
+
+                //popups for decor
+                document.querySelectorAll('.decor').forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    walltitle.innerText = "Editing Decor"
+                    wallpopupWindow.style.display = "block";
+                    wallxfield.value = button.x.animVal.value
+                    wallyfield.value = button.y.animVal.value
+                    wallwidth.value = button.width.animVal.value
+                    wallheight.value = button.height.animVal.value
+
+                    //the buttons on the popup know decor computer they came from.
+                    wallcloseButton.setAttribute('data-id', button.id);
+                    wallapplyButton.setAttribute('data-id', button.id);
+                    });
+                });
+
+                //adding functionality to the textboxes so they can be clicked as well
+                document.querySelectorAll('.decortext').forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    texttitle.innerText = "Editing Textbox"
+                    textpopupWindow.style.display = "block";
+                    textxfield.value = button.getAttribute("x")
+                    textyfield.value = button.getAttribute("y")
+                    textstring.value = button.textContent
+
+                    //the buttons on the popup know decor computer they came from.
+                    textcloseButton.setAttribute('data-id', button.id);
+                    textapplyButton.setAttribute('data-id', button.id);
+                    });
+                });
+
                 const socket = io();
-                function save() {
-                    socket.emit('updateComps',(document.getElementById("comparr").textContent));
-                    socket.emit('updateWalls',(document.getElementById("wallarr").textContent));
-                    socket.emit('updateDec',(document.getElementById("decarr").textContent));
-                    socket.emit('updateBooks',(document.getElementById("bookarr").textContent));
+
+                //this function simply loops through all "selectable" objects and sends their values to the server
+                function apply() {
+                    var output = '';
+                    document.querySelectorAll('.selectable').forEach(function(e) {
+                        // Get all attributes of the element
+                        var attributes = e.attributes;
+                        for (var i = 0; i < attributes.length; i++) {
+                            output += (attributes[i].value + ';') //semi-colon delineated
+                        }
+                        output += "\n"
+                    });
+                    console.log(output)
+                    socket.emit('updateComps',output);
                 }
                 function restore(){
-                    alert('Restore Saved')
+                    socket.emit('restore',output);
+                }
+
+                //All of the make new element functionality. 
+
+                function makelement(){
+                    var newElementWindow = document.getElementById("new-element");
+                    newElementWindow.style.display = "block";
+                    console.log("H")
+                }
+                
+                var newcancelbutton = document.getElementById("cancel-new");
+                newcancelbutton.addEventListener("click", function() {
+                    newElementWindow.style.display = "none";
+                    console.log("H")
+                });
+
+                var newcomputer = document.getElementById("new-computer");
+                newcomputer.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    popupWindow.style.display = "block";
+                    showorhide.checked = false;
+                    currentitle.innerText = "New Computer"
+                    xfield.value = "0"
+                    yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    closeButton.setAttribute('data-id', "H");
+                    applyButton.setAttribute('data-id', "H");
+                });
+
+                //Checks if a name already exists
+                //If it does, then the program will affix a 1 to the end and try again. If proposed_name1 is also taken, try with 2, etc.
+                function guranteeunique(proposed_name, element){
+                    if(proposed_name == element.id){
+                        console.log("Equal")
+                        return proposed_name
+                    }
+                    if(checktaken(proposed_name)){
+                        var number = 1
+                        for (const e of document.querySelectorAll('.selectable')) {
+                            if(proposed_name.concat("(").concat(number).concat(")") == e.id){
+                                number+=1
+                            }
+                        };
+                        return proposed_name.concat("(").concat(number).concat(")")
+                    }
+                    return proposed_name
+                }
+
+                //checks if a name is already taken
+                function checktaken(name){
+                    for (const e of document.querySelectorAll('.selectable')) {
+                        if(name == e.id){
+                            return true;
+                        }
+                    };
+                    //the name isn't taken
+                    return false;
                 }
             </script>
         </html>
