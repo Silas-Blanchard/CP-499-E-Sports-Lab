@@ -37,7 +37,7 @@ function checkWhitelist(req, res, next) {
     console.log('User details and email:', req.session.user.email);
     
     // Check if the user email is in the whitelist
-    const isWhitelisted = req.session.user.email && adminWhitelist.includes(userEmail.toLowerCase());
+    const isWhitelisted = req.session.user.email && adminWhitelist.includes(req.session.user.email);
     
     // If user is on the whitelist, proceed to the next middleware
     if (isWhitelisted) {
