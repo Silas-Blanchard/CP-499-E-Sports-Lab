@@ -28,13 +28,13 @@ function checkWhitelist(req, res, next) {
     const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
 
     // Log the current user email and whitelist status
-    console.log('User email:', userEmail);
-    console.log('Admin whitelist:', adminWhitelist);
+    // console.log('User email:', userEmail);
+    // console.log('Admin whitelist:', adminWhitelist);
 
-    console.log('Session data:', req.session);
+    // console.log('Session data:', req.session);
     // If you expect the user details to be under `req.session.user`, log this:
-    console.log('User details:', req.session.user);
-    console.log('User details and email:', req.session.user.email);
+    // console.log('User details:', req.session.user);
+    // console.log('User details and email:', req.session.user.email);
     
     // Check if the user email is in the whitelist
     const isWhitelisted = req.session.user.email && adminWhitelist.includes(req.session.user.email);
