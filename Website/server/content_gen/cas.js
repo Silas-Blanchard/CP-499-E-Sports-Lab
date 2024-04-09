@@ -16,14 +16,6 @@ function initializeCasAuth() {
 
 // Middleware to check whitelist
 function checkWhitelist(req, res, next) {
-  try {
-    // Check if user email is available in session attributes
-    const userEmail = req.session.cas && 
-                      req.session.user &&
-                       req.session.cas.user && 
-                       req.session.cas.user.attributes && 
-                       req.session.cas.user.attributes.email;
-    
     // Whitelisted email addresses
     const adminWhitelist = ['jlauer2023@ColoradoCollege.edu', 'q_sebso@ColoradoCollege.edu', 's_blanchard@ColoradoCollege.edu'];
 
@@ -43,11 +35,6 @@ function checkWhitelist(req, res, next) {
       console.log('Redirecting to main page.');
       res.redirect('/');
     }
-  } catch (error) {
-    // Log any errors that occur during whitelist checking
-    console.error('Error checking whitelist:', error.message);
-    res.redirect('/'); // Redirect to main page in case of error
-  }
 }
 
 

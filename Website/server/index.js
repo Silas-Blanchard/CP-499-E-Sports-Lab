@@ -57,7 +57,7 @@ app.get('/admin', (req, res, next) => {
     // User is on the whitelist, redirect to admin page
     console.log('User is on the whitelist.');
     console.log('Redirecting to admin page.');
-    res.redirect('/admin');
+    res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
   }, () => {
     // User is not on the whitelist, redirect to main page
     console.log('User is not on the whitelist.');
