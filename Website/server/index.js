@@ -50,13 +50,17 @@ app.get('/admin', (req, res, next) => {
   initializeCasAuth()(req, res, next);
 }, (req, res) => {
   console.log('CAS authentication successful');
+  console.log()
   // After CAS authentication, check whitelist
   checkWhitelist(req, res, () => {
+    console.log(checkWhitelist)
     // If user is on the whitelist, redirect to admin page
     res.redirect('/admin');
+    console.log('IT WORKED BUT YOU DIDNT GET SENT THERE');
   }, () => {
     // If user is not on the whitelist, redirect to main page
     res.redirect('/');
+    console.log('WHYYYYYYYY');
   });
 });
 
