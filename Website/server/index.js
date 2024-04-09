@@ -45,27 +45,24 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// Route to handle CAS authentication callback and whitelist check
+// Route to handle CAS authentication callback
 app.get('/admin', (req, res, next) => {
-  // Initialize CAS authentication middleware
-  initializeCasAuth()(req, res, () => {
-    // After CAS authentication, check whitelist
-    const userEmail = req.session.cas && req.session.cas.user.attributes.email;
-    const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
-    if (userEmail && adminWhitelist.includes(userEmail.toLowerCase())) {
-      // If user is on the whitelist, redirect to admin page
-      console.log('CAS authentication successful');
-      console.log('User is on the whitelist');
-      res.redirect('/admin');
-    } else {
-      // If user is not on the whitelist, redirect to main page
-      console.log('CAS authentication successful');
-      console.log('User is not on the whitelist');
-      res.redirect('/');
-    }
+  initializeCasAuth()(req, res, next);
+}, (req, res) => {
+  console.log('CAS authentication successful');
+  console.log()
+  // After CAS authentication, check whitelist
+  checkWhitelist(req, res, () => {
+    console.log(checkWhitelist)
+    // If user is on the whitelist, redirect to admin page
+    res.redirect('/admin');
+    console.log('IT WORKED BUT YOU DIDNT GET SENT THERE');
+  }, () => {
+    // If user is not on the whitelist, redirect to main page
+    res.redirect('/');
+    console.log('WHYYYYYYYY');
   });
 });
-
 
 // Main page route
 app.get('/', (req, res) => {
