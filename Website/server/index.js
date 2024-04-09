@@ -50,17 +50,18 @@ app.get('/admin', (req, res, next) => {
   initializeCasAuth()(req, res, next);
 }, (req, res) => {
   console.log('CAS authentication successful');
-  console.log()
+
   // After CAS authentication, check whitelist
   checkWhitelist(req, res, () => {
-    console.log(checkWhitelist)
-    // If user is on the whitelist, redirect to admin page
+    // User is on the whitelist, redirect to admin page
+    console.log('User is on the whitelist.');
+    console.log('Redirecting to admin page.');
     res.redirect('/admin');
-    console.log('IT WORKED BUT YOU DIDNT GET SENT THERE');
   }, () => {
-    // If user is not on the whitelist, redirect to main page
+    // User is not on the whitelist, redirect to main page
+    console.log('User is not on the whitelist.');
+    console.log('Redirecting to main page.');
     res.redirect('/');
-    console.log('WHYYYYYYYY');
   });
 });
 
@@ -69,26 +70,17 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, '/html_and_layout_data/webber.html'));
 });
 
-app.get('/admin', (req, res) => {
-  var listening = spawn('python3',['server/content_gen/admin_page_datafill.py']);
-  res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
-});
-
-// app.get('/admin', cas.block, (req, res) => {
-//   res.sendFile(join(__dirname, 'admin_page.html'));
-// });
-
 io.on('connection', (socket) => {
   socket.on("updateComps", function(data) {
-  fs.writeFile('server/html_and_layout_data/unparsed.txt', data, (err) => {
+    fs.writeFile('server/html_and_layout_data/unparsed.txt', data, (err) => {
       if (err) throw err;
-  })
-  var listening = spawn('python3',['server/content_gen/admin_update.py'])
-  listening.on('exit', function (code) { 
-    listening = null;
-    console.log("EXITED " + code);
-   });
-  spawn('python3',['server/content_gen/six_website.py'])
+    })
+    var listening = spawn('python3',['server/content_gen/admin_update.py'])
+    listening.on('exit', function (code) { 
+      listening = null;
+      console.log("EXITED " + code);
+    });
+    spawn('python3',['server/content_gen/six_website.py'])
   });
 
   socket.on("restore", function(data) {
@@ -103,4 +95,3 @@ server.listen(PORT, () => {
 childPython.on('close', (code) => {
   console.log(`child process exited with code ${code}`);
 });
-

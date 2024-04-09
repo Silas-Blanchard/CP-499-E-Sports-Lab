@@ -16,28 +16,38 @@ function initializeCasAuth() {
 
 // Middleware to check whitelist
 function checkWhitelist(req, res, next) {
-  const userEmail = req.session.cas && req.session.cas.user.attributes.email;
-  const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
-  if (userEmail && adminWhitelist.includes(userEmail)) {
-    console.log(adminWhitelist.includes(userEmail));
-    console.log(userEmail && adminWhitelist.includes(userEmail));
-    console.log(req.session.cas);
-    console.log(req.session.cas.user);
-    console.log(req.session.cas.user.attributes.email); // Corrected access to email attribute
+  try {
+    // Check if user email is available in session attributes
+    const userEmail = req.session.cas && req.session.cas.user && req.session.cas.user.attributes && req.session.cas.user.attributes.email;
+    
+    // Whitelisted email addresses
+    const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
+
+    // Log the current user email and whitelist status
+    console.log('User email:', userEmail);
+    console.log('Admin whitelist:', adminWhitelist);
+    
+    // Check if the user email is in the whitelist
+    const isWhitelisted = userEmail && adminWhitelist.includes(userEmail.toLowerCase());
+    
     // If user is on the whitelist, proceed to the next middleware
-    res.redirect('/admin');
-    console.log('IT WORKED, WHY ARE YOU NOT GOING?');
-  } else {
-    // If user is not on the whitelist, redirect to the main page
-    console.log(adminWhitelist.includes(userEmail));
-    console.log(userEmail && adminWhitelist.includes(userEmail));
-    console.log(req.session.cas);
-    console.log(req.session.cas.user);
-    console.log(req.session.cas.user.attributes.email); // Corrected access to email attribute
-    res.redirect('/');
-    console.log('User is not on the list');
+    if (isWhitelisted) {
+      console.log('User is on the whitelist.');
+      console.log('Redirecting to admin page.');
+      res.redirect('/admin');
+    } else {
+      // If user is not on the whitelist, redirect to the main page
+      console.log('User is not on the whitelist.');
+      console.log('Redirecting to main page.');
+      res.redirect('/');
+    }
+  } catch (error) {
+    // Log any errors that occur during whitelist checking
+    console.error('Error checking whitelist:', error.message);
+    res.redirect('/'); // Redirect to main page in case of error
   }
 }
+
 
 
 
