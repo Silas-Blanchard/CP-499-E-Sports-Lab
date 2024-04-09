@@ -45,23 +45,6 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// Define the /user-email route
-app.get('/user-email', async (req, res) => {
-  console.log("index")
-  try {
-      // Assuming you have user email in session after CAS authentication
-      const userEmail = req.session.cas && req.session.cas.user && req.session.cas.user.attributes && req.session.cas.user.attributes.email;
-      
-      if (userEmail) {
-          res.json({ email: userEmail });
-      } else {
-          res.status(404).send('User email not found in');
-      }
-  } catch (error) {
-      console.error('Error retrieving user email:', error.message);
-      res.status(500).send('Internal Server Error');
-  }
-});
 
 // Route to handle CAS authentication callback
 app.get('/admin', (req, res, next) => {
