@@ -13,6 +13,23 @@ function initializeCasAuth() {
   return cas.bounce;
 }
 
+// Define the /user-email route
+app.get('/user-email', async (req, res) => {
+  console.log('cas.js')
+  try {
+      // Assuming you have user email in session after CAS authentication
+      const userEmail = req.session.cas && req.session.cas.user && req.session.cas.user.attributes && req.session.cas.user.attributes.email;
+      
+      if (userEmail) {
+          res.json({ email: userEmail });
+      } else {
+          res.status(404).send('User email not found in');
+      }
+  } catch (error) {
+      console.error('Error retrieving user email:', error.message);
+      res.status(500).send('Internal Server Error');
+  }
+});
 
 // Middleware to check whitelist
 function checkWhitelist(req, res, next) {
@@ -50,6 +67,7 @@ function checkWhitelist(req, res, next) {
     res.redirect('/'); // Redirect to main page in case of error
   }
 }
+
 
 
 // Logout route
