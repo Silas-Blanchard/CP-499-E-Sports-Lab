@@ -18,7 +18,10 @@ function initializeCasAuth() {
 function checkWhitelist(req, res, next) {
   try {
     // Check if user email is available in session attributes
-    const userEmail = req.session.cas && req.session.cas.user && req.session.cas.user.attributes && req.session.cas.user.attributes.email;
+    const userEmail = req.session.cas && 
+                       req.session.cas.user && 
+                       req.session.cas.user.attributes && 
+                       req.session.cas.user.attributes.email;
     
     // Whitelisted email addresses
     const adminWhitelist = ['jlauer2023@coloradocollege.edu', 'q_sebso@gcoloradocollege.edu'];
@@ -47,8 +50,6 @@ function checkWhitelist(req, res, next) {
     res.redirect('/'); // Redirect to main page in case of error
   }
 }
-
-
 
 
 // Logout route
