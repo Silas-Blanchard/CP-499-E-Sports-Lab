@@ -7,7 +7,7 @@ The project has three main parts: the website, the server, and the lab computers
 Installation and operation proceudres can be found here:
 https://docs.google.com/document/d/1Gbk26AQQR50lvck4qG3Cwwc0CK82GKBLDHK_NAvysS0
 
-Modify port numbers in the files under /NEW PYW FILES to suit your needs. The default port is 12345 for our server, which is under Website/server
+Modify port numbers in the files under /PYW Files to suit your needs. The default port is 12345 for our server, which is under Website/server
 
 The project is currently maintained by @Silas-Blanchard and @qsebso on github
 Contact us at silasb3435@gmail.com or q_sebso@coloradocollege.edu respectively
