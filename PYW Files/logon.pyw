@@ -12,6 +12,6 @@ if __name__ == '__main__':
     s.settimeout(2)
 
     s.connect((host, port))
-    content = os.getlogin() + ' 0'
+    content = os.getlogin() + ' 2'
 
     s.send(content.encode())
