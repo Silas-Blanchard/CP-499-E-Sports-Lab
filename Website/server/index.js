@@ -10,6 +10,11 @@ const { initializeCasAuth, checkWhitelist } = require('./content_gen/cas');
 
 const childPython = spawn('python3', ['server/content_gen/six_website.py']);
 const childPythonJSON = spawn('python3', ['server/content_gen/JSON-maker.py']);
+const serverpython = spawn('python3', ['server/server with database.py']);
+serverpython.on('exit', function (code) { 
+  listening = null;
+  console.log("PYTHON SERVER EXITED " + code);
+ });
 
 const PORT = process.env.PORT || 3001;
 const io = new Server(server);
@@ -20,7 +25,7 @@ async function notify() {
   while (true) {
     await sleep(5000)
     spawn('python3', ['server/content_gen/six_website.py']);
-    const hey = spawn('python3', ['server/content_gen/JSON-maker.py']);
+    const hey = spawn('python3', ['server/content_gen/JSON-maker.py']); //constantly updates computes with new colors
     hey.stdout.on('data', function (data) {
       var text = data.toString('utf8');
       var str = text.replace(/'/g, '\"');
