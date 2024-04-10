@@ -13,18 +13,30 @@ function initializeCasAuth() {
   return cas.bounce;
 }
 
+
 // Middleware to check whitelist
 function checkWhitelist(req, res, next) {
-  const userEmail = req.session.cas && req.session.cas.user;
-  const adminWhitelist = ['s_blanchard@coloradocollege.edu', 'jlauer2023@coloradocollege.edu'];
-  if (userEmail && adminWhitelist.includes(userEmail.toLowerCase())) {
+    // Whitelisted email addresses
+    const adminWhitelist = ['jlauer2023@ColoradoCollege.edu', 'q_sebso@ColoradoCollege.edu', 's_blanchard@ColoradoCollege.edu'];
+
+    console.log('User details and email:', req.session.user.email);
+    
+    // Check if the user email is in the whitelist
+    const isWhitelisted = req.session.user.email && adminWhitelist.includes(req.session.user.email);
+    
     // If user is on the whitelist, proceed to the next middleware
-    next();
-  } else {
-    // If user is not on the whitelist, redirect to the main page
-    res.redirect('/');
-  }
+    if (isWhitelisted) {
+      console.log('User is on the whitelist.');
+      console.log('Redirecting to admin page.');
+      next();
+    } else {
+      // If user is not on the whitelist, redirect to the main page
+      console.log('User is not on the whitelist.');
+      console.log('Redirecting to main page.');
+      res.redirect('/');
+    }
 }
+
 
 
 // Logout route
@@ -37,3 +49,4 @@ module.exports = {
   checkWhitelist,
   logout
 };
+
