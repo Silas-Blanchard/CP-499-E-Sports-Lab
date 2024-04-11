@@ -463,20 +463,18 @@
 
                     //new button is a unique id we give to new buttons
                     new_id = guranteeunique("new_computer")
-                    closeButton.setAttribute('data-id', new_id);
-                    applyButton.setAttribute('data-id', new_id);
 
-                    var createdcomp = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
-                    document.getElementById("svg").appendChild(createdcomp);
-                    createdcomp.id = new_id
-                    createdcomp.setAttribute('x',0)
-                    createdcomp.setAttribute('y',0)
-                    createdcomp.setAttribute('width',35)
-                    createdcomp.setAttribute('height',35)
-                    createdcomp.classList.add("selectable");
-                    createdcomp.classList.add("computer");
-                    createdcomp.setAttribute("data-id",new_id + ',' + false);
-                    imbuecomputer(createdcomp)
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',0)
+                    createlement.setAttribute('width',35)
+                    createlement.setAttribute('height',35)
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("computer");
+                    createlement.setAttribute("data-id",new_id + ',' + false);
+                    imbuecomputer(createlement)
                 });
 
                 var newwall = document.getElementById("new-wall");
@@ -491,19 +489,68 @@
 
                     //new button is a unique id we give to new buttons
                     new_id = guranteeunique("new_wall")
-                    closeButton.setAttribute('data-id', new_id);
-                    applyButton.setAttribute('data-id', new_id);
 
-                    var createdcomp = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
-                    document.getElementById("svg").appendChild(createdcomp);
-                    createdcomp.id = new_id
-                    createdcomp.setAttribute('x',0)
-                    createdcomp.setAttribute('y',0)
-                    createdcomp.setAttribute('width',35)
-                    createdcomp.setAttribute('height',35)
-                    createdcomp.classList.add("selectable");
-                    createdcomp.classList.add("wall");
-                    imbuewall(createdcomp)
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',20)
+                    createlement.setAttribute('width',200)
+                    createlement.setAttribute('height',5)
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("wall");
+                    imbuewall(createlement)
+                });
+
+                //the button which handles creating new decor
+                var newdec = document.getElementById("new-decoration");
+                newdec.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Decor"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_decoration")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',0)
+                    createlement.setAttribute('width',35)
+                    createlement.setAttribute('height',35)
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decor");
+                    imbuewall(createlement) //imbue wall works for both to give them functionality
+                });
+
+                //the button which handles creating new textboxes
+                var newtext = document.getElementById("new-textbox");
+                newtext.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Decor"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_text")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'text'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.setAttribute('x',100)
+                    createlement.setAttribute('y',100)
+                    createlement.textContent = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decortext");
+                    imbuetext(createlement)
                 });
 
                 //Checks if a name already exists
