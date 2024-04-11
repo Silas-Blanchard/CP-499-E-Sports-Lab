@@ -26,4 +26,3 @@ The other files in the top directory are files created by node.js
 /CP-499-E-Sports-Lab/Website/server:
 >content-gen: Contains files that produce the files in html_and_layout_data
 >html_and_layout_data: Contains files as well as default settings in the form of CSV files (also includes default versions of the HTML files)
->tests: Contains programs useful in bug-fixing. Remains in place in anticipation of future versions.
