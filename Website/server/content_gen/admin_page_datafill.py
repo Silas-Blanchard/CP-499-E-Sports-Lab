@@ -30,7 +30,7 @@ def update_HTML():
     computers = walls = decor = books = ""
 
     HTML = """
-    <svg viewBox='-10 0 1000 500'>
+    <svg id="svg" viewBox='-10 0 1000 500'>
     """
     
     #Takes everything from the computer layout CSV and makes it into its HTML representation
@@ -64,7 +64,7 @@ def update_HTML():
     for row in list(label_reader)[1:]:
         text, x, y, name = row
         HTML += f"""
-            <text id="{text}" class="selectable decor" x="{x}" y="{y}" data-id="{text}">{text}</text>
+            <text id="{text}" class="selectable decortext" x="{x}" y="{y}" data-id="{text}">{text}</text>
         """
     
     #this bit takes the default html, which is a text file and can be manipulated with minimal imports

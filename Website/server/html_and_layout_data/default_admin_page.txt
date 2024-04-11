@@ -171,12 +171,6 @@
             <div class="warning">
                 <h2>ADMINS ONLY</h2>
                 <p>Changing these files will change the arrangement of the computers, walls, and decortations in the lab!</p>
-                <ul>
-                    <li>Computer Arrangement Syntax: Computer Name, X Position, Y Position</li>
-                    <li>Wall Arrangement Syntax: Wall Name, Starting X, Starting Y, Length, Rotation (Enter TRUE or FALSE or it will break)</li>
-                    <li>Decor Arrangement Syntax: Decor Name, Starting X, Starting Y, Width, Height</li>
-                    <li>(0,0) meaning X = 0 and Y = 0 is the top left of the screen</li>
-                </ul>
             </div>
 		        <div id="comp-popup">
   		        <text id="comp-title">Computer</text><br><br>
@@ -338,6 +332,10 @@
                 // Show the comp-pop-up window when each computer is clicked
                 //Also populates the pop-up with the proper values
                 document.querySelectorAll('.computer').forEach(function(button) {
+                    imbuecomputer(button)
+                });
+                
+                function imbuecomputer(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     popupWindow.style.display = "block";
@@ -356,10 +354,15 @@
                     });
 
                     //the buttons on the popup know which computer they came from.
-                });
+                }
 
                 // Adds the popup functionality to walls
                 document.querySelectorAll('.wall').forEach(function(button) {
+                    imbuewall(button)
+                });
+
+                //adds clicker functionality to walls
+                function imbuewall(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     wallpopupWindow.style.display = "block";
@@ -372,10 +375,15 @@
                     wallcloseButton.setAttribute('data-id', button.id);
                     wallapplyButton.setAttribute('data-id', button.id);
                     });
-                });
+                }
 
                 //popups for decor
                 document.querySelectorAll('.decor').forEach(function(button) {
+                    imbuedecor(button)
+                });
+
+                //imbuing decor with button funcitonality
+                function imbuedecor(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     walltitle.innerText = "Editing Decor"
@@ -389,10 +397,14 @@
                     wallcloseButton.setAttribute('data-id', button.id);
                     wallapplyButton.setAttribute('data-id', button.id);
                     });
-                });
+                }
 
                 //adding functionality to the textboxes so they can be clicked as well
                 document.querySelectorAll('.decortext').forEach(function(button) {
+                    imbuetext(button)
+                });
+
+                function imbuetext(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     texttitle.innerText = "Editing Textbox"
@@ -405,9 +417,7 @@
                     textcloseButton.setAttribute('data-id', button.id);
                     textapplyButton.setAttribute('data-id', button.id);
                     });
-                });
-
-                const socket = io();
+                }                              
 
                 //this function simply loops through all "selectable" objects and sends their values to the server
                 function apply() {
@@ -438,31 +448,67 @@
                 var newcancelbutton = document.getElementById("cancel-new");
                 newcancelbutton.addEventListener("click", function() {
                     newElementWindow.style.display = "none";
-                    console.log("H")
                 });
 
+                //new compute rbutton functionality wooooowoahhhhhhh
                 var newcomputer = document.getElementById("new-computer");
                 newcomputer.addEventListener("click", function() {
                     event.preventDefault();
                     newElementWindow.style.display = "none";
-                    popupWindow.style.display = "block";
-                    showorhide.checked = false;
-                    currentitle.innerText = "New Computer"
-                    xfield.value = "0"
-                    yfield.value = "0"
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Computer"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
 
                     //new button is a unique id we give to new buttons
-                    closeButton.setAttribute('data-id', "H");
-                    applyButton.setAttribute('data-id', "H");
+                    new_id = guranteeunique("new_computer")
+                    closeButton.setAttribute('data-id', new_id);
+                    applyButton.setAttribute('data-id', new_id);
+
+                    var createdcomp = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createdcomp);
+                    createdcomp.id = new_id
+                    createdcomp.setAttribute('x',0)
+                    createdcomp.setAttribute('y',0)
+                    createdcomp.setAttribute('width',35)
+                    createdcomp.setAttribute('height',35)
+                    createdcomp.classList.add("selectable");
+                    createdcomp.classList.add("computer");
+                    createdcomp.setAttribute("data-id",new_id + ',' + false);
+                    imbuecomputer(createdcomp)
+                });
+
+                var newwall = document.getElementById("new-wall");
+                newwall.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Computer"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_wall")
+                    closeButton.setAttribute('data-id', new_id);
+                    applyButton.setAttribute('data-id', new_id);
+
+                    var createdcomp = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createdcomp);
+                    createdcomp.id = new_id
+                    createdcomp.setAttribute('x',0)
+                    createdcomp.setAttribute('y',0)
+                    createdcomp.setAttribute('width',35)
+                    createdcomp.setAttribute('height',35)
+                    createdcomp.classList.add("selectable");
+                    createdcomp.classList.add("wall");
+                    imbuewall(createdcomp)
                 });
 
                 //Checks if a name already exists
                 //If it does, then the program will affix a 1 to the end and try again. If proposed_name1 is also taken, try with 2, etc.
-                function guranteeunique(proposed_name, element){
-                    if(proposed_name == element.id){
-                        console.log("Equal")
-                        return proposed_name
-                    }
+                function guranteeunique(proposed_name){
                     if(checktaken(proposed_name)){
                         var number = 1
                         for (const e of document.querySelectorAll('.selectable')) {
@@ -487,6 +533,6 @@
                 }
 
                 //okay so below this is all of the 
-
+                const socket = io();
             </script>
         </html>

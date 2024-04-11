@@ -349,7 +349,7 @@ def generate_computer_svg(row, computer, identifier):
     svg_computer = f"""
         <g>
             <rect id="{computer_name}" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:{box_color};"/>
-            <text class="computer-text" x="{x + width/2}" y="{y + height/2}" fill="white">{identifier}</text>
+            <text class="computer-text" x="{x + width/2}" y="{y + height/2 + 5}" fill="white">{identifier}</text>
         </g>
         """
     return svg_computer
@@ -420,6 +420,9 @@ def write_html_file(HTML_path, HTML_text):
             document.getElementById(text_id).innerHTML = computer_stat
           }else if(dataJSON[computer] == "#D09B2C"){
             let computer_stat = computer.concat(": Likely In Use");
+            document.getElementById(text_id).innerHTML = computer_stat
+          }else if(dataJSON[computer] == "#808080"){
+            let computer_stat = computer.concat(": Out of Order");
             document.getElementById(text_id).innerHTML = computer_stat
           }else{
             let computer_stat = computer.concat(": Free");

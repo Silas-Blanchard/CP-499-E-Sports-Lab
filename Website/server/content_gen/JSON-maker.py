@@ -28,6 +28,8 @@ for row in rows:
         box_color = "#228C22"
     elif "might be in use" in status:
         box_color = "#D09B2C"
+    elif "out of order" in status:
+        box_color = "#808080"
     elif "is in use" in status:
         box_color = "#801B1B"
 

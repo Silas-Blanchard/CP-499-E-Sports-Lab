@@ -169,7 +169,7 @@
     </div>
     <svg viewBox='0 0 1000 1000'>
         <g>
-            <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:#228C22;"/>
+            <rect id="VarsityLab1" x="10" y="200" width="35" height="35" style="fill:#801B1B;"/>
             <text class="computer-text" x="27.5" y="217.5" fill="white">1</text>
         </g>
         
@@ -368,6 +368,9 @@
             document.getElementById(text_id).innerHTML = computer_stat
           }else if(dataJSON[computer] == "#D09B2C"){
             let computer_stat = computer.concat(": Likely In Use");
+            document.getElementById(text_id).innerHTML = computer_stat
+          }else if(dataJSON[computer] == "#808080"){
+            let computer_stat = computer.concat(": Out of Order");
             document.getElementById(text_id).innerHTML = computer_stat
           }else{
             let computer_stat = computer.concat(": Free");
