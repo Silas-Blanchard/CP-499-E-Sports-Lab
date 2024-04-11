@@ -56,23 +56,28 @@ app.use(session({
 
 
 // Route to handle CAS authentication callback
-app.get('/admin', (req, res, next) => {
-  initializeCasAuth()(req, res, next);
-}, (req, res) => {
-  console.log('CAS authentication successful');
+// app.get('/admin', (req, res, next) => {
+//   initializeCasAuth()(req, res, next);
+// }, (req, res) => {
+//   console.log('CAS authentication successful');
 
-  // After CAS authentication, check whitelist
-  checkWhitelist(req, res, () => {
-    // User is on the whitelist, redirect to admin page
-    console.log('User is on the whitelist.');
-    console.log('Redirecting to admin page.');
-    res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
-  }, () => {
-    // User is not on the whitelist, redirect to main page
-    console.log('User is not on the whitelist.');
-    console.log('Redirecting to main page.');
-    res.redirect('/');
-  });
+//   // After CAS authentication, check whitelist
+//   checkWhitelist(req, res, () => {
+//     // User is on the whitelist, redirect to admin page
+//     console.log('User is on the whitelist.');
+//     console.log('Redirecting to admin page.');
+       //spawn('python3', ['server/content_gen/admin_page_datafill.py']);
+//     res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
+//   }, () => {
+//     // User is not on the whitelist, redirect to main page
+//     console.log('User is not on the whitelist.');
+//     console.log('Redirecting to main page.');
+//     res.redirect('/');
+//   });
+// });
+
+app.get('/admin', (req, res) => {
+  res.sendFile(join(__dirname, '/html_and_layout_data/admin_page.html'));
 });
 
 // Main page route

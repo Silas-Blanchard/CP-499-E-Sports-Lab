@@ -422,19 +422,49 @@
                 //this function simply loops through all "selectable" objects and sends their values to the server
                 function apply() {
                     var output = '';
+                    //attributes need to be in this order
+                    //id, classes, data-id, x, y, width, height
                     document.querySelectorAll('.selectable').forEach(function(e) {
                         // Get all attributes of the element
-                        var attributes = e.attributes;
-                        for (var i = 0; i < attributes.length; i++) {
-                            output += (attributes[i].value + ';') //semi-colon delineated
+                        if(e.classList.contains("computer")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.dataset[0] + e.dataset[1] + ";"
+                            output+= e.x.animVal.value + ";"
+                            output+= e.y.animVal.value + ";"
+                            output+= e.width.animVal.value + ";"
+                            output+= e.height.animVal.value + ";"
                         }
+                        if(e.classList.contains("wall")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.x + ";"
+                            output+= e.y + ";"
+                            output+= e.width + ";"
+                            output+= e.height + ";"
+                        }
+                        if(e.classList.contains("decor")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.x + ";"
+                            output+= e.y + ";"
+                            output+= e.width + ";"
+                            output+= e.height + ";"
+                        }
+                         if(e.classList.contains("decortext")){
+                            output += e.textContent + ";"
+                            output += e.classList + ";"
+                            output+= e.x + ";"
+                            output+= e.y + ";"
+                        }
+
                         output += "\n"
                     });
                     console.log(output)
                     socket.emit('updateComps',output);
                 }
                 function restore(){
-                    socket.emit('restore',output);
+                    socket.emit('restore');
                 }
 
                 //All of the make new element functionality. 
@@ -442,7 +472,6 @@
                 function makelement(){
                     var newElementWindow = document.getElementById("new-element");
                     newElementWindow.style.display = "block";
-                    console.log("H")
                 }
                 
                 var newcancelbutton = document.getElementById("cancel-new");
@@ -467,12 +496,12 @@
                     var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
                     document.getElementById("svg").appendChild(createlement);
                     createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("computer");
                     createlement.setAttribute('x',0)
                     createlement.setAttribute('y',0)
                     createlement.setAttribute('width',35)
                     createlement.setAttribute('height',35)
-                    createlement.classList.add("selectable");
-                    createlement.classList.add("computer");
                     createlement.setAttribute("data-id",new_id + ',' + false);
                     imbuecomputer(createlement)
                 });
@@ -493,12 +522,12 @@
                     var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
                     document.getElementById("svg").appendChild(createlement);
                     createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("wall");
                     createlement.setAttribute('x',0)
                     createlement.setAttribute('y',20)
                     createlement.setAttribute('width',200)
                     createlement.setAttribute('height',5)
-                    createlement.classList.add("selectable");
-                    createlement.classList.add("wall");
                     imbuewall(createlement)
                 });
 
@@ -519,12 +548,13 @@
                     var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
                     document.getElementById("svg").appendChild(createlement);
                     createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decor");
                     createlement.setAttribute('x',0)
                     createlement.setAttribute('y',0)
                     createlement.setAttribute('width',35)
                     createlement.setAttribute('height',35)
-                    createlement.classList.add("selectable");
-                    createlement.classList.add("decor");
+                    createlement.setAttribute('fill:#808080;')
                     imbuewall(createlement) //imbue wall works for both to give them functionality
                 });
 
@@ -545,11 +575,11 @@
                     var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'text'); //new computer
                     document.getElementById("svg").appendChild(createlement);
                     createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decortext");
                     createlement.setAttribute('x',100)
                     createlement.setAttribute('y',100)
                     createlement.textContent = new_id
-                    createlement.classList.add("selectable");
-                    createlement.classList.add("decortext");
                     imbuetext(createlement)
                 });
 
