@@ -1,7 +1,10 @@
+#This code will create the admin page using default_admin_page.txt as the basis.
+
 import os
 import csv
 import sys
 
+#returns paths to vital assets. This code is used in many other python files. Don't modify without seeing where it is used.
 def get_paths(BASE_DIR):
     return(
         os.path.join(BASE_DIR, "..","html_and_layout_data","Book1.csv"),
@@ -13,6 +16,7 @@ def get_paths(BASE_DIR):
         os.path.join(BASE_DIR, "..","html_and_layout_data","labels.csv")
     )
 
+#fills in the non-default values into our default HTML
 def update_HTML():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     computer_layout, wall_layout, decor_layout, bookings, admin_html_path, default_admin_path, labels = get_paths(BASE_DIR)
@@ -82,9 +86,6 @@ def update_files(files):
     with open(computer_layout_path, "w") as file:
         file.write(separate_files[0])
         file.close()
-
-def restore_original():
-    pass
 
 if __name__ == "__main__":
     if(len(sys.argv) < 2):

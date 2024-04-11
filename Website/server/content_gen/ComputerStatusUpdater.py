@@ -1,3 +1,5 @@
+#this code takes a given bit of database data and determines which color the computer should be
+
 import sqlite3
 from datetime import datetime
 

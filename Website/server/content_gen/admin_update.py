@@ -1,3 +1,5 @@
+#this code handles taking a file, created by index.js, and using it to update the various csv files in html_and_layout_data
+
 import os
 import csv
 import sys

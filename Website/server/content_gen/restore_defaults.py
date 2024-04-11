@@ -1,3 +1,4 @@
+#Restores default values to the csv files.
 import shutil
 import os
 

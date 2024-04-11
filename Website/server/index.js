@@ -1,3 +1,5 @@
+//index.js is the brains of the operation. It will call server with database.py and the HTML generator code (which is written in python). 
+
 const express = require('express');
 const http = require('http');
 const { spawn } = require('node:child_process');
@@ -21,6 +23,7 @@ const io = new Server(server);
 
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
+//this function sends JSON files, containing color data for the lab computers, to every isntance of the website.
 async function notify() {
   while (true) {
     await sleep(5000)

@@ -1,3 +1,5 @@
+#This code recieves messages from computers while always listening on 12345. It will then save the data to the database, where it can be interpretted by other python programs in content-gen
+
 # first of all import the socket library
 import socket
 import sqlite3 as sql
@@ -112,16 +114,6 @@ if __name__ == '__main__':
                 # Call the function to find computer status
                 set_computer_status = find_computer_status(global_computer_name, global_computer_status)
                 print("Set Computer Status:", set_computer_status)
-
-                # Inside the loop where you process each computer status
-                # Insert data into the computer_status table
-                # cursor.execute("INSERT or REPLACE INTO computer_status (name, time_last_0_received, time_last_1_received) VALUES (?, ?, ?)",
-                #             (global_computer_name,
-                #                 # Set time_last_0_received if status is 0
-                #                 current_timestamp if global_computer_status == 0 else None,
-                #                 # Set time_last_1_received if status is 1
-                #                 current_timestamp if global_computer_status == 1 else None
-                #                 ))
 
                 #time_last_0_received just means time since computer pinged that it was active.
                 #time_last_0_received just means time since computer pinged that it was idle

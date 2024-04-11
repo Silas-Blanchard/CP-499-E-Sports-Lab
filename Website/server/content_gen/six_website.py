@@ -1,3 +1,5 @@
+#this method takes the creation of the HTML and splits it into many pieces and then writes to the HTML to send to the end users.
+
 import sqlite3
 import csv
 import os
