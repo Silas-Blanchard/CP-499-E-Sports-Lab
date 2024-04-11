@@ -70,15 +70,9 @@ def generate_html_content(rows, computers, walls, labels, decor_path):
     HTML_text += generate_styles()
     HTML_text += generate_header()
     
-    # Add the responsive iframe container
-    HTML_text += """
-    <div class="iframe-container">
-        <iframe class="responsive-iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&showTitle=0&showCalendars=0&src=Y2Nlc3BvcnRzQGNvbG9yYWRvY29sbGVnZS5lZHU&color=%23D81B60" frameborder="0" scrolling="no"></iframe>
-    </div>
-    """
-    
+      
     # Continue with the SVG content
-    HTML_text += "<svg viewBox='0 0 1000 1000'>"
+    HTML_text += "<svg viewBox='-10 0 1000 450'>"
     
     # Add computers and walls to SVG
     HTML_text += generate_computers_svg(rows, computers)
@@ -100,9 +94,15 @@ def generate_html_content(rows, computers, walls, labels, decor_path):
         </div>
     </div>
     """
-    
+    # Add the responsive iframe container and closing out our SVG
+    HTML_text += """
+    </svg>
+    <div class="iframe-container">
+        <iframe class="responsive-iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FDenver&showTitle=0&showCalendars=0&src=Y2Nlc3BvcnRzQGNvbG9yYWRvY29sbGVnZS5lZHU&color=%23D81B60" frameborder="0" scrolling="no"></iframe>
+    </div>
+    """  
     # Close SVG and add remaining HTML content
-    HTML_text += "</svg></body></html>"
+    HTML_text += "</body></html>"
     return HTML_text
 
 #adds labels to the HTML file
