@@ -62,7 +62,7 @@ def update_HTML():
         """
     
     for row in list(label_reader)[1:]:
-        text, x, y, name = row
+        text, x, y = row
         HTML += f"""
             <text id="{text}" class="selectable decortext" x="{x}" y="{y}" data-id="{text}">{text}</text>
         """

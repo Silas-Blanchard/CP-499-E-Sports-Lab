@@ -1,2 +1,4 @@
 Name,x,y,width,height
-Nintendo Spot,500,10,35,35
+Nintendo Spot,575,10,120,100
+new_decoration,375,100,35,35
+new_decoration(1),375,50,35,35

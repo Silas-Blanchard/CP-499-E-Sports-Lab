@@ -1,4 +1,5 @@
 Label,x,y,size
-West Entrance,10,380,West Entrance
-East Entrance,630,380,East Entrance
-Nintendo Corner,500,40,Nintendo Corner
+Varsity Entrance,10,380
+East Entrance,630,380
+Nintendo Corner,580,40
+Switches,425,100

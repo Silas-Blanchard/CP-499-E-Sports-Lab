@@ -109,9 +109,9 @@ def generate_html_content(rows, computers, walls, labels, decor_path):
 def generate_labels(label_path):
     outputHTML = ""
     for i in label_path:
-        label, x, y, size = i
+        label, x, y = i
         outputHTML += f"""
-            <text x = "{x}" y = "{y}" data-id = "{size}">{label}</text>
+            <text x = "{x}" y = "{y}">{label}</text>
         """
     return outputHTML
 #the labels
@@ -122,6 +122,7 @@ def generate_decor(decs):
         outputHTML += f"""
             <rect id="{decor}" class="selectable decor" x="{x}" y="{y}" width="{width}" height="{height}" style="fill:#808080;"></rect>
         """
+        print(i)
     return outputHTML
 
 

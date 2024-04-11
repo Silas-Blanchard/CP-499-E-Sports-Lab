@@ -74,7 +74,6 @@
     }
 	
     .selectable{
-	    fill: #000F;
         border: 2px solid black;
         outline-style: solid;
     }
@@ -84,6 +83,10 @@
 
     .computer{
         fill: #080808;
+    }
+
+    .decor {
+        fill:#808080;
     }
 
     .wall {
@@ -429,42 +432,41 @@
                         if(e.classList.contains("computer")){
                             output += e.id + ";"
                             output += e.classList + ";"
-                            output+= e.dataset[0] + e.dataset[1] + ";"
+                            output+= e.getAttribute("data-id") + ";"
+                            output+= e.getAttribute("x") + ";"
+                            output+= e.getAttribute("y") + ";"
+                            output+= e.getAttribute("width") + ";"
+                            output+= e.getAttribute("height") + ";"
+                        }
+                        if(e.classList.contains("wall")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
                             output+= e.x.animVal.value + ";"
                             output+= e.y.animVal.value + ";"
                             output+= e.width.animVal.value + ";"
                             output+= e.height.animVal.value + ";"
                         }
-                        if(e.classList.contains("wall")){
-                            output += e.id + ";"
-                            output += e.classList + ";"
-                            output+= e.x + ";"
-                            output+= e.y + ";"
-                            output+= e.width + ";"
-                            output+= e.height + ";"
-                        }
                         if(e.classList.contains("decor")){
                             output += e.id + ";"
                             output += e.classList + ";"
-                            output+= e.x + ";"
-                            output+= e.y + ";"
-                            output+= e.width + ";"
-                            output+= e.height + ";"
+                            output+= e.x.animVal.value + ";"
+                            output+= e.y.animVal.value + ";"
+                            output+= e.width.animVal.value + ";"
+                            output+= e.height.animVal.value + ";"
                         }
                          if(e.classList.contains("decortext")){
                             output += e.textContent + ";"
                             output += e.classList + ";"
-                            output+= e.x + ";"
-                            output+= e.y + ";"
+                            output+= e.getAttribute("x") + ";"
+                            output+= e.getAttribute("y") + ";"
                         }
-
                         output += "\n"
                     });
                     console.log(output)
                     socket.emit('updateComps',output);
                 }
                 function restore(){
-                    socket.emit('restore');
+                    socket.emit('restore',output);
                 }
 
                 //All of the make new element functionality. 
@@ -472,6 +474,7 @@
                 function makelement(){
                     var newElementWindow = document.getElementById("new-element");
                     newElementWindow.style.display = "block";
+                    console.log("H")
                 }
                 
                 var newcancelbutton = document.getElementById("cancel-new");
@@ -554,7 +557,6 @@
                     createlement.setAttribute('y',0)
                     createlement.setAttribute('width',35)
                     createlement.setAttribute('height',35)
-                    createlement.setAttribute('fill:#808080;')
                     imbuewall(createlement) //imbue wall works for both to give them functionality
                 });
 

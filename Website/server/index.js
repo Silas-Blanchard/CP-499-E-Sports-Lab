@@ -95,7 +95,11 @@ io.on('connection', (socket) => {
       listening = null;
       console.log("EXITED " + code);
     });
-    spawn('python3',['server/content_gen/six_website.py'])
+    var x = spawn('python3',['server/content_gen/six_website.py'])
+    x.on('exit', function (code) { 
+      listening = null;
+      console.log("EXITED six" + code);
+    });
   });
 
   socket.on("restore", function(data) {

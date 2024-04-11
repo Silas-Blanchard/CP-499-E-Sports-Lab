@@ -74,7 +74,6 @@
     }
 	
     .selectable{
-	    fill: #000F;
         border: 2px solid black;
         outline-style: solid;
     }
@@ -84,6 +83,10 @@
 
     .computer{
         fill: #080808;
+    }
+
+    .decor {
+        fill:#808080;
     }
 
     .wall {
@@ -171,12 +174,6 @@
             <div class="warning">
                 <h2>ADMINS ONLY</h2>
                 <p>Changing these files will change the arrangement of the computers, walls, and decortations in the lab!</p>
-                <ul>
-                    <li>Computer Arrangement Syntax: Computer Name, X Position, Y Position</li>
-                    <li>Wall Arrangement Syntax: Wall Name, Starting X, Starting Y, Length, Rotation (Enter TRUE or FALSE or it will break)</li>
-                    <li>Decor Arrangement Syntax: Decor Name, Starting X, Starting Y, Width, Height</li>
-                    <li>(0,0) meaning X = 0 and Y = 0 is the top left of the screen</li>
-                </ul>
             </div>
 		        <div id="comp-popup">
   		        <text id="comp-title">Computer</text><br><br>
@@ -236,7 +233,7 @@
                 <button id="cancel-new">Cancel</button><br><br>
 	        </div>       
 	    
-    <svg viewBox='-10 0 1000 500'>
+    <svg id="svg" viewBox='-10 0 1000 500'>
     
             <rect id = "VarsityLab1" class="selectable computer" data-id="VarsityLab1,TRUE" x="10" y="200" width="35" height="35"/>
         
@@ -260,7 +257,7 @@
         
             <rect id = "VarsityLab11" class="selectable computer" data-id="VarsityLab11,FALSE" x="310" y="150" width="35" height="35"/>
         
-            <rect id = "VarsityLab12" class="selectable computer" data-id="VarsityLab12,false" x="366" y="200" width="35" height="35"/>
+            <rect id = "VarsityLab12" class="selectable computer" data-id="VarsityLab12,false" x="310" y="200" width="35" height="35"/>
         
             <rect id = "EventSpace1" class="selectable computer" data-id="EventSpace1,FALSE" x="375" y="150" width="35" height="35"/>
         
@@ -274,9 +271,9 @@
         
             <rect id = "EventSpace6" class="selectable computer" data-id="EventSpace6,FALSE" x="610" y="300" width="35" height="35"/>
         
-        <rect id = "0" class="selectable wall" x="350" y="0" width="5" height="240"></rect>
+        <rect id = "0" class="selectable wall" x="357" y="0" width="5" height="240"></rect>
         
-        <rect id = "1" class="selectable wall" x="350" y="310" width="5" height="40"></rect>
+        <rect id = "1" class="selectable wall" x="357" y="310" width="5" height="40"></rect>
         
         <rect id = "2" class="selectable wall" x="0" y="350" width="700" height="5"></rect>
         
@@ -396,6 +393,10 @@
                 // Show the comp-pop-up window when each computer is clicked
                 //Also populates the pop-up with the proper values
                 document.querySelectorAll('.computer').forEach(function(button) {
+                    imbuecomputer(button)
+                });
+                
+                function imbuecomputer(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     popupWindow.style.display = "block";
@@ -414,10 +415,15 @@
                     });
 
                     //the buttons on the popup know which computer they came from.
-                });
+                }
 
                 // Adds the popup functionality to walls
                 document.querySelectorAll('.wall').forEach(function(button) {
+                    imbuewall(button)
+                });
+
+                //adds clicker functionality to walls
+                function imbuewall(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     wallpopupWindow.style.display = "block";
@@ -430,10 +436,15 @@
                     wallcloseButton.setAttribute('data-id', button.id);
                     wallapplyButton.setAttribute('data-id', button.id);
                     });
-                });
+                }
 
                 //popups for decor
                 document.querySelectorAll('.decor').forEach(function(button) {
+                    imbuedecor(button)
+                });
+
+                //imbuing decor with button funcitonality
+                function imbuedecor(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     walltitle.innerText = "Editing Decor"
@@ -447,10 +458,14 @@
                     wallcloseButton.setAttribute('data-id', button.id);
                     wallapplyButton.setAttribute('data-id', button.id);
                     });
-                });
+                }
 
                 //adding functionality to the textboxes so they can be clicked as well
                 document.querySelectorAll('.decortext').forEach(function(button) {
+                    imbuetext(button)
+                });
+
+                function imbuetext(button){
                     button.addEventListener('click', function(event) {
                     event.preventDefault();
                     texttitle.innerText = "Editing Textbox"
@@ -463,18 +478,45 @@
                     textcloseButton.setAttribute('data-id', button.id);
                     textapplyButton.setAttribute('data-id', button.id);
                     });
-                });
-
-                const socket = io();
+                }                              
 
                 //this function simply loops through all "selectable" objects and sends their values to the server
                 function apply() {
                     var output = '';
+                    //attributes need to be in this order
+                    //id, classes, data-id, x, y, width, height
                     document.querySelectorAll('.selectable').forEach(function(e) {
                         // Get all attributes of the element
-                        var attributes = e.attributes;
-                        for (var i = 0; i < attributes.length; i++) {
-                            output += (attributes[i].value + ';') //semi-colon delineated
+                        if(e.classList.contains("computer")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.getAttribute("data-id") + ";"
+                            output+= e.getAttribute("x") + ";"
+                            output+= e.getAttribute("y") + ";"
+                            output+= e.getAttribute("width") + ";"
+                            output+= e.getAttribute("height") + ";"
+                        }
+                        if(e.classList.contains("wall")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.x.animVal.value + ";"
+                            output+= e.y.animVal.value + ";"
+                            output+= e.width.animVal.value + ";"
+                            output+= e.height.animVal.value + ";"
+                        }
+                        if(e.classList.contains("decor")){
+                            output += e.id + ";"
+                            output += e.classList + ";"
+                            output+= e.x.animVal.value + ";"
+                            output+= e.y.animVal.value + ";"
+                            output+= e.width.animVal.value + ";"
+                            output+= e.height.animVal.value + ";"
+                        }
+                         if(e.classList.contains("decortext")){
+                            output += e.textContent + ";"
+                            output += e.classList + ";"
+                            output+= e.getAttribute("x") + ";"
+                            output+= e.getAttribute("y") + ";"
                         }
                         output += "\n"
                     });
@@ -490,6 +532,7 @@
                 function makelement(){
                     var newElementWindow = document.getElementById("new-element");
                     newElementWindow.style.display = "block";
+                    console.log("H")
                 }
                 
                 var newcancelbutton = document.getElementById("cancel-new");
@@ -497,28 +540,112 @@
                     newElementWindow.style.display = "none";
                 });
 
+                //new compute rbutton functionality wooooowoahhhhhhh
                 var newcomputer = document.getElementById("new-computer");
                 newcomputer.addEventListener("click", function() {
                     event.preventDefault();
                     newElementWindow.style.display = "none";
-                    popupWindow.style.display = "block";
-                    showorhide.checked = false;
-                    currentitle.innerText = "New Computer"
-                    xfield.value = "0"
-                    yfield.value = "0"
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Computer"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
 
                     //new button is a unique id we give to new buttons
-                    closeButton.setAttribute('data-id', "H");
-                    applyButton.setAttribute('data-id', "H");
+                    new_id = guranteeunique("new_computer")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("computer");
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',0)
+                    createlement.setAttribute('width',35)
+                    createlement.setAttribute('height',35)
+                    createlement.setAttribute("data-id",new_id + ',' + false);
+                    imbuecomputer(createlement)
+                });
+
+                var newwall = document.getElementById("new-wall");
+                newwall.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Computer"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_wall")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("wall");
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',20)
+                    createlement.setAttribute('width',200)
+                    createlement.setAttribute('height',5)
+                    imbuewall(createlement)
+                });
+
+                //the button which handles creating new decor
+                var newdec = document.getElementById("new-decoration");
+                newdec.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Decor"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_decoration")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decor");
+                    createlement.setAttribute('x',0)
+                    createlement.setAttribute('y',0)
+                    createlement.setAttribute('width',35)
+                    createlement.setAttribute('height',35)
+                    imbuewall(createlement) //imbue wall works for both to give them functionality
+                });
+
+                //the button which handles creating new textboxes
+                var newtext = document.getElementById("new-textbox");
+                newtext.addEventListener("click", function() {
+                    event.preventDefault();
+                    newElementWindow.style.display = "none";
+                    //popupWindow.style.display = "block";
+                    //showorhide.checked = false;
+                    //currentitle.innerText = "New Decor"
+                    //xfield.value = "0"
+                    //yfield.value = "0"
+
+                    //new button is a unique id we give to new buttons
+                    new_id = guranteeunique("new_text")
+
+                    var createlement = document.createElementNS("http://www.w3.org/2000/svg", 'text'); //new computer
+                    document.getElementById("svg").appendChild(createlement);
+                    createlement.id = new_id
+                    createlement.classList.add("selectable");
+                    createlement.classList.add("decortext");
+                    createlement.setAttribute('x',100)
+                    createlement.setAttribute('y',100)
+                    createlement.textContent = new_id
+                    imbuetext(createlement)
                 });
 
                 //Checks if a name already exists
                 //If it does, then the program will affix a 1 to the end and try again. If proposed_name1 is also taken, try with 2, etc.
-                function guranteeunique(proposed_name, element){
-                    if(proposed_name == element.id){
-                        console.log("Equal")
-                        return proposed_name
-                    }
+                function guranteeunique(proposed_name){
                     if(checktaken(proposed_name)){
                         var number = 1
                         for (const e of document.querySelectorAll('.selectable')) {
@@ -541,5 +668,8 @@
                     //the name isn't taken
                     return false;
                 }
+
+                //okay so below this is all of the 
+                const socket = io();
             </script>
         </html>
