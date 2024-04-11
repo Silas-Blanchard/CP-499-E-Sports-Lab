@@ -9,6 +9,7 @@ const { Server } = require("socket.io");
 const { join } = require('path');
 const session = require('express-session');
 const { initializeCasAuth, checkWhitelist } = require('./content_gen/cas');
+const fs = require('fs');
 
 const childPython = spawn('python3', ['server/content_gen/six_website.py']);
 const childPythonJSON = spawn('python3', ['server/content_gen/JSON-maker.py']);
